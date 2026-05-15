@@ -1,7 +1,28 @@
 [gd_scene format=3 uid="uid://j5gfgd7xjjq1"]
 
 [ext_resource type="Script" uid="uid://bsa5jjryu8b7c" path="res://scripts/customization.gd" id="1_k71u6"]
-[ext_resource type="Texture2D" uid="uid://dmwtse26k3itx" path="res://assets/foto/Group 37.png" id="2_ds3pn"]
+[ext_resource type="Texture2D" uid="uid://duvq0frr80lpl" path="res://assets/foto/Group 94(2).png" id="2_73iet"]
+[ext_resource type="Texture2D" uid="uid://br5fpbu5l1a8p" path="res://assets/icon/стрелка в меню 1.png" id="3_0vfys"]
+[ext_resource type="Texture2D" uid="uid://bsdvkv0hxokk1" path="res://assets/icon/Group 39.png" id="4_kx870"]
+[ext_resource type="Texture2D" uid="uid://cqsj4ft6ltsfl" path="res://assets/icon/Group 40.png" id="5_acx06"]
+[ext_resource type="Texture2D" uid="uid://btrrqljlc1ury" path="res://assets/icon/Group 41.png" id="6_ppfrd"]
+[ext_resource type="Texture2D" uid="uid://chu38uw7rw473" path="res://assets/castom/Кучеряшка 1.png" id="7_ppfrd"]
+[ext_resource type="Texture2D" uid="uid://de23264chse6j" path="res://assets/icon/Group 42.png" id="7_vbge7"]
+[ext_resource type="Texture2D" uid="uid://bhwauihst2mab" path="res://assets/castom/Грива 22.png" id="8_d0b0o"]
+[ext_resource type="Texture2D" uid="uid://wdp74uxg7ehi" path="res://assets/castom/Косичка 1.png" id="9_smh0u"]
+[ext_resource type="Texture2D" uid="uid://3fql3iojqx06" path="res://assets/castom/Эрокез 1.png" id="10_5esjd"]
+[ext_resource type="Texture2D" uid="uid://vfues5sjmj7e" path="res://assets/castom/Хв кудряшка 1.png" id="11_8gnxe"]
+[ext_resource type="Texture2D" uid="uid://bvnp8uyeubf5k" path="res://assets/castom/Хв исходный 1.png" id="12_uocac"]
+[ext_resource type="Texture2D" uid="uid://bf7tb63ifnmli" path="res://assets/castom/Хв косичка 1.png" id="13_ewwti"]
+[ext_resource type="Texture2D" uid="uid://cnyuhtgovehul" path="res://assets/castom/Хв эрокез 1.png" id="14_bd3ap"]
+[ext_resource type="Texture2D" uid="uid://c8a1nvdwvgsnf" path="res://assets/castom/Р крутиться 1.png" id="15_j1g68"]
+[ext_resource type="Texture2D" uid="uid://b6bh1d2cggb2s" path="res://assets/castom/Р норм 1.png" id="16_60j1w"]
+[ext_resource type="Texture2D" uid="uid://ct18vamlfhyeg" path="res://assets/castom/Р большой 1.png" id="17_a1myt"]
+[ext_resource type="Texture2D" uid="uid://63tigmpqfowv" path="res://assets/castom/Р панк 1.png" id="18_m6itl"]
+[ext_resource type="Texture2D" uid="uid://jvj2cedrrt5a" path="res://assets/castom/очки 1.png" id="19_6y2rn"]
+[ext_resource type="Texture2D" uid="uid://bn00bfqxj8qbt" path="res://assets/castom/шляпа 1.png" id="20_60iw8"]
+[ext_resource type="Texture2D" uid="uid://lhoy61y4gpw" path="res://assets/castom/корона 1.png" id="21_tiq0o"]
+[ext_resource type="Texture2D" uid="uid://4nnx5gdo2ogo" path="res://assets/castom/бантик 1.png" id="22_ht6mq"]
 
 [node name="Customization" type="Node2D" unique_id=2095228116]
 
@@ -18,11 +39,296 @@ script = ExtResource("1_k71u6")
 layout_mode = 0
 offset_right = 1920.0
 offset_bottom = 1080.0
-texture = ExtResource("2_ds3pn")
+texture = ExtResource("2_73iet")
+
+[node name="TabContainer" type="HBoxContainer" parent="Node2D/Control/TextureRect" unique_id=239010045]
+layout_mode = 0
+offset_left = 60.0
+offset_top = 105.0
+offset_right = 849.0
+offset_bottom = 227.0
+
+[node name="GrivaButton" type="Button" parent="Node2D/Control/TextureRect/TabContainer" unique_id=190359933]
+layout_mode = 2
+icon = ExtResource("4_kx870")
+flat = true
+
+[node name="HvostButton" type="Button" parent="Node2D/Control/TextureRect/TabContainer" unique_id=1778890685]
+layout_mode = 2
+icon = ExtResource("5_acx06")
+flat = true
+
+[node name="RogButton" type="Button" parent="Node2D/Control/TextureRect/TabContainer" unique_id=58981887]
+layout_mode = 2
+icon = ExtResource("6_ppfrd")
+flat = true
+
+[node name="TeloButton" type="Button" parent="Node2D/Control/TextureRect/TabContainer" unique_id=520896751]
+layout_mode = 2
+icon = ExtResource("7_vbge7")
+flat = true
+
+[node name="ContentPanel" type="Control" parent="Node2D/Control/TextureRect" unique_id=1078118867]
+anchors_preset = 0
+offset_left = 73.0
+offset_top = 309.0
+offset_right = 580.0
+offset_bottom = 877.0
+
+[node name="GrivaPanel" type="Control" parent="Node2D/Control/TextureRect/ContentPanel" unique_id=1096430752]
+anchors_preset = 0
+offset_left = 6.0
+offset_top = 21.0
+offset_right = 516.0
+offset_bottom = 541.0
+
+[node name="1" type="Button" parent="Node2D/Control/TextureRect/ContentPanel/GrivaPanel" unique_id=860296520]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 3.0
+offset_right = 249.0
+offset_bottom = 249.0
+icon = ExtResource("7_ppfrd")
+flat = true
+
+[node name="2" type="Button" parent="Node2D/Control/TextureRect/ContentPanel/GrivaPanel" unique_id=2122105574]
+layout_mode = 0
+offset_left = 268.0
+offset_top = -0.99999905
+offset_right = 565.0
+offset_bottom = 271.0
+scale = Vector2(0.8517562, 0.9641206)
+icon = ExtResource("8_d0b0o")
+flat = true
+
+[node name="3" type="Button" parent="Node2D/Control/TextureRect/ContentPanel/GrivaPanel" unique_id=1567641927]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 270.0
+offset_right = 249.0
+offset_bottom = 516.0
+icon = ExtResource("9_smh0u")
+flat = true
+
+[node name="4" type="Button" parent="Node2D/Control/TextureRect/ContentPanel/GrivaPanel" unique_id=817543546]
+layout_mode = 0
+offset_left = 262.0
+offset_top = 270.0
+offset_right = 506.0
+offset_bottom = 516.0
+icon = ExtResource("10_5esjd")
+flat = true
+
+[node name="HvostPanel" type="Control" parent="Node2D/Control/TextureRect/ContentPanel" unique_id=614639387]
+visible = false
+anchors_preset = 0
+offset_left = 6.0
+offset_top = 21.0
+offset_right = 516.0
+offset_bottom = 541.0
+
+[node name="1" type="Button" parent="Node2D/Control/TextureRect/ContentPanel/HvostPanel" unique_id=1336077735]
+layout_mode = 0
+offset_left = 3.0
+offset_top = -20.000002
+offset_right = 260.0
+offset_bottom = 306.0
+scale = Vector2(0.95598626, 0.86951447)
+icon = ExtResource("11_8gnxe")
+flat = true
+
+[node name="2" type="Button" parent="Node2D/Control/TextureRect/ContentPanel/HvostPanel" unique_id=1755502157]
+layout_mode = 0
+offset_left = 261.0
+offset_top = -9.0
+offset_right = 513.0
+offset_bottom = 262.0
+icon = ExtResource("12_uocac")
+flat = true
+
+[node name="3" type="Button" parent="Node2D/Control/TextureRect/ContentPanel/HvostPanel" unique_id=94970622]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 270.0
+offset_right = 249.0
+offset_bottom = 516.0
+icon = ExtResource("13_ewwti")
+flat = true
+
+[node name="4" type="Button" parent="Node2D/Control/TextureRect/ContentPanel/HvostPanel" unique_id=68226432]
+layout_mode = 0
+offset_left = 262.0
+offset_top = 270.0
+offset_right = 506.0
+offset_bottom = 516.0
+scale = Vector2(0.98613554, 0.97385967)
+icon = ExtResource("14_bd3ap")
+flat = true
+
+[node name="RogPanel" type="Control" parent="Node2D/Control/TextureRect/ContentPanel" unique_id=1155387389]
+visible = false
+anchors_preset = 0
+offset_left = 6.0
+offset_top = 21.0
+offset_right = 516.0
+offset_bottom = 541.0
+
+[node name="1" type="Button" parent="Node2D/Control/TextureRect/ContentPanel/RogPanel" unique_id=900525204]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 3.0
+offset_right = 249.0
+offset_bottom = 249.0
+icon = ExtResource("15_j1g68")
+flat = true
+
+[node name="2" type="Button" parent="Node2D/Control/TextureRect/ContentPanel/RogPanel" unique_id=749241246]
+layout_mode = 0
+offset_left = 262.0
+offset_top = 3.0
+offset_right = 506.0
+offset_bottom = 249.0
+icon = ExtResource("16_60j1w")
+flat = true
+
+[node name="3" type="Button" parent="Node2D/Control/TextureRect/ContentPanel/RogPanel" unique_id=412170793]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 270.0
+offset_right = 249.0
+offset_bottom = 516.0
+icon = ExtResource("17_a1myt")
+flat = true
+
+[node name="4" type="Button" parent="Node2D/Control/TextureRect/ContentPanel/RogPanel" unique_id=117051969]
+layout_mode = 0
+offset_left = 262.0
+offset_top = 270.0
+offset_right = 506.0
+offset_bottom = 516.0
+icon = ExtResource("18_m6itl")
+flat = true
+
+[node name="TeloPanel" type="Control" parent="Node2D/Control/TextureRect/ContentPanel" unique_id=1143836174]
+visible = false
+anchors_preset = 0
+offset_left = 6.0
+offset_top = 21.0
+offset_right = 516.0
+offset_bottom = 541.0
+
+[node name="1" type="Button" parent="Node2D/Control/TextureRect/ContentPanel/TeloPanel" unique_id=1668101305]
+layout_mode = 0
+offset_left = -5.0
+offset_top = 3.0
+offset_right = 250.0
+offset_bottom = 249.0
+icon = ExtResource("19_6y2rn")
+flat = true
+
+[node name="2" type="Button" parent="Node2D/Control/TextureRect/ContentPanel/TeloPanel" unique_id=21627616]
+layout_mode = 0
+offset_left = 262.0
+offset_top = 3.0
+offset_right = 506.0
+offset_bottom = 249.0
+icon = ExtResource("20_60iw8")
+flat = true
+
+[node name="3" type="Button" parent="Node2D/Control/TextureRect/ContentPanel/TeloPanel" unique_id=529622133]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 270.0
+offset_right = 249.0
+offset_bottom = 516.0
+icon = ExtResource("21_tiq0o")
+flat = true
+
+[node name="4" type="Button" parent="Node2D/Control/TextureRect/ContentPanel/TeloPanel" unique_id=1979920344]
+layout_mode = 0
+offset_left = 262.0
+offset_top = 270.0
+offset_right = 506.0
+offset_bottom = 516.0
+icon = ExtResource("22_ht6mq")
+flat = true
 
 [node name="MenuButton" type="Button" parent="Node2D/Control/TextureRect" unique_id=1057930859]
 layout_mode = 0
-offset_left = 1753.0
-offset_top = 26.0
-offset_right = 1873.0
-offset_bottom = 126.0
+offset_left = 1606.0
+offset_top = 29.0
+offset_right = 1804.8151
+offset_bottom = 173.40247
+scale = Vector2(1.0905684, 0.83700746)
+icon = ExtResource("3_0vfys")
+flat = true
+
+[node name="Blue" type="Button" parent="Node2D/Control/TextureRect" unique_id=1478131312]
+layout_mode = 0
+offset_left = 606.0
+offset_top = 391.0
+offset_right = 699.0
+offset_bottom = 481.0
+
+[node name="Green" type="Button" parent="Node2D/Control/TextureRect" unique_id=1884615331]
+layout_mode = 0
+offset_left = 733.0
+offset_top = 391.0
+offset_right = 826.0
+offset_bottom = 481.0
+
+[node name="DarkBlue" type="Button" parent="Node2D/Control/TextureRect" unique_id=1196846613]
+layout_mode = 0
+offset_left = 606.0
+offset_top = 491.0
+offset_right = 699.0
+offset_bottom = 581.0
+
+[node name="Purple" type="Button" parent="Node2D/Control/TextureRect" unique_id=696297207]
+layout_mode = 0
+offset_left = 733.0
+offset_top = 491.0
+offset_right = 826.0
+offset_bottom = 581.0
+
+[node name="Pink" type="Button" parent="Node2D/Control/TextureRect" unique_id=76087659]
+layout_mode = 0
+offset_left = 606.0
+offset_top = 591.0
+offset_right = 699.0
+offset_bottom = 681.0
+
+[node name="Red" type="Button" parent="Node2D/Control/TextureRect" unique_id=1952966223]
+layout_mode = 0
+offset_left = 732.0
+offset_top = 591.0
+offset_right = 825.0
+offset_bottom = 681.0
+
+[node name="Yellow" type="Button" parent="Node2D/Control/TextureRect" unique_id=260323617]
+layout_mode = 0
+offset_left = 606.0
+offset_top = 692.0
+offset_right = 699.0
+offset_bottom = 782.0
+
+[node name="Orange" type="Button" parent="Node2D/Control/TextureRect" unique_id=1801660357]
+layout_mode = 0
+offset_left = 733.0
+offset_top = 691.0
+offset_right = 826.0
+offset_bottom = 781.0
+
+[node name="White" type="Button" parent="Node2D/Control/TextureRect" unique_id=1729023409]
+layout_mode = 0
+offset_left = 607.0
+offset_top = 792.0
+offset_right = 700.0
+offset_bottom = 882.0
+
+[node name="Black" type="Button" parent="Node2D/Control/TextureRect" unique_id=2031814016]
+layout_mode = 0
+offset_left = 733.0
+offset_top = 792.0
+offset_right = 826.0
+offset_bottom = 882.0

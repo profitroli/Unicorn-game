@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://babpimfhr1gkt"
-path="res://.godot/imported/Облако 1.png-a94a1e2c645aed899707750beccc3c36.ctex"
+uid="uid://lhoy61y4gpw"
+path="res://.godot/imported/корона 1.png-62c62c73c5fcc4b8512f7575a0764818.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/foto/Облако 1.png"
-dest_files=["res://.godot/imported/Облако 1.png-a94a1e2c645aed899707750beccc3c36.ctex"]
+source_file="res://assets/castom/корона 1.png"
+dest_files=["res://.godot/imported/корона 1.png-62c62c73c5fcc4b8512f7575a0764818.ctex"]
 
 [params]
 
