@@ -1,3 +1,28 @@
 [gd_scene format=3 uid="uid://j5gfgd7xjjq1"]
 
+[ext_resource type="Script" uid="uid://bsa5jjryu8b7c" path="res://scripts/customization.gd" id="1_k71u6"]
+[ext_resource type="Texture2D" uid="uid://dmwtse26k3itx" path="res://assets/foto/Group 37.png" id="2_ds3pn"]
+
 [node name="Customization" type="Node2D" unique_id=2095228116]
+
+[node name="Node2D" type="Node2D" parent="." unique_id=67980788]
+
+[node name="Control" type="Control" parent="Node2D" unique_id=30171550]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+script = ExtResource("1_k71u6")
+
+[node name="TextureRect" type="TextureRect" parent="Node2D/Control" unique_id=878814113]
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+texture = ExtResource("2_ds3pn")
+
+[node name="MenuButton" type="Button" parent="Node2D/Control/TextureRect" unique_id=1057930859]
+layout_mode = 0
+offset_left = 1753.0
+offset_top = 26.0
+offset_right = 1873.0
+offset_bottom = 126.0

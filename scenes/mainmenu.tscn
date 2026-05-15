@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://cy4qaphqkorsb"]
 
-[ext_resource type="Texture2D" uid="uid://bam4hou1ju5p3" path="res://assets/foto/Group 38.png" id="1_s5g8n"]
 [ext_resource type="Texture2D" uid="uid://cwysa4e76vn3h" path="res://assets/icon/Group 36(1).png" id="2_7yvfd"]
-[ext_resource type="Script" uid="uid://cm6tthtmv1ton" path="res://scripts/button_manager.gd" id="2_dfy5j"]
+[ext_resource type="Texture2D" uid="uid://cqsd6jars7fqm" path="res://assets/foto/Group 43.png" id="2_85riq"]
+[ext_resource type="Script" uid="uid://cm6tthtmv1ton" path="res://scripts/mainmenu.gd" id="2_dfy5j"]
 [ext_resource type="Texture2D" uid="uid://uhf4vcwvpgwf" path="res://assets/icon/Group 32.png" id="3_dfy5j"]
 [ext_resource type="Texture2D" uid="uid://cbo8rxt804lwh" path="res://assets/icon/Group 34.png" id="4_85riq"]
 [ext_resource type="Texture2D" uid="uid://7moiyowqrg0r" path="res://assets/icon/Group 33.png" id="5_wf3n4"]
@@ -20,7 +20,7 @@ script = ExtResource("2_dfy5j")
 layout_mode = 0
 offset_right = 1920.0
 offset_bottom = 1080.0
-texture = ExtResource("1_s5g8n")
+texture = ExtResource("2_85riq")
 
 [node name="PlayButton" type="Button" parent="Control/TextureRect" unique_id=1760332660]
 layout_mode = 0
@@ -34,27 +34,27 @@ flat = true
 [node name="SettingsButton" type="Button" parent="Control/TextureRect" unique_id=484743585]
 layout_mode = 0
 offset_left = 1088.0
-offset_top = 485.0
+offset_top = 490.0
 offset_right = 1618.0
-offset_bottom = 609.0
+offset_bottom = 614.0
 icon = ExtResource("3_dfy5j")
 flat = true
 
 [node name="SaveButton" type="Button" parent="Control/TextureRect" unique_id=747713285]
 layout_mode = 0
 offset_left = 1088.0
-offset_top = 615.0
+offset_top = 620.0
 offset_right = 1618.0
-offset_bottom = 739.0
+offset_bottom = 744.0
 icon = ExtResource("4_85riq")
 flat = true
 
 [node name="ExitButton" type="Button" parent="Control/TextureRect" unique_id=628156307]
 layout_mode = 0
 offset_left = 1088.0
-offset_top = 745.0
+offset_top = 750.0
 offset_right = 1618.0
-offset_bottom = 869.0
+offset_bottom = 874.0
 icon = ExtResource("5_wf3n4")
 flat = true
 

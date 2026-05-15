@@ -1,13 +1,28 @@
 [gd_scene format=3 uid="uid://cjcumn7d4n7ao"]
 
 [ext_resource type="VideoStream" uid="uid://7y0busnvvnf2" path="res://assets/video/1000031541-enhanced_1_(1).ogv" id="1_ioskq"]
+[ext_resource type="Script" uid="uid://bmf5dpa6hk3it" path="res://scripts/intro.gd" id="1_yjqpq"]
 
 [node name="Intro" type="Node2D" unique_id=2121289290]
 
-[node name="Node2D" type="Node2D" parent="." unique_id=1673782763]
+[node name="Control" type="Control" parent="." unique_id=673809025]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_yjqpq")
 
-[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="Node2D" unique_id=161450558]
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="Control" unique_id=161450558]
+layout_mode = 0
 offset_right = 1920.0
 offset_bottom = 1080.0
 stream = ExtResource("1_ioskq")
 autoplay = true
+
+[node name="FadeLayer" type="CanvasLayer" parent="Control" unique_id=1156442559]
+layer = 100
+
+[node name="WhiteScreen" type="ColorRect" parent="Control/FadeLayer" unique_id=2041722671]
+offset_right = 1920.0
+offset_bottom = 1080.0
+color = Color(1, 1, 1, 0)
