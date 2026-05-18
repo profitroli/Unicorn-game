@@ -263,70 +263,75 @@ scale = Vector2(1.0905684, 0.83700746)
 icon = ExtResource("3_0vfys")
 flat = true
 
-[node name="Blue" type="Button" parent="Node2D/Control/TextureRect" unique_id=1478131312]
+[node name="Color" type="Control" parent="Node2D/Control/TextureRect" unique_id=1646732877]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Blue" type="Button" parent="Node2D/Control/TextureRect/Color" unique_id=1478131312]
 layout_mode = 0
 offset_left = 606.0
 offset_top = 391.0
 offset_right = 699.0
 offset_bottom = 481.0
 
-[node name="Green" type="Button" parent="Node2D/Control/TextureRect" unique_id=1884615331]
+[node name="Green" type="Button" parent="Node2D/Control/TextureRect/Color" unique_id=1884615331]
 layout_mode = 0
 offset_left = 733.0
 offset_top = 391.0
 offset_right = 826.0
 offset_bottom = 481.0
 
-[node name="DarkBlue" type="Button" parent="Node2D/Control/TextureRect" unique_id=1196846613]
+[node name="DarkBlue" type="Button" parent="Node2D/Control/TextureRect/Color" unique_id=1196846613]
 layout_mode = 0
 offset_left = 606.0
 offset_top = 491.0
 offset_right = 699.0
 offset_bottom = 581.0
 
-[node name="Purple" type="Button" parent="Node2D/Control/TextureRect" unique_id=696297207]
+[node name="Purple" type="Button" parent="Node2D/Control/TextureRect/Color" unique_id=696297207]
 layout_mode = 0
 offset_left = 733.0
 offset_top = 491.0
 offset_right = 826.0
 offset_bottom = 581.0
 
-[node name="Pink" type="Button" parent="Node2D/Control/TextureRect" unique_id=76087659]
+[node name="Pink" type="Button" parent="Node2D/Control/TextureRect/Color" unique_id=76087659]
 layout_mode = 0
 offset_left = 606.0
 offset_top = 591.0
 offset_right = 699.0
 offset_bottom = 681.0
 
-[node name="Red" type="Button" parent="Node2D/Control/TextureRect" unique_id=1952966223]
+[node name="Red" type="Button" parent="Node2D/Control/TextureRect/Color" unique_id=1952966223]
 layout_mode = 0
 offset_left = 732.0
 offset_top = 591.0
 offset_right = 825.0
 offset_bottom = 681.0
 
-[node name="Yellow" type="Button" parent="Node2D/Control/TextureRect" unique_id=260323617]
+[node name="Yellow" type="Button" parent="Node2D/Control/TextureRect/Color" unique_id=260323617]
 layout_mode = 0
 offset_left = 606.0
 offset_top = 692.0
 offset_right = 699.0
 offset_bottom = 782.0
 
-[node name="Orange" type="Button" parent="Node2D/Control/TextureRect" unique_id=1801660357]
+[node name="Orange" type="Button" parent="Node2D/Control/TextureRect/Color" unique_id=1801660357]
 layout_mode = 0
 offset_left = 733.0
 offset_top = 691.0
 offset_right = 826.0
 offset_bottom = 781.0
 
-[node name="White" type="Button" parent="Node2D/Control/TextureRect" unique_id=1729023409]
+[node name="White" type="Button" parent="Node2D/Control/TextureRect/Color" unique_id=1729023409]
 layout_mode = 0
 offset_left = 607.0
 offset_top = 792.0
 offset_right = 700.0
 offset_bottom = 882.0
 
-[node name="Black" type="Button" parent="Node2D/Control/TextureRect" unique_id=2031814016]
+[node name="Black" type="Button" parent="Node2D/Control/TextureRect/Color" unique_id=2031814016]
 layout_mode = 0
 offset_left = 733.0
 offset_top = 792.0

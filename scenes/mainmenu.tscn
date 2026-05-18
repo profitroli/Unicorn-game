@@ -7,6 +7,10 @@
 [ext_resource type="Texture2D" uid="uid://cbo8rxt804lwh" path="res://assets/icon/Group 34.png" id="4_85riq"]
 [ext_resource type="Texture2D" uid="uid://7moiyowqrg0r" path="res://assets/icon/Group 33.png" id="5_wf3n4"]
 [ext_resource type="Texture2D" uid="uid://dglaswnmhbkin" path="res://assets/foto/Group 71.png" id="7_dfy5j"]
+[ext_resource type="Texture2D" uid="uid://b4n43w6eeckh3" path="res://assets/icon/Кастомизация 1.png" id="7_h73c4"]
+[ext_resource type="Texture2D" uid="uid://bpvpufwnldqkq" path="res://assets/foto/Group 101.png" id="8_wf3n4"]
+[ext_resource type="Texture2D" uid="uid://t74ml5rwwgja" path="res://assets/foto/Group 102.png" id="9_h73c4"]
+[ext_resource type="AudioStream" uid="uid://b7a3v80negqok" path="res://assets/music/mm.mp3" id="11_uui5l"]
 
 [node name="Mainmenu" type="Node2D" unique_id=1966524846]
 
@@ -61,22 +65,26 @@ flat = true
 
 [node name="CustomizationButton" type="Button" parent="Control/TextureRect" unique_id=2140760374]
 layout_mode = 0
-offset_right = 8.0
-offset_bottom = 40.0
+offset_left = 275.0
+offset_top = 874.0
+offset_right = 840.0
+offset_bottom = 987.0
+icon = ExtResource("7_h73c4")
+flat = true
 
-[node name="Control" type="Control" parent="Control/TextureRect" unique_id=482241208]
+[node name="Controlvixod" type="Control" parent="Control/TextureRect" unique_id=482241208]
 visible = false
 anchors_preset = 0
 offset_right = 1920.0
 offset_bottom = 1080.0
 
-[node name="TextureRect" type="TextureRect" parent="Control/TextureRect/Control" unique_id=1885895596]
+[node name="TextureRect" type="TextureRect" parent="Control/TextureRect/Controlvixod" unique_id=1885895596]
 layout_mode = 0
 offset_right = 1920.0
 offset_bottom = 1080.0
 texture = ExtResource("7_dfy5j")
 
-[node name="yes" type="Button" parent="Control/TextureRect/Control" unique_id=732735082]
+[node name="yes" type="Button" parent="Control/TextureRect/Controlvixod" unique_id=732735082]
 layout_mode = 0
 offset_left = 686.0
 offset_top = 636.0
@@ -84,10 +92,74 @@ offset_right = 945.0
 offset_bottom = 725.0
 flat = true
 
-[node name="no" type="Button" parent="Control/TextureRect/Control" unique_id=1883190481]
+[node name="no" type="Button" parent="Control/TextureRect/Controlvixod" unique_id=1883190481]
 layout_mode = 0
 offset_left = 970.0
 offset_top = 635.0
 offset_right = 1228.0
 offset_bottom = 723.0
 flat = true
+
+[node name="krest" type="Button" parent="Control/TextureRect/Controlvixod" unique_id=497953080]
+layout_mode = 0
+offset_left = 1281.0
+offset_top = 387.0
+offset_right = 1332.0
+offset_bottom = 436.0
+flat = true
+
+[node name="Controlset" type="Control" parent="Control/TextureRect" unique_id=1331161553]
+visible = false
+anchors_preset = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+
+[node name="TextureRect" type="TextureRect" parent="Control/TextureRect/Controlset" unique_id=1557325033]
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+texture = ExtResource("8_wf3n4")
+
+[node name="vixod" type="Button" parent="Control/TextureRect/Controlset" unique_id=1829733613]
+layout_mode = 0
+offset_left = 1582.0
+offset_top = 168.0
+offset_right = 1649.0
+offset_bottom = 236.0
+flat = true
+
+[node name="VolumeSlider" type="HSlider" parent="Control/TextureRect/Controlset" unique_id=1032199300]
+layout_mode = 0
+offset_left = 776.0
+offset_top = 397.0
+offset_right = 876.0
+offset_bottom = 413.0
+min_value = -30.0
+max_value = 0.0
+
+[node name="Controlsave" type="Control" parent="Control/TextureRect" unique_id=2121285456]
+visible = false
+anchors_preset = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+
+[node name="TextureRect" type="TextureRect" parent="Control/TextureRect/Controlsave" unique_id=1132494289]
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+texture = ExtResource("9_h73c4")
+
+[node name="vixod" type="Button" parent="Control/TextureRect/Controlsave" unique_id=1268606282]
+layout_mode = 0
+offset_left = 1580.0
+offset_top = 168.0
+offset_right = 1649.0
+offset_bottom = 235.0
+flat = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Control" unique_id=547355984]
+stream = ExtResource("11_uui5l")
+autoplay = true
+parameters/looping = true
+
+[connection signal="value_changed" from="Control/TextureRect/Controlset/VolumeSlider" to="Control" method="_on_volume_slider_value_changed"]
