@@ -8,9 +8,64 @@
 [ext_resource type="Texture2D" uid="uid://7moiyowqrg0r" path="res://assets/icon/Group 33.png" id="5_wf3n4"]
 [ext_resource type="Texture2D" uid="uid://dglaswnmhbkin" path="res://assets/foto/Group 71.png" id="7_dfy5j"]
 [ext_resource type="Texture2D" uid="uid://b4n43w6eeckh3" path="res://assets/icon/Кастомизация 1.png" id="7_h73c4"]
-[ext_resource type="Texture2D" uid="uid://bpvpufwnldqkq" path="res://assets/foto/Group 101.png" id="8_wf3n4"]
 [ext_resource type="Texture2D" uid="uid://t74ml5rwwgja" path="res://assets/foto/Group 102.png" id="9_h73c4"]
+[ext_resource type="Texture2D" uid="uid://cyy0t6myn61gu" path="res://assets/foto/Group 109.png" id="9_nkpmc"]
+[ext_resource type="Texture2D" uid="uid://b1fbajwt8e1o0" path="res://assets/icon/КНОПКА (2) 1.png" id="10_4hago"]
+[ext_resource type="Texture2D" uid="uid://b6cxao5mojikt" path="res://assets/icon/КНОПКА (1) 1.png" id="11_6pj40"]
+[ext_resource type="Texture2D" uid="uid://cy37us6invyol" path="res://assets/icon/ЧЕКБОКС 1.png" id="11_gjjcl"]
 [ext_resource type="AudioStream" uid="uid://b7a3v80negqok" path="res://assets/music/mm.mp3" id="11_uui5l"]
+[ext_resource type="Texture2D" uid="uid://isajc60vrb4d" path="res://assets/icon/dfhd 1.png" id="12_6pj40"]
+[ext_resource type="FontFile" uid="uid://d0xdu780tm0v8" path="res://assets/text/PixelifySans-VariableFont_wght.ttf" id="12_nkpmc"]
+[ext_resource type="Texture2D" uid="uid://clxsx6o3hhios" path="res://assets/icon/добавить 1.png" id="16_prb5i"]
+[ext_resource type="Texture2D" uid="uid://cvu1l1hy0s0hw" path="res://assets/icon/удалить 1.png" id="17_xwyuh"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kait0"]
+content_margin_left = 0.0
+content_margin_top = 39.0
+content_margin_right = 0.0
+content_margin_bottom = 10.0
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6pj40"]
+content_margin_left = 0.0
+content_margin_top = 10.0
+content_margin_right = 0.0
+content_margin_bottom = 10.0
+bg_color = Color(0.5058824, 0.4862745, 0.73333335, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nkpmc"]
+content_margin_left = 0.0
+content_margin_top = 10.0
+content_margin_right = 0.0
+content_margin_bottom = 10.0
+bg_color = Color(0.5058824, 0.4862745, 0.73333335, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fsdjo"]
+bg_color = Color(0.8156863, 0.8039216, 0.9019608, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c6huh"]
+bg_color = Color(0.8156863, 0.8039216, 0.9019608, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_prb5i"]
+bg_color = Color(0.8156863, 0.8039216, 0.9019608, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hn6ym"]
+bg_color = Color(0.8156863, 0.8039216, 0.9019608, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xwyuh"]
+bg_color = Color(0.8156863, 0.8039216, 0.9019608, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gr43c"]
+bg_color = Color(0.8156863, 0.8039216, 0.9019608, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_18cd8"]
+bg_color = Color(0.8156863, 0.8039216, 0.9019608, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gj5y3"]
+bg_color = Color(0.8156863, 0.8039216, 0.9019608, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6643n"]
+bg_color = Color(0.8156863, 0.8039216, 0.9019608, 1)
 
 [node name="Mainmenu" type="Node2D" unique_id=1966524846]
 
@@ -118,7 +173,7 @@ offset_bottom = 1080.0
 layout_mode = 0
 offset_right = 1920.0
 offset_bottom = 1080.0
-texture = ExtResource("8_wf3n4")
+texture = ExtResource("9_nkpmc")
 
 [node name="vixod" type="Button" parent="Control/TextureRect/Controlset" unique_id=1829733613]
 layout_mode = 0
@@ -130,12 +185,62 @@ flat = true
 
 [node name="VolumeSlider" type="HSlider" parent="Control/TextureRect/Controlset" unique_id=1032199300]
 layout_mode = 0
-offset_left = 776.0
-offset_top = 397.0
-offset_right = 876.0
-offset_bottom = 413.0
+offset_left = 357.0
+offset_top = 401.0
+offset_right = 982.0
+offset_bottom = 470.0
+theme_override_icons/grabber = ExtResource("10_4hago")
+theme_override_icons/grabber_highlight = ExtResource("10_4hago")
+theme_override_icons/grabber_disabled = ExtResource("10_4hago")
+theme_override_styles/slider = SubResource("StyleBoxFlat_kait0")
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_6pj40")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_nkpmc")
 min_value = -30.0
 max_value = 0.0
+
+[node name="Кнопка(1)1" type="Sprite2D" parent="Control/TextureRect/Controlset" unique_id=1596035885]
+position = Vector2(1336, 570)
+texture = ExtResource("11_6pj40")
+
+[node name="FPSButton" type="OptionButton" parent="Control/TextureRect/Controlset" unique_id=349675138]
+layout_mode = 0
+offset_left = 1200.0
+offset_top = 472.0
+offset_right = 1480.0
+offset_bottom = 527.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("12_nkpmc")
+theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = SubResource("StyleBoxFlat_fsdjo")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_c6huh")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_prb5i")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_hn6ym")
+theme_override_styles/hover = SubResource("StyleBoxFlat_xwyuh")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_gr43c")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_18cd8")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_gj5y3")
+theme_override_styles/focus = SubResource("StyleBoxFlat_6643n")
+alignment = 1
+icon_alignment = 1
+selected = 1
+item_count = 2
+popup/item_0/text = "30 FPS"
+popup/item_0/id = 0
+popup/item_1/text = "60 FPS"
+popup/item_1/id = 1
+
+[node name="AntiAliasingButton" type="CheckBox" parent="Control/TextureRect/Controlset" unique_id=1351130624]
+layout_mode = 0
+offset_left = 627.0
+offset_top = 624.0
+offset_right = 707.0
+offset_bottom = 703.0
+theme_override_icons/checked = ExtResource("12_6pj40")
+theme_override_icons/unchecked = ExtResource("11_gjjcl")
 
 [node name="Controlsave" type="Control" parent="Control/TextureRect" unique_id=2121285456]
 visible = false
@@ -157,9 +262,36 @@ offset_right = 1649.0
 offset_bottom = 235.0
 flat = true
 
+[node name="add" type="Button" parent="Control/TextureRect/Controlsave" unique_id=82935576]
+layout_mode = 0
+offset_left = 462.0
+offset_top = 266.0
+offset_right = 950.0
+offset_bottom = 374.0
+icon = ExtResource("16_prb5i")
+flat = true
+
+[node name="delete" type="Button" parent="Control/TextureRect/Controlsave" unique_id=1649821447]
+layout_mode = 0
+offset_left = 1022.0
+offset_top = 266.0
+offset_right = 1498.0
+offset_bottom = 378.0
+icon = ExtResource("17_xwyuh")
+flat = true
+
+[node name="SavesList" type="VBoxContainer" parent="Control/TextureRect/Controlsave" unique_id=459757482]
+layout_mode = 0
+offset_left = 390.0
+offset_top = 397.0
+offset_right = 1583.0
+offset_bottom = 888.0
+
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Control" unique_id=547355984]
 stream = ExtResource("11_uui5l")
 autoplay = true
 parameters/looping = true
 
 [connection signal="value_changed" from="Control/TextureRect/Controlset/VolumeSlider" to="Control" method="_on_volume_slider_value_changed"]
+[connection signal="item_selected" from="Control/TextureRect/Controlset/FPSButton" to="Control" method="_on_fps_button_item_selected"]
+[connection signal="toggled" from="Control/TextureRect/Controlset/AntiAliasingButton" to="Control" method="_on_anti_aliasing_button_toggled"]
