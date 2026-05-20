@@ -18,6 +18,8 @@
 [ext_resource type="FontFile" uid="uid://d0xdu780tm0v8" path="res://assets/text/PixelifySans-VariableFont_wght.ttf" id="12_nkpmc"]
 [ext_resource type="Texture2D" uid="uid://clxsx6o3hhios" path="res://assets/icon/добавить 1.png" id="16_prb5i"]
 [ext_resource type="Texture2D" uid="uid://cvu1l1hy0s0hw" path="res://assets/icon/удалить 1.png" id="17_xwyuh"]
+[ext_resource type="Texture2D" uid="uid://b82meiotj0rdg" path="res://assets/castom/Тело 1.png" id="18_xwyuh"]
+[ext_resource type="Texture2D" uid="uid://dqa8sjnw2s1fp" path="res://assets/ui/Group 31.png" id="19_c6huh"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kait0"]
 content_margin_left = 0.0
@@ -286,6 +288,19 @@ offset_left = 390.0
 offset_top = 397.0
 offset_right = 1583.0
 offset_bottom = 888.0
+
+[node name="Unicorn" type="TextureRect" parent="Control/TextureRect" unique_id=1414710663]
+visible = false
+layout_mode = 0
+offset_left = 277.0
+offset_top = 151.0
+offset_right = 962.0
+offset_bottom = 895.0
+texture = ExtResource("18_xwyuh")
+
+[node name="Group31" type="Sprite2D" parent="Control/TextureRect" unique_id=1791206806]
+position = Vector2(500, 646)
+texture = ExtResource("19_c6huh")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Control" unique_id=547355984]
 stream = ExtResource("11_uui5l")

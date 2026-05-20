@@ -24,8 +24,6 @@
 [ext_resource type="Texture2D" uid="uid://bn00bfqxj8qbt" path="res://assets/castom/шляпа 1.png" id="20_60iw8"]
 [ext_resource type="Texture2D" uid="uid://lhoy61y4gpw" path="res://assets/castom/корона 1.png" id="21_tiq0o"]
 [ext_resource type="Texture2D" uid="uid://4nnx5gdo2ogo" path="res://assets/castom/бантик 1.png" id="22_ht6mq"]
-[ext_resource type="Texture2D" uid="uid://ci15f3g1y7l61" path="res://assets/icon/image 4.png" id="24_ewwti"]
-[ext_resource type="Texture2D" uid="uid://brqdf4lxr6ato" path="res://assets/icon/Group 108.png" id="26_bd3ap"]
 
 [node name="Customization" type="Node2D" unique_id=2095228116]
 
@@ -226,7 +224,7 @@ anchors_preset = 0
 offset_left = 6.0
 offset_top = 21.0
 offset_right = 516.0
-offset_bottom = 597.0
+offset_bottom = 541.0
 
 [node name="1" type="Button" parent="Node2D/Control/TextureRect/ContentPanel/TeloPanel" unique_id=1668101305]
 layout_mode = 0
@@ -248,10 +246,10 @@ flat = true
 
 [node name="3" type="Button" parent="Node2D/Control/TextureRect/ContentPanel/TeloPanel" unique_id=529622133]
 layout_mode = 0
-offset_left = 11.0
-offset_top = 245.0
-offset_right = 255.0
-offset_bottom = 457.0
+offset_left = 5.0
+offset_top = 270.0
+offset_right = 249.0
+offset_bottom = 516.0
 icon = ExtResource("21_tiq0o")
 flat = true
 
@@ -260,17 +258,8 @@ layout_mode = 0
 offset_left = 262.0
 offset_top = 270.0
 offset_right = 506.0
-offset_bottom = 463.0
+offset_bottom = 516.0
 icon = ExtResource("22_ht6mq")
-flat = true
-
-[node name="ResetButton" type="Button" parent="Node2D/Control/TextureRect/ContentPanel/TeloPanel" unique_id=1129674600]
-layout_mode = 0
-offset_left = 189.0
-offset_top = 463.0
-offset_right = 298.0
-offset_bottom = 572.0
-icon = ExtResource("24_ewwti")
 flat = true
 
 [node name="MenuButton" type="Button" parent="Node2D/Control/TextureRect" unique_id=1057930859]
@@ -357,12 +346,3 @@ offset_left = 733.0
 offset_top = 792.0
 offset_right = 826.0
 offset_bottom = 882.0
-
-[node name="SaveButton" type="Button" parent="Node2D/Control/TextureRect" unique_id=1249226546]
-layout_mode = 0
-offset_left = 127.0
-offset_top = 941.0
-offset_right = 747.0
-offset_bottom = 1047.0
-icon = ExtResource("26_bd3ap")
-flat = true
