@@ -1,0 +1,106 @@
+[gd_scene format=3 uid="uid://b2jtj1kboyl3h"]
+
+[ext_resource type="Script" uid="uid://dmg48kle5evsy" path="res://scripts/dialogue_manager.gd" id="1_5jffm"]
+[ext_resource type="Script" uid="uid://dtcpcbvpgoheb" path="res://scripts/prologue.gd" id="1_8byya"]
+[ext_resource type="Texture2D" uid="uid://cteefwf827km7" path="res://assets/foto/Group 122.png" id="2_6e114"]
+[ext_resource type="Texture2D" uid="uid://cqkabq4rekq08" path="res://assets/foto/Group 116(3).png" id="3_6e114"]
+[ext_resource type="FontFile" uid="uid://desu4jund4dbp" path="res://assets/text/ArcadeJeu-Regular.otf" id="4_1wrf5"]
+
+[node name="Prologue" type="Node2D" unique_id=604721994]
+script = ExtResource("1_8byya")
+university_background_texture = ExtResource("2_6e114")
+
+[node name="FadeLayer" type="CanvasLayer" parent="." unique_id=577671926]
+layer = 100
+visible = false
+
+[node name="WhiteScreen" type="ColorRect" parent="FadeLayer" unique_id=611634114]
+offset_right = 1920.0
+offset_bottom = 1080.0
+
+[node name="Node2D" type="Node2D" parent="." unique_id=1915062252]
+
+[node name="TextureRect" type="TextureRect" parent="Node2D" unique_id=1867256639]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Background" type="TextureRect" parent="." unique_id=630524100]
+offset_right = 1920.0
+offset_bottom = 1080.0
+texture = ExtResource("3_6e114")
+
+[node name="DialogueManager" type="Node" parent="." unique_id=286591815 node_paths=PackedStringArray("dialogue_box", "speaker_label", "text_label", "continue_hint")]
+script = ExtResource("1_5jffm")
+dialogue_box = NodePath("../DialogueBox")
+speaker_label = NodePath("../DialogueBox/SpeakerLabel")
+text_label = NodePath("../DialogueBox/TextLabel")
+continue_hint = NodePath("../DialogueBox/ContinueHint")
+
+[node name="DialogueBox" type="Control" parent="." unique_id=354816007]
+layout_mode = 3
+anchors_preset = 0
+offset_top = 87.0
+offset_right = 1920.0
+offset_bottom = 302.0
+
+[node name="DialogueBG" type="ColorRect" parent="DialogueBox" unique_id=477940360]
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 215.0
+color = Color(0, 0, 0, 0.6666667)
+
+[node name="SpeakerLabel" type="Label" parent="DialogueBox" unique_id=821675117]
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 90.0
+theme_override_fonts/font = ExtResource("4_1wrf5")
+theme_override_font_sizes/font_size = 50
+vertical_alignment = 1
+
+[node name="TextLabel" type="RichTextLabel" parent="DialogueBox" unique_id=1613254814]
+layout_mode = 0
+offset_top = 90.0
+offset_right = 1920.0
+offset_bottom = 215.0
+theme_override_fonts/normal_font = ExtResource("4_1wrf5")
+theme_override_font_sizes/normal_font_size = 40
+
+[node name="ContinueHint" type="Label" parent="DialogueBox" unique_id=1049670766]
+layout_mode = 0
+offset_left = 1770.0
+offset_top = 390.0
+offset_right = 1920.0
+offset_bottom = 460.0
+
+[node name="PlashkaLayer" type="CanvasLayer" parent="." unique_id=1383526703]
+layer = 50
+
+[node name="PlashkaRect" type="ColorRect" parent="PlashkaLayer" unique_id=1535370873]
+offset_right = 1920.0
+offset_bottom = 1080.0
+color = Color(0, 0, 0, 0)
+
+[node name="PlashkaLabel" type="Label" parent="PlashkaLayer" unique_id=281015772]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("4_1wrf5")
+theme_override_font_sizes/font_size = 80
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CharacterPortrait1" type="TextureRect" parent="." unique_id=41606796]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="CharacterPortrait2" type="TextureRect" parent="." unique_id=1200511559]
+offset_right = 40.0
+offset_bottom = 40.0

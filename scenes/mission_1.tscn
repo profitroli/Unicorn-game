@@ -7,9 +7,8 @@ script = ExtResource("1_besfq")
 
 [node name="FadeLayer" type="CanvasLayer" parent="." unique_id=667037625]
 layer = 100
+visible = false
 
-[node name="WhiteScreen" type="ColorRect" parent="FadeLayer" unique_id=2009285412]
-offset_right = 1920.0
-offset_bottom = 1080.0
-
-[node name="Node2D" type="Node2D" parent="." unique_id=1426229838]
+[node name="TextureRect" type="TextureRect" parent="FadeLayer" unique_id=82767682]
+offset_right = 40.0
+offset_bottom = 40.0
