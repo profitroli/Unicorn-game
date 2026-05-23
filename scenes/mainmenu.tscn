@@ -20,6 +20,16 @@
 [ext_resource type="Texture2D" uid="uid://cvu1l1hy0s0hw" path="res://assets/icon/удалить 1.png" id="17_xwyuh"]
 [ext_resource type="Texture2D" uid="uid://dqa8sjnw2s1fp" path="res://assets/ui/Group 31.png" id="19_c6huh"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xwyuh"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_c6huh"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hn6ym"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gr43c"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5diu1"]
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kait0"]
 content_margin_left = 0.0
 content_margin_top = 39.0
@@ -89,6 +99,9 @@ offset_left = 1072.0
 offset_top = 365.0
 offset_right = 1645.0
 offset_bottom = 489.0
+theme_override_colors/icon_pressed_color = Color(0.99638397, 0.4909454, 1, 0.92941177)
+theme_override_colors/icon_hover_color = Color(0.99607843, 0.49019608, 1, 0.92941177)
+theme_override_styles/hover = SubResource("StyleBoxEmpty_xwyuh")
 icon = ExtResource("2_7yvfd")
 flat = true
 
@@ -98,6 +111,9 @@ offset_left = 1088.0
 offset_top = 490.0
 offset_right = 1618.0
 offset_bottom = 614.0
+theme_override_colors/icon_pressed_color = Color(0.99607843, 0.49019608, 1, 0.92941177)
+theme_override_colors/icon_hover_color = Color(0.99607843, 0.49019608, 1, 0.92941177)
+theme_override_styles/hover = SubResource("StyleBoxEmpty_c6huh")
 icon = ExtResource("3_dfy5j")
 flat = true
 
@@ -107,6 +123,9 @@ offset_left = 1088.0
 offset_top = 620.0
 offset_right = 1618.0
 offset_bottom = 744.0
+theme_override_colors/icon_pressed_color = Color(0.99607843, 0.49019608, 1, 0.92941177)
+theme_override_colors/icon_hover_color = Color(0.99607843, 0.49019608, 1, 0.92941177)
+theme_override_styles/hover = SubResource("StyleBoxEmpty_hn6ym")
 icon = ExtResource("4_85riq")
 flat = true
 
@@ -116,6 +135,9 @@ offset_left = 1088.0
 offset_top = 750.0
 offset_right = 1618.0
 offset_bottom = 874.0
+theme_override_colors/icon_pressed_color = Color(0.99607843, 0.49019608, 1, 0.92941177)
+theme_override_colors/icon_hover_color = Color(0.99607843, 0.49019608, 1, 0.92941177)
+theme_override_styles/hover = SubResource("StyleBoxEmpty_gr43c")
 icon = ExtResource("5_wf3n4")
 flat = true
 
@@ -125,6 +147,9 @@ offset_left = 275.0
 offset_top = 874.0
 offset_right = 840.0
 offset_bottom = 987.0
+theme_override_colors/icon_pressed_color = Color(0.99607843, 0.49019608, 1, 0.92941177)
+theme_override_colors/icon_hover_color = Color(0.99607843, 0.49019608, 1, 0.92941177)
+theme_override_styles/hover = SubResource("StyleBoxFlat_5diu1")
 icon = ExtResource("7_h73c4")
 flat = true
 
