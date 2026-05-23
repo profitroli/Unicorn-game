@@ -53,20 +53,22 @@ func _input(event: InputEvent) -> void:
 
 func _begin_fade_in() -> void:
 	_phase = Phase.FADE_IN
-	white_screen.visible = true
-	white_screen.modulate.a = 1.0
 	
-	# Запускаем диалог сразу, но с задержкой в 0.1 секунды
-	# чтобы дать время на инициализацию узлов
+	# Гарантируем, что на старте экран белый и непрозрачный
+	white_screen.color = Color(1, 1, 1, 1.0)
+	white_screen.modulate.a = 1.0
+	white_screen.visible = true
+	
+	# Запускаем подготовку диалога, пока идет анимация появления
 	call_deferred("_start_prologue_dialogue_deferred")
 	
+	# Плавное появление из белого в прозрачный за 1.5 секунды
 	var tw := create_tween()
 	tw.tween_property(white_screen, "modulate:a", 0.0, 1.5)
 	await tw.finished
 	white_screen.visible = false
 
 func _start_prologue_dialogue_deferred() -> void:
-	# Небольшая задержка для плавности
 	await get_tree().create_timer(0.1).timeout
 	_start_prologue_dialogue()
 
@@ -74,7 +76,6 @@ func _start_prologue_dialogue() -> void:
 	_phase = Phase.DIALOGUE
 	
 	if dm and dm.has_method("start"):
-		# ТЕПЕРЬ ДЛЯ КАЖДОЙ РЕПЛИКИ МОЖНО ЗАДАТЬ ДО 2-Х ПЕРСОНАЖЕЙ ОДНОВРЕМЕННО
 		var dialogue_data: Array[Dictionary] = [
 			{
 				"speaker": "ПРОХОЖИЙ 1", 
@@ -107,7 +108,7 @@ func _start_prologue_dialogue() -> void:
 				"pos_1": Vector2(150, 500),
 				"portrait_2": preload("res://assets/pers/Group 126.png"),
 				"pos_2": Vector2(0, 0)
-			},	
+			},    
 			{
 				"speaker": "МУЖЧИНА В КОСТЮМЕ", 
 				"text": "Наверное, флешмоб. Креативно.",
@@ -115,7 +116,7 @@ func _start_prologue_dialogue() -> void:
 				"pos_1": Vector2(150, 500),
 				"portrait_2": preload("res://assets/pers/Group 127.png"),
 				"pos_2": Vector2(0, 0)
-			},	
+			},    
 			{
 				"speaker": "ЕДИНОРОГ", 
 				"text": "Где деревья? Почему всё из камня? И зачем эти существа светят мне в глаза своими маленькими пластинками?", 
@@ -136,7 +137,6 @@ func _start_prologue_dialogue() -> void:
 		
 		dm.start(dialogue_data)
 
-# Управляем отображением обеих картинок
 func _on_dialogue_line_changed(line_data: Dictionary) -> void:
 	# 1. Обрабатываем первый портрет
 	if character_portrait_1:
@@ -184,10 +184,5 @@ func _begin_fade_out() -> void:
 	_phase = Phase.FADE_OUT
 	white_screen.visible = true
 	white_screen.modulate.a = 0.0
-	
-	var tw := create_tween()
-	tw.tween_property(plashka_label, "modulate:a", 0.0, 0.5)
-	tw.parallel().tween_property(white_screen, "modulate:a", 1.0, 1.0)
-	await tw.finished
 	
 	get_tree().change_scene_to_file("res://scenes/mission_1.tscn")

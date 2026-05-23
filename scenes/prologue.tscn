@@ -12,7 +12,6 @@ university_background_texture = ExtResource("2_6e114")
 
 [node name="FadeLayer" type="CanvasLayer" parent="." unique_id=577671926]
 layer = 100
-visible = false
 
 [node name="WhiteScreen" type="ColorRect" parent="FadeLayer" unique_id=611634114]
 offset_right = 1920.0

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b82meiotj0rdg"
-path="res://.godot/imported/Тело 1.png-eb74cc3eb05a9caee2a2226b6283c960.ctex"
+uid="uid://cn7stnlrsltyv"
+path="res://.godot/imported/Group 129(7).png-e547a504dc1e32a6b75ae8f5db5abc02.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/castom/Тело 1.png"
-dest_files=["res://.godot/imported/Тело 1.png-eb74cc3eb05a9caee2a2226b6283c960.ctex"]
+source_file="res://assets/group/Group 129(7).png"
+dest_files=["res://.godot/imported/Group 129(7).png-e547a504dc1e32a6b75ae8f5db5abc02.ctex"]
 
 [params]
 

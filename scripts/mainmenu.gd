@@ -2,55 +2,50 @@ extends Control
 
 const SLOT_TEXTURE = preload("res://assets/icon/Group 113.png")
 
-@onready var saves_list = $TextureRect/Controlsave/SavesList 
+@onready var saves_list = $TextureRect/Controlsave/SavesList
 var save_counter = 1
 
 func _ready():
-	$TextureRect/PlayButton.pressed.connect(_on_play_pressed) 
-	$TextureRect/SaveButton.pressed.connect(_on_save_pressed) 
-	$TextureRect/CustomizationButton.pressed.connect(_on_customization_pressed) 
+	$TextureRect/PlayButton.pressed.connect(_on_play_pressed)
+	$TextureRect/SaveButton.pressed.connect(_on_save_pressed)
+	$TextureRect/CustomizationButton.pressed.connect(_on_customization_pressed)
 	$TextureRect/SettingsButton.pressed.connect(_on_settings_pressed)
 	$TextureRect/ExitButton.pressed.connect(_on_exit_pressed)
 	
-	$TextureRect/Controlvixod/yes.pressed.connect(_on_confirm_exit) 
-	$TextureRect/Controlvixod/no.pressed.connect(_on_cancel_exit) 
+	$TextureRect/Controlvixod/yes.pressed.connect(_on_confirm_exit)
+	$TextureRect/Controlvixod/no.pressed.connect(_on_cancel_exit)
 	$TextureRect/Controlvixod/krest.pressed.connect(_on_cancel_exit)
 	
 	$TextureRect/Controlset/vixod.pressed.connect(_on_close_settings_pressed)
-	
 	$TextureRect/Controlsave/vixod.pressed.connect(_on_close_save_pressed)
 	
 	$TextureRect/Controlsave/add.pressed.connect(_on_add_save_button_pressed)
 	$TextureRect/Controlsave/delete.pressed.connect(_on_delete_save_button_pressed)
 	
-	$TextureRect/Controlvixod.visible = false 
+	$TextureRect/Controlvixod.visible = false
 	$TextureRect/Controlset.visible = false
 	$TextureRect/Controlsave.visible = false
 	
 	var custom_font = load("res://assets/text/PixelifySans-VariableFont_wght.ttf")
-
 	var fps_button = $"TextureRect/Controlset/FPSButton"
-
 	var popup = fps_button.get_popup()
 
 	var new_style = StyleBoxFlat.new()
-	new_style.bg_color = Color("d0cde6") 
-	new_style.set_corner_radius_all(8)  
-
+	new_style.bg_color = Color("d0cde6")
+	new_style.set_corner_radius_all(8)
 	new_style.content_margin_left = 15
 	new_style.content_margin_right = 15
 	new_style.content_margin_top = 10
 	new_style.content_margin_bottom = 10
 	
 	popup.add_theme_stylebox_override("panel", new_style)
-
 	if custom_font:
 		popup.add_theme_font_override("font", custom_font)
 	popup.add_theme_font_size_override("font_size", 35)
-
-	popup.add_theme_color_override("font_color", Color.BLACK)        
+	popup.add_theme_color_override("font_color", Color.BLACK)       
 	popup.add_theme_color_override("font_hover_color", Color.BLACK)
 
+# --- ВСЕ ОСТАЛЬНЫЕ ФУНКЦИИ ОСТАЮТСЯ БЕЗ ИЗМЕНЕНИЙ ---
 func _on_play_pressed():
 	get_tree().change_scene_to_file("res://scenes/intro.tscn")
 
@@ -106,19 +101,14 @@ func _on_add_save_button_pressed():
 	
 	new_slot.add_child(name_label)
 	new_slot.add_child(date_label)
-
 	saves_list.add_child(new_slot)
-	
 	save_counter += 1
 
 func _on_delete_save_button_pressed():
 	if saves_list.get_child_count() == 0:
 		return
-
 	var last_slot = saves_list.get_child(saves_list.get_child_count() - 1)
-
 	last_slot.queue_free()
-
 	if save_counter > 1:
 		save_counter -= 1
 

@@ -1,0 +1,49 @@
+[gd_scene format=3 uid="uid://dgavqkeapceuh"]
+
+[ext_resource type="Texture2D" uid="uid://bh6tmqqqlj2d5" path="res://assets/group/Group 129.png" id="1_ps3yi"]
+
+[node name="UnicornDisplay" type="Control" unique_id=1814234202]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1028.0
+offset_bottom = 791.0
+
+[node name="UnicornContainer" type="TextureRect" parent="." unique_id=486504088]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HvostLayer" type="TextureRect" parent="UnicornContainer" unique_id=1807799439]
+visible = false
+layout_mode = 0
+offset_right = 1028.0
+offset_bottom = 791.0
+expand_mode = 1
+
+[node name="GrivaLayer" type="TextureRect" parent="UnicornContainer" unique_id=957430055]
+visible = false
+layout_mode = 0
+offset_right = 1028.0
+offset_bottom = 791.0
+expand_mode = 1
+
+[node name="BaseUnicorn" type="TextureRect" parent="UnicornContainer" unique_id=1290230953]
+layout_mode = 0
+offset_right = 1028.0
+offset_bottom = 791.0
+texture = ExtResource("1_ps3yi")
+expand_mode = 1
+
+[node name="RogLayer" type="TextureRect" parent="UnicornContainer" unique_id=753687407]
+visible = false
+layout_mode = 0
+offset_right = 1028.0
+offset_bottom = 791.0
+expand_mode = 1
+
+[node name="AksLayer" type="TextureRect" parent="UnicornContainer" unique_id=1765362898]
+visible = false
+layout_mode = 0
+offset_right = 1028.0
+offset_bottom = 791.0
+expand_mode = 1

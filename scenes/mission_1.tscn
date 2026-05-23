@@ -1,14 +1,20 @@
 [gd_scene format=3 uid="uid://bu8yvhwaxrolx"]
 
 [ext_resource type="Script" uid="uid://dcvqvhn5gj4fd" path="res://scripts/mission_1.gd" id="1_besfq"]
+[ext_resource type="Texture2D" uid="uid://ckrvpxodo50bp" path="res://assets/foto/Max_a_мне_нужен_вид_в_свет 1.png" id="2_besfq"]
 
 [node name="Mission1" type="Node2D" unique_id=755943032]
 script = ExtResource("1_besfq")
 
+[node name="TextureRect" type="TextureRect" parent="." unique_id=82767682]
+offset_right = 1920.0
+offset_bottom = 1080.0
+texture = ExtResource("2_besfq")
+
 [node name="FadeLayer" type="CanvasLayer" parent="." unique_id=667037625]
 layer = 100
-visible = false
 
-[node name="TextureRect" type="TextureRect" parent="FadeLayer" unique_id=82767682]
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="BlackScreen" type="ColorRect" parent="FadeLayer" unique_id=455412137]
+offset_right = 1920.0
+offset_bottom = 1080.0
+color = Color(0, 0, 0, 1)
