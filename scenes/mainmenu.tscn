@@ -78,6 +78,10 @@ bg_color = Color(0.8156863, 0.8039216, 0.9019608, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6643n"]
 bg_color = Color(0.8156863, 0.8039216, 0.9019608, 1)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c50wd"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kcrt3"]
+
 [node name="Mainmenu" type="Node2D" unique_id=1966524846]
 
 [node name="Control" type="Control" parent="." unique_id=436704068]
@@ -187,7 +191,9 @@ offset_left = 1281.0
 offset_top = 387.0
 offset_right = 1332.0
 offset_bottom = 436.0
-flat = true
+theme_type_variation = &"FlatButton"
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0)
+theme_override_colors/icon_pressed_color = Color(0.43529412, 0.43529412, 0.43529412, 0.75686276)
 
 [node name="Controlset" type="Control" parent="Control/TextureRect" unique_id=1331161553]
 visible = false
@@ -207,7 +213,8 @@ offset_left = 1582.0
 offset_top = 168.0
 offset_right = 1649.0
 offset_bottom = 236.0
-flat = true
+theme_type_variation = &"FlatButton"
+theme_override_colors/icon_pressed_color = Color(0.43529412, 0.43529412, 0.43529412, 0.75686276)
 
 [node name="VolumeSlider" type="HSlider" parent="Control/TextureRect/Controlset" unique_id=1032199300]
 layout_mode = 0
@@ -286,7 +293,8 @@ offset_left = 1580.0
 offset_top = 168.0
 offset_right = 1649.0
 offset_bottom = 235.0
-flat = true
+theme_type_variation = &"FlatButton"
+theme_override_colors/icon_pressed_color = Color(0.43529412, 0.43529412, 0.43529412, 0.75686276)
 
 [node name="add" type="Button" parent="Control/TextureRect/Controlsave" unique_id=82935576]
 layout_mode = 0
@@ -294,6 +302,9 @@ offset_left = 462.0
 offset_top = 266.0
 offset_right = 950.0
 offset_bottom = 374.0
+theme_override_colors/icon_pressed_color = Color(0.99607843, 0.49019608, 1, 0.92941177)
+theme_override_colors/icon_hover_color = Color(0.99607843, 0.49019608, 1, 0.92941177)
+theme_override_styles/hover = SubResource("StyleBoxFlat_c50wd")
 icon = ExtResource("16_prb5i")
 flat = true
 
@@ -303,6 +314,9 @@ offset_left = 1022.0
 offset_top = 266.0
 offset_right = 1498.0
 offset_bottom = 378.0
+theme_override_colors/icon_pressed_color = Color(0.99607843, 0.49019608, 1, 0.92941177)
+theme_override_colors/icon_hover_color = Color(0.99607843, 0.49019608, 1, 0.92941177)
+theme_override_styles/hover = SubResource("StyleBoxFlat_kcrt3")
 icon = ExtResource("17_xwyuh")
 flat = true
 

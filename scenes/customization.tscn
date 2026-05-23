@@ -27,6 +27,16 @@
 [ext_resource type="Texture2D" uid="uid://ci15f3g1y7l61" path="res://assets/icon/image 4.png" id="24_ewwti"]
 [ext_resource type="Texture2D" uid="uid://brqdf4lxr6ato" path="res://assets/icon/Group 108.png" id="26_bd3ap"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ewwti"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bd3ap"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j1g68"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_60j1w"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a1myt"]
+
 [node name="Customization" type="Node2D" unique_id=2095228116]
 
 [node name="Node2D" type="Node2D" parent="." unique_id=67980788]
@@ -61,21 +71,33 @@ offset_bottom = 227.0
 
 [node name="GrivaButton" type="Button" parent="Node2D/Control/TextureRect/TabContainer" unique_id=190359933]
 layout_mode = 2
+theme_override_colors/icon_pressed_color = Color(0.5529412, 0.45882353, 0.9843137, 0.92941177)
+theme_override_colors/icon_hover_color = Color(0.5529412, 0.45882353, 0.9843137, 0.92941177)
+theme_override_styles/hover = SubResource("StyleBoxFlat_ewwti")
 icon = ExtResource("4_kx870")
 flat = true
 
 [node name="HvostButton" type="Button" parent="Node2D/Control/TextureRect/TabContainer" unique_id=1778890685]
 layout_mode = 2
+theme_override_colors/icon_pressed_color = Color(0.5529412, 0.45882353, 0.9843137, 0.92941177)
+theme_override_colors/icon_hover_color = Color(0.5529412, 0.45882353, 0.9843137, 0.92941177)
+theme_override_styles/hover = SubResource("StyleBoxFlat_bd3ap")
 icon = ExtResource("5_acx06")
 flat = true
 
 [node name="RogButton" type="Button" parent="Node2D/Control/TextureRect/TabContainer" unique_id=58981887]
 layout_mode = 2
+theme_override_colors/icon_pressed_color = Color(0.5529412, 0.45882353, 0.9843137, 0.92941177)
+theme_override_colors/icon_hover_color = Color(0.5529412, 0.45882353, 0.9843137, 0.92941177)
+theme_override_styles/hover = SubResource("StyleBoxFlat_j1g68")
 icon = ExtResource("6_ppfrd")
 flat = true
 
 [node name="TeloButton" type="Button" parent="Node2D/Control/TextureRect/TabContainer" unique_id=520896751]
 layout_mode = 2
+theme_override_colors/icon_pressed_color = Color(0.5529412, 0.45882353, 0.9843137, 0.92941177)
+theme_override_colors/icon_hover_color = Color(0.5529412, 0.45882353, 0.9843137, 0.92941177)
+theme_override_styles/hover = SubResource("StyleBoxFlat_60j1w")
 icon = ExtResource("7_vbge7")
 flat = true
 
@@ -94,11 +116,10 @@ offset_right = 516.0
 offset_bottom = 541.0
 
 [node name="1" type="Button" parent="Node2D/Control/TextureRect/ContentPanel/GrivaPanel" unique_id=860296520]
-layout_mode = 0
-offset_left = 5.0
-offset_top = 3.0
-offset_right = 249.0
-offset_bottom = 249.0
+layout_mode = 1
+offset_right = 252.0
+offset_bottom = 254.0
+theme_override_colors/icon_pressed_color = Color(0.43519226, 0.4351923, 0.43519217, 0.75686276)
 icon = ExtResource("7_ppfrd")
 flat = true
 
@@ -109,6 +130,7 @@ offset_top = -0.99999905
 offset_right = 565.0
 offset_bottom = 271.0
 scale = Vector2(0.8517562, 0.9641206)
+theme_override_colors/icon_pressed_color = Color(0.43529412, 0.43529412, 0.43529412, 0.75686276)
 icon = ExtResource("8_d0b0o")
 flat = true
 
@@ -118,6 +140,7 @@ offset_left = 5.0
 offset_top = 270.0
 offset_right = 249.0
 offset_bottom = 516.0
+theme_override_colors/icon_pressed_color = Color(0.43529412, 0.43529412, 0.43529412, 0.75686276)
 icon = ExtResource("9_smh0u")
 flat = true
 
@@ -127,6 +150,7 @@ offset_left = 262.0
 offset_top = 270.0
 offset_right = 506.0
 offset_bottom = 516.0
+theme_override_colors/icon_pressed_color = Color(0.43529412, 0.43529412, 0.43529412, 0.75686276)
 icon = ExtResource("10_5esjd")
 flat = true
 
@@ -145,6 +169,7 @@ offset_top = -20.000002
 offset_right = 260.0
 offset_bottom = 306.0
 scale = Vector2(0.95598626, 0.86951447)
+theme_override_colors/icon_pressed_color = Color(0.43529412, 0.43529412, 0.43529412, 0.75686276)
 icon = ExtResource("11_8gnxe")
 flat = true
 
@@ -154,6 +179,7 @@ offset_left = 261.0
 offset_top = -9.0
 offset_right = 513.0
 offset_bottom = 262.0
+theme_override_colors/icon_pressed_color = Color(0.43529412, 0.43529412, 0.43529412, 0.75686276)
 icon = ExtResource("12_uocac")
 flat = true
 
@@ -163,6 +189,7 @@ offset_left = 5.0
 offset_top = 270.0
 offset_right = 249.0
 offset_bottom = 516.0
+theme_override_colors/icon_pressed_color = Color(0.43529412, 0.43529412, 0.43529412, 0.75686276)
 icon = ExtResource("13_ewwti")
 flat = true
 
@@ -173,6 +200,7 @@ offset_top = 270.0
 offset_right = 506.0
 offset_bottom = 516.0
 scale = Vector2(0.98613554, 0.97385967)
+theme_override_colors/icon_pressed_color = Color(0.43529412, 0.43529412, 0.43529412, 0.75686276)
 icon = ExtResource("14_bd3ap")
 flat = true
 
@@ -190,6 +218,7 @@ offset_left = 5.0
 offset_top = 3.0
 offset_right = 249.0
 offset_bottom = 249.0
+theme_override_colors/icon_pressed_color = Color(0.43529412, 0.43529412, 0.43529412, 0.75686276)
 icon = ExtResource("15_j1g68")
 flat = true
 
@@ -199,6 +228,7 @@ offset_left = 262.0
 offset_top = 3.0
 offset_right = 506.0
 offset_bottom = 249.0
+theme_override_colors/icon_pressed_color = Color(0.43529412, 0.43529412, 0.43529412, 0.75686276)
 icon = ExtResource("16_60j1w")
 flat = true
 
@@ -208,6 +238,7 @@ offset_left = 5.0
 offset_top = 270.0
 offset_right = 249.0
 offset_bottom = 516.0
+theme_override_colors/icon_pressed_color = Color(0.43529412, 0.43529412, 0.43529412, 0.75686276)
 icon = ExtResource("17_a1myt")
 flat = true
 
@@ -217,6 +248,7 @@ offset_left = 262.0
 offset_top = 270.0
 offset_right = 506.0
 offset_bottom = 516.0
+theme_override_colors/icon_pressed_color = Color(0.43529412, 0.43529412, 0.43529412, 0.75686276)
 icon = ExtResource("18_m6itl")
 flat = true
 
@@ -234,6 +266,7 @@ offset_left = -5.0
 offset_top = 3.0
 offset_right = 250.0
 offset_bottom = 249.0
+theme_override_colors/icon_pressed_color = Color(0.43529412, 0.43529412, 0.43529412, 0.75686276)
 icon = ExtResource("19_6y2rn")
 flat = true
 
@@ -243,6 +276,7 @@ offset_left = 262.0
 offset_top = 3.0
 offset_right = 506.0
 offset_bottom = 249.0
+theme_override_colors/icon_pressed_color = Color(0.43529412, 0.43529412, 0.43529412, 0.75686276)
 icon = ExtResource("20_60iw8")
 flat = true
 
@@ -252,6 +286,7 @@ offset_left = 11.0
 offset_top = 245.0
 offset_right = 255.0
 offset_bottom = 457.0
+theme_override_colors/icon_pressed_color = Color(0.43529412, 0.43529412, 0.43529412, 0.75686276)
 icon = ExtResource("21_tiq0o")
 flat = true
 
@@ -261,6 +296,7 @@ offset_left = 262.0
 offset_top = 270.0
 offset_right = 506.0
 offset_bottom = 463.0
+theme_override_colors/icon_pressed_color = Color(0.43529412, 0.43529412, 0.43529412, 0.75686276)
 icon = ExtResource("22_ht6mq")
 flat = true
 
@@ -280,6 +316,8 @@ offset_top = 29.0
 offset_right = 1804.8151
 offset_bottom = 173.40247
 scale = Vector2(1.0905684, 0.83700746)
+theme_override_colors/icon_pressed_color = Color(0.92941177, 0.32156864, 0.21960784, 1)
+theme_override_colors/icon_hover_color = Color(0.92941177, 0.32156864, 0.21960784, 1)
 icon = ExtResource("3_0vfys")
 flat = true
 
@@ -374,5 +412,8 @@ offset_left = 127.0
 offset_top = 941.0
 offset_right = 747.0
 offset_bottom = 1047.0
+theme_override_colors/icon_pressed_color = Color(0.5529412, 0.45882353, 0.9843137, 0.92941177)
+theme_override_colors/icon_hover_color = Color(0.5529412, 0.45882353, 0.9843137, 0.92941177)
+theme_override_styles/hover = SubResource("StyleBoxFlat_a1myt")
 icon = ExtResource("26_bd3ap")
 flat = true
