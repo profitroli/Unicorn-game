@@ -14,6 +14,7 @@ script = ExtResource("1_3etti")
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
+mouse_filter = 2
 
 [node name="HvostLayer" type="TextureRect" parent="UnicornContainer" unique_id=1807799439]
 visible = false
