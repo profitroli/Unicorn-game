@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://dgavqkeapceuh"]
 
+[ext_resource type="Script" uid="uid://dbtup637k3dni" path="res://scripts/unicorn_display.gd" id="1_3etti"]
 [ext_resource type="Texture2D" uid="uid://bh6tmqqqlj2d5" path="res://assets/group/Group 129.png" id="1_ps3yi"]
 
 [node name="UnicornDisplay" type="Control" unique_id=1814234202]
@@ -7,6 +8,7 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 1028.0
 offset_bottom = 791.0
+script = ExtResource("1_3etti")
 
 [node name="UnicornContainer" type="TextureRect" parent="." unique_id=486504088]
 layout_mode = 0

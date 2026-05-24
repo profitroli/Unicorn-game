@@ -1,110 +1,71 @@
 extends Control
+class_name UnicornDisplay
 
-var base_unicorn: TextureRect
-var griva_layer: TextureRect
-var hvost_layer: TextureRect
-var rog_layer: TextureRect
-var aks_layer: TextureRect
+# ─── Ссылки на слои (назначаются при инициализации) ───────────────────────────
+# Структура узлов в unicorn_display.tscn:
+# UnicornDisplay (Control)  ← этот скрипт
+#   └── UnicornContainer (TextureRect)
+#         ├── HvostLayer   (TextureRect)
+#         ├── GrivaLayer   (TextureRect)
+#         ├── BaseUnicorn  (TextureRect) ← тело единорога
+#         ├── RogLayer     (TextureRect)
+#         └── AksLayer     (TextureRect)
 
-func _ready():
-	# Создаём всё программно
-	_setup_unicorn_layers()
-	# Подписываемся на сигнал обновления
-	if has_node("/root/GlobalData"):
-		get_node("/root/GlobalData").unicorn_updated.connect(_on_unicorn_updated)
-	# Загружаем текущие данные
-	load_unicorn_data()
+@onready var _hvost_layer:    TextureRect = $UnicornContainer/HvostLayer
+@onready var _griva_layer:    TextureRect = $UnicornContainer/GrivaLayer
+@onready var _base_unicorn:   TextureRect = $UnicornContainer/BaseUnicorn
+@onready var _rog_layer:      TextureRect = $UnicornContainer/RogLayer
+@onready var _aks_layer:      TextureRect = $UnicornContainer/AksLayer
 
-func _setup_unicorn_layers():
-	# Очищаем старые дети, если есть
-	for child in get_children():
-		if child is TextureRect:
-			child.queue_free()
-	
-	# Создаём контейнер
-	var container = TextureRect.new()
-	container.name = "UnicornContainer"
-	container.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	container.stretch_mode = TextureRect.STRETCH_SCALE
-	container.size = Vector2(1028, 791)
-	add_child(container)
-	
-	# 1. Хвост (будет ЗА конём)
-	hvost_layer = TextureRect.new()
-	hvost_layer.name = "HvostLayer"
-	hvost_layer.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	hvost_layer.stretch_mode = TextureRect.STRETCH_SCALE
-	hvost_layer.size = Vector2(1028, 791)
-	container.add_child(hvost_layer)
-	
-	# 2. Грива (будет ЗА конём)
-	griva_layer = TextureRect.new()
-	griva_layer.name = "GrivaLayer"
-	griva_layer.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	griva_layer.stretch_mode = TextureRect.STRETCH_SCALE
-	griva_layer.size = Vector2(1028, 791)
-	container.add_child(griva_layer)
-	
-	# 3. Базовый конь
-	base_unicorn = TextureRect.new()
-	base_unicorn.name = "UnicornBase"
-	base_unicorn.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	base_unicorn.stretch_mode = TextureRect.STRETCH_SCALE
-	base_unicorn.size = Vector2(1028, 791)
-	# Загрузи сюда свою базовую картинку коня!
-	base_unicorn.texture = load("res://assets/group/Group 129.png")
-	container.add_child(base_unicorn)
-	
-	# 4. Рог (ПЕРЕД конём)
-	rog_layer = TextureRect.new()
-	rog_layer.name = "RogLayer"
-	rog_layer.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	rog_layer.stretch_mode = TextureRect.STRETCH_SCALE
-	rog_layer.size = Vector2(1028, 791)
-	container.add_child(rog_layer)
-	
-	# 5. Аксессуары (ПЕРЕД конём)
-	aks_layer = TextureRect.new()
-	aks_layer.name = "AksLayer"
-	aks_layer.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	aks_layer.stretch_mode = TextureRect.STRETCH_SCALE
-	aks_layer.size = Vector2(1028, 791)
-	container.add_child(aks_layer)
-	
-	print("Слои созданы!")
 
-func load_unicorn_data():
+func _ready() -> void:
+	# ─── БАГ #1 ИСПРАВЛЕН: сигнал теперь существует в GlobalData ─────────────
 	if not has_node("/root/GlobalData"):
-		print("НЕТ GLOBALDATA!")
+		push_error("[UnicornDisplay] GlobalData не зарегистрирован в Autoload!")
 		return
-	
-	var global = get_node("/root/GlobalData")
-	
-	print("ЗАГРУЖАЮ данные:")
-	print("Грива путь: ", global.temp_griva_path)
-	print("Хвост путь: ", global.temp_hvost_path)
-	
-	# Загружаем текстуры
-	_set_layer_texture(griva_layer, global.temp_griva_path)
-	_set_layer_texture(hvost_layer, global.temp_hvost_path)
-	_set_layer_texture(rog_layer, global.temp_rog_path)
-	_set_layer_texture(aks_layer, global.temp_aks_path)
-	
-	# Применяем цвета
-	griva_layer.modulate = global.color_griva
-	hvost_layer.modulate = global.color_hvost
-	rog_layer.modulate = global.color_rog
-	aks_layer.modulate = global.color_aks
 
-func _set_layer_texture(layer: TextureRect, path: String):
-	if layer:
-		if path and path != "" and ResourceLoader.exists(path):
-			layer.texture = load(path)
-			print("✓ Загружено: ", path)
-		else:
-			layer.texture = null
-			print("✗ Не загружено: ", path)
+	var g: GlobalDataManager = get_node("/root/GlobalData")
 
-func _on_unicorn_updated():
-	print("Получен сигнал обновления!")
-	load_unicorn_data()
+	# Подписываемся на обновления кастомизации
+	g.unicorn_updated.connect(_on_unicorn_updated)
+
+	# Применяем текущие данные сразу при загрузке сцены
+	_apply_from_global()
+
+
+## Вызывается сигналом unicorn_updated из GlobalData.
+func _on_unicorn_updated() -> void:
+	_apply_from_global()
+
+
+## Читает данные из GlobalData и обновляет все слои единорога.
+func _apply_from_global() -> void:
+	if not has_node("/root/GlobalData"):
+		return
+
+	var g: GlobalDataManager = get_node("/root/GlobalData")
+
+	_set_texture(_griva_layer, g.temp_griva_path)
+	_set_texture(_hvost_layer, g.temp_hvost_path)
+	_set_texture(_rog_layer,   g.temp_rog_path)
+	_set_texture(_aks_layer,   g.temp_aks_path)
+
+	_griva_layer.modulate = g.color_griva
+	_hvost_layer.modulate = g.color_hvost
+	_rog_layer.modulate   = g.color_rog
+	_aks_layer.modulate   = g.color_aks
+
+	# Показываем слой только если для него задана текстура
+	_hvost_layer.visible = (_hvost_layer.texture != null)
+	_griva_layer.visible = (_griva_layer.texture != null)
+	_rog_layer.visible   = (_rog_layer.texture   != null)
+	_aks_layer.visible   = (_aks_layer.texture   != null)
+
+
+func _set_texture(layer: TextureRect, path: String) -> void:
+	if not is_instance_valid(layer):
+		return
+	if path != "" and ResourceLoader.exists(path):
+		layer.texture = load(path)
+	else:
+		layer.texture = null

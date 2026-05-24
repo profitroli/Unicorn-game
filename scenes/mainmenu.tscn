@@ -19,6 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://clxsx6o3hhios" path="res://assets/icon/добавить 1.png" id="16_prb5i"]
 [ext_resource type="Texture2D" uid="uid://cvu1l1hy0s0hw" path="res://assets/icon/удалить 1.png" id="17_xwyuh"]
 [ext_resource type="Texture2D" uid="uid://dqa8sjnw2s1fp" path="res://assets/ui/Group 31.png" id="19_c6huh"]
+[ext_resource type="PackedScene" uid="uid://dgavqkeapceuh" path="res://scenes/unicorn_display.tscn" id="20_c6huh"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xwyuh"]
 
@@ -96,6 +97,14 @@ layout_mode = 0
 offset_right = 1920.0
 offset_bottom = 1080.0
 texture = ExtResource("2_85riq")
+
+[node name="UnicornDisplay" parent="Control/TextureRect" unique_id=1814234202 instance=ExtResource("20_c6huh")]
+layout_mode = 0
+offset_left = 90.0
+offset_top = 280.0
+offset_right = 790.0
+offset_bottom = 820.0
+scale = Vector2(0.75, 0.75)
 
 [node name="PlayButton" type="Button" parent="Control/TextureRect" unique_id=1760332660]
 layout_mode = 0
