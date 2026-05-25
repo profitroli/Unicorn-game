@@ -1,15 +1,13 @@
 extends Control
 class_name UnicornDisplay
 
-# ─── Узлы ─────────────────────────────────────────────────────────────────────
 @onready var _hvost_layer:  TextureRect = $UnicornContainer/HvostLayer
 @onready var _griva_layer:  TextureRect = $UnicornContainer/GrivaLayer
 @onready var _base_unicorn: TextureRect = $UnicornContainer/BaseUnicorn
 @onready var _rog_layer:    TextureRect = $UnicornContainer/RogLayer
 @onready var _aks_layer:    TextureRect = $UnicornContainer/AksLayer
 
-# ─── Настройки подсветки ──────────────────────────────────────────────────────
-const HOVER_TINT:     Color = Color(1.18, 1.1, 1.35, 1.0)  # тёплый фиолетовый отблеск
+const HOVER_TINT:     Color = Color(1.18, 1.1, 1.35, 1.0)  
 const NORMAL_TINT:    Color = Color.WHITE
 const TWEEN_DURATION: float = 0.18
 

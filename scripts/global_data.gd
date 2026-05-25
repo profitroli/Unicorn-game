@@ -3,16 +3,13 @@ class_name GlobalDataManager
 
 signal unicorn_updated
 
-# Путь к файлу сохранения на диске
 const SAVE_PATH := "user://unicorn_save.json"
 
-# Пути текстур
 var temp_griva_path: String = "res://assets/group/Group 129(4).png"
 var temp_hvost_path: String = "res://assets/group/Group 129(5).png"
 var temp_rog_path:   String = "res://assets/group/Group 129(6).png"
 var temp_aks_path:   String = ""
 
-# Цвета (WHITE = без изменений)
 var color_griva: Color = Color.WHITE
 var color_hvost: Color = Color.WHITE
 var color_rog:   Color = Color.WHITE
@@ -20,11 +17,7 @@ var color_aks:   Color = Color.WHITE
 
 
 func _ready() -> void:
-	# Загружаем сохранение сразу при старте игры
 	load_from_disk()
-
-
-# ─── СОХРАНЕНИЕ НА ДИСК ───────────────────────────────────────────────────────
 
 func save_unicorn_with_colors(
 		griva:   String,
@@ -58,11 +51,7 @@ func save_unicorn(griva: String, hvost: String, rog: String, aks: String) -> voi
 	save_to_disk()
 	unicorn_updated.emit()
 
-
-# ─── ЗАПИСЬ В ФАЙЛ ────────────────────────────────────────────────────────────
-
 func save_to_disk() -> void:
-	# Собираем всё в словарь — Color сериализуем как строку "#rrggbbaa"
 	var data := {
 		"griva_path": temp_griva_path,
 		"hvost_path": temp_hvost_path,
@@ -82,9 +71,6 @@ func save_to_disk() -> void:
 	file.store_string(JSON.stringify(data, "\t"))
 	file.close()
 	print("[GlobalData] Сохранено в ", SAVE_PATH)
-
-
-# ─── ЧТЕНИЕ ИЗ ФАЙЛА ──────────────────────────────────────────────────────────
 
 func load_from_disk() -> void:
 	if not FileAccess.file_exists(SAVE_PATH):
@@ -107,13 +93,11 @@ func load_from_disk() -> void:
 
 	var data: Dictionary = json.get_data()
 
-	# Восстанавливаем пути
 	temp_griva_path = data.get("griva_path", temp_griva_path)
 	temp_hvost_path = data.get("hvost_path", temp_hvost_path)
 	temp_rog_path   = data.get("rog_path",   temp_rog_path)
 	temp_aks_path   = data.get("aks_path",   temp_aks_path)
 
-	# Восстанавливаем цвета из hex-строк
 	color_griva = Color.from_string(data.get("color_griva", "ffffffff"), Color.WHITE)
 	color_hvost = Color.from_string(data.get("color_hvost", "ffffffff"), Color.WHITE)
 	color_rog   = Color.from_string(data.get("color_rog",   "ffffffff"), Color.WHITE)

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dklmmmcxkcgl3"
-path="res://.godot/imported/image-Photoroom 1(2).png-5228e57ae2665183b586922c2da1ab35.ctex"
+uid="uid://dtearq6pjalkb"
+path="res://.godot/imported/Group 114(2).png-ec61e5feaf3aa9171f3d7636c4a9174b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/user/image-Photoroom 1(2).png"
-dest_files=["res://.godot/imported/image-Photoroom 1(2).png-5228e57ae2665183b586922c2da1ab35.ctex"]
+source_file="res://assets/unicorn/Group 114(2).png"
+dest_files=["res://.godot/imported/Group 114(2).png-ec61e5feaf3aa9171f3d7636c4a9174b.ctex"]
 
 [params]
 

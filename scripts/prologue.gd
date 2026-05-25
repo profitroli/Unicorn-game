@@ -20,7 +20,6 @@ var _phase := Phase.FADE_IN
 @onready var dm            : Node       = $DialogueManager
 @onready var background    : TextureRect = $Background
 
-# Два отдельных узла для отображения двух персонажей на экране
 @onready var character_portrait_1 : TextureRect = $CharacterPortrait1
 @onready var character_portrait_2 : TextureRect = $CharacterPortrait2
 
@@ -54,15 +53,12 @@ func _input(event: InputEvent) -> void:
 func _begin_fade_in() -> void:
 	_phase = Phase.FADE_IN
 	
-	# Гарантируем, что на старте экран белый и непрозрачный
 	white_screen.color = Color(1, 1, 1, 1.0)
 	white_screen.modulate.a = 1.0
 	white_screen.visible = true
-	
-	# Запускаем подготовку диалога, пока идет анимация появления
+
 	call_deferred("_start_prologue_dialogue_deferred")
 	
-	# Плавное появление из белого в прозрачный за 1.5 секунды
 	var tw := create_tween()
 	tw.tween_property(white_screen, "modulate:a", 0.0, 1.5)
 	await tw.finished
@@ -138,7 +134,6 @@ func _start_prologue_dialogue() -> void:
 		dm.start(dialogue_data)
 
 func _on_dialogue_line_changed(line_data: Dictionary) -> void:
-	# 1. Обрабатываем первый портрет
 	if character_portrait_1:
 		var tex_1: Texture2D = line_data.get("portrait_1", null)
 		if tex_1 == null:
@@ -148,7 +143,6 @@ func _on_dialogue_line_changed(line_data: Dictionary) -> void:
 			character_portrait_1.visible = true
 			character_portrait_1.global_position = line_data.get("pos_1", Vector2.ZERO)
 
-	# 2. Обрабатываем второй портрет
 	if character_portrait_2:
 		var tex_2: Texture2D = line_data.get("portrait_2", null)
 		if tex_2 == null:

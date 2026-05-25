@@ -1,3 +1,108 @@
 [gd_scene format=3 uid="uid://yqpp2tpv27sa"]
 
+[ext_resource type="Script" uid="uid://c528j71yfcptx" path="res://scripts/mission_3.gd" id="1_hvna8"]
+[ext_resource type="Script" uid="uid://dmg48kle5evsy" path="res://scripts/dialogue_manager.gd" id="1_q8smh"]
+[ext_resource type="FontFile" uid="uid://desu4jund4dbp" path="res://assets/text/ArcadeJeu-Regular.otf" id="2_hvna8"]
+
 [node name="Mission3" type="Node2D" unique_id=1002992990]
+script = ExtResource("1_hvna8")
+
+[node name="Background" type="TextureRect" parent="." unique_id=145297760]
+offset_right = 1920.0
+offset_bottom = 1080.0
+
+[node name="CharacterPortrait1" type="TextureRect" parent="." unique_id=172136590]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="CharacterPortrait2" type="TextureRect" parent="." unique_id=1271020969]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="DialogueManager" type="Node" parent="." unique_id=112055696 node_paths=PackedStringArray("dialogue_box", "speaker_label", "text_label", "continue_hint")]
+script = ExtResource("1_q8smh")
+dialogue_box = NodePath("../DialogueBox")
+speaker_label = NodePath("../DialogueBox/SpeakerLabel")
+text_label = NodePath("../DialogueBox/TextLabel")
+continue_hint = NodePath("../DialogueBox/ContinueHint")
+
+[node name="DialogueBox" type="Control" parent="." unique_id=824778833]
+layout_mode = 3
+anchors_preset = 0
+offset_top = 87.0
+offset_right = 1920.0
+offset_bottom = 337.0
+
+[node name="DialogueBG" type="ColorRect" parent="DialogueBox" unique_id=1775023661]
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 250.0
+color = Color(0, 0, 0, 0.6666667)
+
+[node name="SpeakerLabel" type="Label" parent="DialogueBox" unique_id=221624044]
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 90.0
+theme_override_fonts/font = ExtResource("2_hvna8")
+theme_override_font_sizes/font_size = 50
+vertical_alignment = 1
+
+[node name="TextLabel" type="RichTextLabel" parent="DialogueBox" unique_id=1160080964]
+layout_mode = 0
+offset_top = 90.0
+offset_right = 1920.0
+offset_bottom = 250.0
+theme_override_fonts/normal_font = ExtResource("2_hvna8")
+theme_override_font_sizes/normal_font_size = 40
+
+[node name="ContinueHint" type="Label" parent="DialogueBox" unique_id=1875705302]
+layout_mode = 0
+offset_left = 1770.0
+offset_top = 390.0
+offset_right = 1920.0
+offset_bottom = 460.0
+
+[node name="PlashkaLayer" type="CanvasLayer" parent="." unique_id=1185638498]
+layer = 50
+
+[node name="PlashkaRect" type="ColorRect" parent="PlashkaLayer" unique_id=2063983241]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -960.0
+offset_top = -540.0
+offset_right = 960.0
+offset_bottom = 540.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0)
+
+[node name="PlashkaLabel" type="Label" parent="PlashkaLayer" unique_id=695787712]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_hvna8")
+theme_override_font_sizes/font_size = 90
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MinigameLayer" type="CanvasLayer" parent="." unique_id=940281011]
+
+[node name="FadeLayer" type="CanvasLayer" parent="." unique_id=1965276060]
+layer = 100
+
+[node name="BlackScreen" type="ColorRect" parent="FadeLayer" unique_id=1656143939]
+visible = false
+offset_right = 1920.0
+offset_bottom = 1080.0
+color = Color(0, 0, 0, 1)
