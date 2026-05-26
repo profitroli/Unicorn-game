@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://b7nvpareptty5" path="res://assets/max/Group 132.png" id="6_66ryj"]
 [ext_resource type="Texture2D" uid="uid://dtearq6pjalkb" path="res://assets/unicorn/Group 114(2).png" id="7_k6fn8"]
 [ext_resource type="Texture2D" uid="uid://bbd20yr0q8pv2" path="res://assets/unicorn/Group 133.png" id="8_k6fn8"]
+[ext_resource type="Texture2D" uid="uid://ly5s76pmyhco" path="res://assets/foto/Group 134.png" id="10_486iq"]
 
 [node name="Mission1" type="Node2D" unique_id=755943032]
 script = ExtResource("1_besfq")
@@ -22,6 +23,7 @@ portrait_max_surprised = ExtResource("5_m7cak")
 portrait_max_resigned = ExtResource("6_66ryj")
 portrait_unicorn_neutral = ExtResource("7_k6fn8")
 portrait_unicorn_curious = ExtResource("8_k6fn8")
+finale_background_texture = ExtResource("10_486iq")
 
 [node name="Background" type="TextureRect" parent="." unique_id=82767682]
 offset_right = 1920.0

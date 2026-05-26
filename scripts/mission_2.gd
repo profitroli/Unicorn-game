@@ -207,8 +207,11 @@ func _ready() -> void:
 			dm.dialogue_finished.connect(_on_dialogue_finished)
 		if dm.has_signal("line_changed"):
 			dm.line_changed.connect(_on_dialogue_line_changed)
-
 	_begin_fade_in()
+
+	var _home := HomeOverlay.new()
+	_home.current_scene_path = "res://scenes/mission_2.tscn"
+	add_child(_home)
 
 # ==============================================================
 # INPUT — пропуск реплик, только во время диалоговых фаз
@@ -271,7 +274,7 @@ func _start_dialogue_intro() -> void:
 			"speaker":    "АЛИСА",
 			"text":       "Ну почему... Почему все находят кого-то, а я – нет?",
 			"portrait_1": portrait_alisa_sad,
-			"pos_1":      Vector2(150, 420),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": null,
 			"pos_2":      Vector2.ZERO
 		},
@@ -280,7 +283,7 @@ func _start_dialogue_intro() -> void:
 			"speaker":    "БАРИСТА",
 			"text":       "Э-э-э... домашних животных нельзя...",
 			"portrait_1": portrait_barista,          # portrait_barista — placeholder
-			"pos_1":      Vector2(1400, 420),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": null,
 			"pos_2":      Vector2.ZERO
 		},
@@ -288,7 +291,7 @@ func _start_dialogue_intro() -> void:
 			"speaker":    "ЕДИНОРОГ",
 			"text":       "Я не домашнее животное. Я ищу Алису.",
 			"portrait_1": portrait_unicorn_neutral,
-			"pos_1":      Vector2(150, 420),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": null,
 			"pos_2":      Vector2.ZERO
 		},
@@ -297,83 +300,83 @@ func _start_dialogue_intro() -> void:
 			"speaker":    "АЛИСА",
 			"text":       "Единорог?! Я думала, вы только в книжках существуете...",
 			"portrait_1": portrait_alisa_surprised,
-			"pos_1":      Vector2(1400, 420),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_unicorn_neutral,
-			"pos_2":      Vector2(150, 420)
+			"pos_2":      Vector2(0, 0)
 		},
 		{
 			"speaker":    "ЕДИНОРОГ",
 			"text":       "В книжках мы тоже, но я вот – живой. Ты Алиса? Макс сказал, ты разбираешься в магии.",
 			"portrait_1": portrait_unicorn_neutral,
-			"pos_1":      Vector2(150, 420),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_alisa_surprised,
-			"pos_2":      Vector2(1400, 420)
+			"pos_2":      Vector2(0, 0)
 		},
 		{
 			"speaker":    "АЛИСА",
 			"text":       "Потрясающе! У тебя рог точь-в-точь как на обложке Хроник Нарнии! Да, я Алиса! Макс прислал тебя?",
 			"portrait_1": portrait_alisa_excited,
-			"pos_1":      Vector2(1400, 420),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_unicorn_neutral,
-			"pos_2":      Vector2(150, 420)
+			"pos_2":      Vector2(0, 0)
 		},
 		{
 			"speaker":    "ЕДИНОРОГ",
 			"text":       "Я помог ему с учёбой. А теперь ищу дорогу домой. Но сначала... что за тоска у тебя в глазах? Она почти осязаема.",
 			"portrait_1": portrait_unicorn_curious,
-			"pos_1":      Vector2(150, 420),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_alisa_excited,
-			"pos_2":      Vector2(1400, 420)
+			"pos_2":      Vector2(0, 0)
 		},
 		# --- Алиса открывается ---
 		{
 			"speaker":    "АЛИСА",
 			"text":       "Ох... Я просто устала быть одна. Все подруги с кем-то знакомятся, ходят на свидания... А я сижу тут, читаю фэнтези и разговариваю с воображаемыми персонажами.",
 			"portrait_1": portrait_alisa_sad,
-			"pos_1":      Vector2(1400, 420),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_unicorn_curious,
-			"pos_2":      Vector2(150, 420)
+			"pos_2":      Vector2(0, 0)
 		},
 		{
 			"speaker":    "ЕДИНОРОГ",
 			"text":       "Воображаемые персонажи – отличная компания. У меня друг дракон, мы с ним... ой. Неважно.",
 			"portrait_1": portrait_unicorn_neutral,
-			"pos_1":      Vector2(150, 420),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_alisa_sad,
-			"pos_2":      Vector2(1400, 420)
+			"pos_2":      Vector2(0, 0)
 		},
 		{
 			"speaker":    "АЛИСА",
 			"text":       "У тебя есть друг дракон?! Настоящий?!",
 			"portrait_1": portrait_alisa_excited,
-			"pos_1":      Vector2(1400, 420),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_unicorn_neutral,
-			"pos_2":      Vector2(150, 420)
+			"pos_2":      Vector2(0, 0)
 		},
 		{
 			"speaker":    "ЕДИНОРОГ",
 			"text":       "Сейчас не об этом. Давай решать твою проблему. Как люди находят себе пару? В моём лесу мы просто трубим рогом, и все собираются.",
 			"portrait_1": portrait_unicorn_curious,
-			"pos_1":      Vector2(150, 420),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_alisa_excited,
-			"pos_2":      Vector2(1400, 420)
+			"pos_2":      Vector2(0, 0)
 		},
 		{
 			"speaker":    "АЛИСА",
 			"text":       "Здесь так не работает. Есть приложения для знакомств. Но я не умею преподносить себя... Всегда пишу что-то не то.",
 			"portrait_1": portrait_alisa_sad,
-			"pos_1":      Vector2(1400, 420),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_unicorn_curious,
-			"pos_2":      Vector2(150, 420)
+			"pos_2":      Vector2(0, 0)
 		},
 		# --- Триггер мини-игры А ---
 		{
 			"speaker":    "ЕДИНОРОГ",
 			"text":       "Покажи мне это «приложение». Будем колдовать вместе.",
 			"portrait_1": portrait_unicorn_wise,
-			"pos_1":      Vector2(150, 420),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_alisa_sad,
-			"pos_2":      Vector2(1400, 420)
+			"pos_2":      Vector2(0, 0)
 		}
 	]
 
@@ -499,7 +502,7 @@ func _start_dialogue_between() -> void:
 			"speaker":    "АЛИСА",
 			"text":       "Готово... Ой, тут сразу кто-то лайкнул!",
 			"portrait_1": portrait_alisa_excited,
-			"pos_1":      Vector2(1400, 420),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": null,
 			"pos_2":      Vector2.ZERO,
 			"show_ui":    "profile_arseniy"          # ui_app_profile_arseniy — placeholder
@@ -508,7 +511,7 @@ func _start_dialogue_between() -> void:
 			"speaker":    "АЛИСА",
 			"text":       "Арсений... У него фото со звёздами. И в описании: «Ночую на крыше, наблюдаю за галактиками. Ищу того, кто тоже смотрит вверх». Ого...",
 			"portrait_1": portrait_alisa_excited,
-			"pos_1":      Vector2(1400, 420),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": null,
 			"pos_2":      Vector2.ZERO,
 			"show_ui":    "profile_arseniy"
@@ -517,18 +520,18 @@ func _start_dialogue_between() -> void:
 			"speaker":    "ЕДИНОРОГ",
 			"text":       "Звёзды и магия всегда рядом. Он смотрит в небо – ты читаешь о других мирах. Это хорошее совпадение.",
 			"portrait_1": portrait_unicorn_wise,
-			"pos_1":      Vector2(150, 420),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_alisa_excited,
-			"pos_2":      Vector2(1400, 420),
+			"pos_2":      Vector2(0, 0),
 			"show_ui":    ""                         # убираем профиль
 		},
 		{
 			"speaker":    "АЛИСА",
 			"text":       "Что мне написать?! Я никогда не пишу первая! А вдруг я всё испорчу?",
 			"portrait_1": portrait_alisa_sad,
-			"pos_1":      Vector2(1400, 420),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_unicorn_wise,
-			"pos_2":      Vector2(150, 420),
+			"pos_2":      Vector2(0, 0),
 			"show_ui":    ""
 		}
 	]
@@ -597,7 +600,7 @@ func _start_dialogue_outro() -> void:
 			"speaker":    "АЛИСА",
 			"text":       "Он предлагает встретиться. Завтра. В книжном.",
 			"portrait_1": portrait_alisa_happy,
-			"pos_1":      Vector2(1400, 420),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": null,
 			"pos_2":      Vector2.ZERO,
 			"show_ui":    "profile_arseniy"          # ui_app_profile_arseniy — placeholder
@@ -606,44 +609,44 @@ func _start_dialogue_outro() -> void:
 			"speaker":    "ЕДИНОРОГ",
 			"text":       "Это хороший знак?",
 			"portrait_1": portrait_unicorn_curious,
-			"pos_1":      Vector2(150, 420),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_alisa_happy,
-			"pos_2":      Vector2(1400, 420),
+			"pos_2":      Vector2(0, 0),
 			"show_ui":    ""
 		},
 		{
 			"speaker":    "АЛИСА",
 			"text":       "Это идеальный знак. Я никогда не думала, что мне поможет единорог.",
 			"portrait_1": portrait_alisa_laughing,
-			"pos_1":      Vector2(1400, 420),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_unicorn_curious,
-			"pos_2":      Vector2(150, 420),
+			"pos_2":      Vector2(0, 0),
 			"show_ui":    ""
 		},
 		{
 			"speaker":    "ЕДИНОРОГ",
 			"text":       "Я никогда не думал, что попаду в мир без магии и найду тебе парня.",
 			"portrait_1": portrait_unicorn_neutral,
-			"pos_1":      Vector2(150, 420),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_alisa_laughing,
-			"pos_2":      Vector2(1400, 420)
+			"pos_2":      Vector2(0, 0)
 		},
 		# --- Поворот: портал ---
 		{
 			"speaker":    "АЛИСА",
 			"text":       "Слушай... ты говорил, что ищешь дорогу домой. Портал?",
 			"portrait_1": portrait_alisa_serious,
-			"pos_1":      Vector2(1400, 420),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_unicorn_neutral,
-			"pos_2":      Vector2(150, 420)
+			"pos_2":      Vector2(0, 0)
 		},
 		{
 			"speaker":    "ЕДИНОРОГ",
 			"text":       "Да. Мне нужно в Волшебный лес. Ты что-то знаешь?",
 			"portrait_1": portrait_unicorn_curious,
-			"pos_1":      Vector2(150, 420),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_alisa_serious,
-			"pos_2":      Vector2(1400, 420)
+			"pos_2":      Vector2(0, 0)
 		},
 		{
 			"speaker":    "АЛИСА",

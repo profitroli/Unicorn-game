@@ -182,6 +182,10 @@ func _ready() -> void:
 
 	_begin_fade_in()
 
+	var _home := HomeOverlay.new()
+	_home.current_scene_path = "res://scenes/mission_3.tscn"
+	add_child(_home)
+
 # ==============================================================
 # INPUT — пропуск реплик, только в диалоговых фазах
 # ==============================================================

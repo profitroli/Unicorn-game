@@ -2,10 +2,20 @@
 
 [ext_resource type="Script" uid="uid://h4ks8pjo48xt" path="res://scripts/mission_2.gd" id="1_nob6w"]
 [ext_resource type="Script" uid="uid://dmg48kle5evsy" path="res://scripts/dialogue_manager.gd" id="1_ol8hf"]
+[ext_resource type="Texture2D" uid="uid://dcd1pavpf52hj" path="res://assets/foto/flux-2-pro_a_убери_девушку_с_пере 1.png" id="2_o0vid"]
 [ext_resource type="FontFile" uid="uid://desu4jund4dbp" path="res://assets/text/ArcadeJeu-Regular.otf" id="2_sywem"]
+[ext_resource type="Texture2D" uid="uid://b1wuu8emo5k84" path="res://assets/alisa/Group 137.png" id="3_xbahv"]
+[ext_resource type="Texture2D" uid="uid://bfw7hq3hte16k" path="res://assets/alisa/Бариста.png" id="4_1xu6l"]
+[ext_resource type="Texture2D" uid="uid://qa8ch3a1mx1l" path="res://assets/alisa/Group 137(1).png" id="4_54ri0"]
+[ext_resource type="Texture2D" uid="uid://c15sr2qw3hmk4" path="res://assets/alisa/Group 137(2).png" id="5_wkb2w"]
 
 [node name="Mission2" type="Node2D" unique_id=2125656525]
 script = ExtResource("1_nob6w")
+bg_cafe_luna = ExtResource("2_o0vid")
+portrait_alisa_surprised = ExtResource("3_xbahv")
+portrait_alisa_excited = ExtResource("4_54ri0")
+portrait_alisa_happy = ExtResource("5_wkb2w")
+portrait_barista = ExtResource("4_1xu6l")
 
 [node name="Background" type="TextureRect" parent="." unique_id=1640878679]
 offset_right = 1920.0

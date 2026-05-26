@@ -27,17 +27,18 @@ func _ready() -> void:
 	dialogue_box.visible = false
 	plashka_label.modulate.a = 0.0
 	plashka_rect.color = Color(0, 0, 0, 0.0)
-	
 	if character_portrait_1: character_portrait_1.visible = false
 	if character_portrait_2: character_portrait_2.visible = false
-	
 	if dm and dm.has_signal("dialogue_finished"):
 		dm.dialogue_finished.connect(_on_dialogue_finished)
-		
 	if dm and dm.has_signal("line_changed"):
 		dm.line_changed.connect(_on_dialogue_line_changed)
-	
 	_begin_fade_in()
+
+	var _home := HomeOverlay.new()
+	_home.current_scene_path = "res://scenes/prologue.tscn"
+	add_child(_home)
+
 
 func _input(event: InputEvent) -> void:
 	if _phase != Phase.DIALOGUE:
