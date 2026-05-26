@@ -301,40 +301,40 @@ func _start_dialogue_desert_intro() -> void:
 			"speaker":    "КСЕНИЯ",
 			"text":       "Игря... я больше не могу. Вода кончилась вчера. Мы идём кругами.",
 			"portrait_1": portrait_ksenia_weak,
-			"pos_1":      Vector2(1400, 400),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_igor_focused,
-			"pos_2":      Vector2(150, 400)
+			"pos_2":      Vector2(0, 0)
 		},
 		{
 			"speaker":    "ИГОРЬ",
 			"text":       "Не кругами. Мы идём... стратегическим зигзагом.",
 			"portrait_1": portrait_igor_focused,
-			"pos_1":      Vector2(150, 400),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_ksenia_weak,
-			"pos_2":      Vector2(1400, 400)
+			"pos_2":      Vector2(0, 0)
 		},
 		{
 			"speaker":    "КСЕНИЯ",
 			"text":       "Мы заблудились.",
 			"portrait_1": portrait_ksenia_weak,
-			"pos_1":      Vector2(1400, 400),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_igor_focused,
-			"pos_2":      Vector2(150, 400)
+			"pos_2":      Vector2(0, 0)
 		},
 		{
 			"speaker":    "ИГОРЬ",
 			"text":       "Геологи не блудят! Мы исследуем альтернативные маршруты.",
 			"portrait_1": portrait_igor_focused,
-			"pos_1":      Vector2(150, 400),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_ksenia_weak,
-			"pos_2":      Vector2(1400, 400)
+			"pos_2":      Vector2(0, 0)
 		},
 		# --- Песок светится. Появляется Единорог. ---
 		{
 			"speaker":    "ЕДИНОРОГ",
 			"text":       "Фух. Песок. Везде песок. Даже в гриве.",
 			"portrait_1": portrait_unicorn_dusty,
-			"pos_1":      Vector2(700, 380),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": null,
 			"pos_2":      Vector2.ZERO
 		},
@@ -342,100 +342,100 @@ func _start_dialogue_desert_intro() -> void:
 			"speaker":    "ИГОРЬ",
 			"text":       "Ксюша... ты тоже это видишь?",
 			"portrait_1": portrait_igor_frozen,
-			"pos_1":      Vector2(150, 400),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_unicorn_dusty,
-			"pos_2":      Vector2(700, 380)
+			"pos_2":      Vector2(0, 0)
 		},
 		{
 			"speaker":    "КСЕНИЯ",
 			"text":       "Единорог. В Сахаре. Либо у меня тепловой удар...",
 			"portrait_1": portrait_ksenia_squinting,
-			"pos_1":      Vector2(1400, 400),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_unicorn_dusty,
-			"pos_2":      Vector2(700, 380)
+			"pos_2":      Vector2(0, 0)
 		},
 		{
 			"speaker":    "ИГОРЬ",
 			"text":       "Либо это новый вид адаптированной лошади! Биолюминисценция рога – возможно, мутация под воздействием ультрафиолета!",
 			"portrait_1": portrait_igor_crisis,
-			"pos_1":      Vector2(150, 400),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_unicorn_dusty,
-			"pos_2":      Vector2(700, 380)
+			"pos_2":      Vector2(0, 0)
 		},
 		# --- Единорог представляется ---
 		{
 			"speaker":    "ЕДИНОРОГ",
 			"text":       "Я не «адаптированная лошадь». Я Астерион. Из Волшебного леса. Меня прислала Алиса. Твоя племянница.",
 			"portrait_1": portrait_unicorn_neutral,
-			"pos_1":      Vector2(700, 380),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_igor_crisis,
-			"pos_2":      Vector2(150, 400)
+			"pos_2":      Vector2(0, 0)
 		},
 		{
 			"speaker":    "ИГОРЬ",
 			"text":       "Алиса? Моя Алиса? Та самая, которая в детстве верила в фей?!",
 			"portrait_1": portrait_igor_frozen,
-			"pos_1":      Vector2(150, 400),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_unicorn_neutral,
-			"pos_2":      Vector2(700, 380)
+			"pos_2":      Vector2(0, 0)
 		},
 		{
 			"speaker":    "ЕДИНОРОГ",
 			"text":       "Она до сих пор верит. И, кстати, передаёт привет.",
 			"portrait_1": portrait_unicorn_curious,
-			"pos_1":      Vector2(700, 380),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_igor_frozen,
-			"pos_2":      Vector2(150, 400)
+			"pos_2":      Vector2(0, 0)
 		},
 		{
 			"speaker":    "ИГОРЬ",
 			"text":       "Ну всё. Моя племянница дружит с магическим существом. С одной стороны – я горжусь. С другой – у меня кризис мировоззрения.",
 			"portrait_1": portrait_igor_crisis,
-			"pos_1":      Vector2(150, 400),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_unicorn_curious,
-			"pos_2":      Vector2(700, 380)
+			"pos_2":      Vector2(0, 0)
 		},
 		{
 			"speaker":    "КСЕНИЯ",
 			"text":       "Подожди... Алиса сказала, где мы? Значит, ты пришёл нам на помощь...?",
 			"portrait_1": portrait_ksenia_squinting,
-			"pos_1":      Vector2(1400, 400),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_unicorn_curious,
-			"pos_2":      Vector2(700, 380)
+			"pos_2":      Vector2(0, 0)
 		},
 		# --- Единорог принюхивается → родник ---
 		{
 			"speaker":    "ЕДИНОРОГ",
 			"text":       "Я чувствую воду. Она глубоко под песком. Родник.",
 			"portrait_1": portrait_unicorn_curious,
-			"pos_1":      Vector2(700, 380),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_ksenia_squinting,
-			"pos_2":      Vector2(1400, 400)
+			"pos_2":      Vector2(0, 0)
 		},
 		{
 			"speaker":    "ИГОРЬ",
 			"text":       "Родник?! Я же говорил! Я говорил, что под этим плато должна быть вода! Где?! Где копать?!",
 			"portrait_1": portrait_igor_excited,
-			"pos_1":      Vector2(150, 400),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_unicorn_curious,
-			"pos_2":      Vector2(700, 380)
+			"pos_2":      Vector2(0, 0)
 		},
 		{
 			"speaker":    "ЕДИНОРОГ",
 			"text":       "Мой рог чувствует магию воды. Но копать копытами я не могу – в лесу земля мягкая, а здесь... сплошной камень под песком. Нужна ваша помощь.",
 			"portrait_1": portrait_unicorn_neutral,
-			"pos_1":      Vector2(700, 380),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_igor_excited,
-			"pos_2":      Vector2(150, 400)
+			"pos_2":      Vector2(0, 0)
 		},
 		# --- Ксения хватает лопату --- (последняя реплика → МГ)
 		{
 			"speaker":    "КСЕНИЯ",
 			"text":       "Показывай. Я больше никогда в жизни не буду жаловаться на дождь. Обещаю.",
 			"portrait_1": portrait_ksenia_hopeful,
-			"pos_1":      Vector2(1400, 400),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_unicorn_neutral,
-			"pos_2":      Vector2(700, 380)
+			"pos_2":      Vector2(0, 0)
 		}
 		# Завершение → _on_dialogue_finished → _start_minigame_water
 	]
@@ -504,7 +504,7 @@ func _start_dialogue_post_water() -> void:
 			"speaker":    "ИГОРЬ",
 			"text":       "Есть! Вода! Ксюша, тащи канистры!",
 			"portrait_1": portrait_igor_excited,
-			"pos_1":      Vector2(150, 400),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": null,
 			"pos_2":      Vector2.ZERO
 		},
@@ -512,25 +512,25 @@ func _start_dialogue_post_water() -> void:
 			"speaker":    "КСЕНИЯ",
 			"text":       "Я никогда не думала, что вода может быть такой вкусной.",
 			"portrait_1": portrait_ksenia_happy,
-			"pos_1":      Vector2(1400, 400),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_igor_drinking,
-			"pos_2":      Vector2(150, 400)
+			"pos_2":      Vector2(0, 0)
 		},
 		{
 			"speaker":    "ИГОРЬ",
 			"text":       "Лучшая экспедиция в моей жизни. Нас спас единорог. Мне никто не поверит.",
 			"portrait_1": portrait_igor_drinking,
-			"pos_1":      Vector2(150, 400),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_ksenia_happy,
-			"pos_2":      Vector2(1400, 400)
+			"pos_2":      Vector2(0, 0)
 		},
 		{
 			"speaker":    "КСЕНИЯ",
 			"text":       "Спасибо. Мы бы погибли.",
 			"portrait_1": portrait_ksenia_grateful,
-			"pos_1":      Vector2(1400, 400),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_unicorn_neutral,
-			"pos_2":      Vector2(700, 380)
+			"pos_2":      Vector2(0, 0)
 		},
 		# --- Единорог спрашивает о портале ---
 		# Примечание: в оригинале «Соня сказала» — очевидная опечатка,
@@ -539,48 +539,48 @@ func _start_dialogue_post_water() -> void:
 			"speaker":    "ЕДИНОРОГ",
 			"text":       "Я ищу портал. Алиса сказала, здесь видели светящиеся врата.",
 			"portrait_1": portrait_unicorn_curious,
-			"pos_1":      Vector2(700, 380),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_ksenia_grateful,
-			"pos_2":      Vector2(1400, 400)
+			"pos_2":      Vector2(0, 0)
 		},
 		{
 			"speaker":    "ИГОРЬ",
 			"text":       "Да, аномалия в квадрате ВР311. Мы шли туда, когда сломались. Я думал – мираж, но теперь...",
 			"portrait_1": portrait_igor_believer,
-			"pos_1":      Vector2(150, 400),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_unicorn_curious,
-			"pos_2":      Vector2(700, 380)
+			"pos_2":      Vector2(0, 0)
 		},
 		{
 			"speaker":    "ЕДИНОРОГ",
 			"text":       "Теперь?",
 			"portrait_1": portrait_unicorn_curious,
-			"pos_1":      Vector2(700, 380),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_igor_believer,
-			"pos_2":      Vector2(150, 400)
+			"pos_2":      Vector2(0, 0)
 		},
 		{
 			"speaker":    "ИГОРЬ",
 			"text":       "Теперь я верю. Если единороги существуют, почему бы не существовать порталам?",
 			"portrait_1": portrait_igor_believer,
-			"pos_1":      Vector2(150, 400),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_unicorn_curious,
-			"pos_2":      Vector2(700, 380)
+			"pos_2":      Vector2(0, 0)
 		},
 		{
 			"speaker":    "КСЕНИЯ",
 			"text":       "Там маршрут сложный. Но с водой мы дойдём.",
 			"portrait_1": portrait_ksenia_hopeful,
-			"pos_1":      Vector2(1400, 400),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_unicorn_neutral,
-			"pos_2":      Vector2(700, 380)
+			"pos_2":      Vector2(0, 0)
 		},
 		# --- Последняя реплика → смена фона на аномалию ---
 		{
 			"speaker":    "ЕДИНОРОГ",
 			"text":       "Я чую магию. Она в той стороне. Идите за мной.",
 			"portrait_1": portrait_unicorn_wise,
-			"pos_1":      Vector2(700, 380),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": null,
 			"pos_2":      Vector2.ZERO
 		}
@@ -608,7 +608,7 @@ func _start_dialogue_pre_portal() -> void:
 			"speaker":    "ЕДИНОРОГ",
 			"text":       "Я чувствую – здесь магия Земли ближе всего. Грань между мирами тонкая, как крылья бабочки.",
 			"portrait_1": portrait_unicorn_wise,
-			"pos_1":      Vector2(700, 380),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": null,
 			"pos_2":      Vector2.ZERO
 		},
@@ -616,34 +616,34 @@ func _start_dialogue_pre_portal() -> void:
 			"speaker":    "ИГОРЬ",
 			"text":       "Магия Земли... Так вот что это за аномалии. Я годами их изучал...",
 			"portrait_1": portrait_igor_believer,
-			"pos_1":      Vector2(150, 400),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_unicorn_wise,
-			"pos_2":      Vector2(700, 380)
+			"pos_2":      Vector2(0, 0)
 		},
 		{
 			"speaker":    "КСЕНИЯ",
 			"text":       "Это красиво. Как падающие звёзды.",
 			"portrait_1": portrait_ksenia_hopeful,
-			"pos_1":      Vector2(1400, 400),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_unicorn_wise,
-			"pos_2":      Vector2(700, 380)
+			"pos_2":      Vector2(0, 0)
 		},
 		{
 			"speaker":    "ИГОРЬ",
 			"text":       "Невероятно... Энергия концентрируется в центре. Прямо как в моих расчётах!",
 			"portrait_1": portrait_igor_believer,
-			"pos_1":      Vector2(1400, 400),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_unicorn_wise,
-			"pos_2":      Vector2(700, 380)
+			"pos_2":      Vector2(0, 0)
 		},
 		# --- Объяснение механики мини-игры в нарративе ---
 		{
 			"speaker":    "ЕДИНОРОГ",
 			"text":       "Эти частицы – осколки магии этого места. Собери их вместе, и портал откроется.",
 			"portrait_1": portrait_unicorn_wise,
-			"pos_1":      Vector2(700, 380),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_ksenia_hopeful,
-			"pos_2":      Vector2(1400, 400)
+			"pos_2":      Vector2(0, 0)
 		}
 		# Завершение → _on_dialogue_finished → _start_minigame_portal
 	]
@@ -716,7 +716,7 @@ func _start_dialogue_portal_open() -> void:
 			"speaker":    "ИГОРЬ",
 			"text":       "Боже мой... это реально.",
 			"portrait_1": portrait_igor_believer,
-			"pos_1":      Vector2(150, 400),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": null,
 			"pos_2":      Vector2.ZERO
 		},
@@ -724,15 +724,15 @@ func _start_dialogue_portal_open() -> void:
 			"speaker":    "КСЕНИЯ",
 			"text":       "Портал в другой мир... Я думала, такое только в книгах.",
 			"portrait_1": portrait_ksenia_moved,
-			"pos_1":      Vector2(1400, 400),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_igor_believer,
-			"pos_2":      Vector2(150, 400)
+			"pos_2":      Vector2(0, 0)
 		},
 		{
 			"speaker":    "ЕДИНОРОГ",
 			"text":       "Дом. Я почти чувствую запах леса.",
 			"portrait_1": portrait_unicorn_wise,
-			"pos_1":      Vector2(700, 380),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": null,
 			"pos_2":      Vector2.ZERO
 		}
@@ -761,40 +761,40 @@ func _start_dialogue_farewell() -> void:
 			"speaker":    "ИГОРЬ",
 			"text":       "Возьми. На память. И... спасибо. За воду. За всё.",
 			"portrait_1": portrait_igor_moved,
-			"pos_1":      Vector2(150, 400),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_unicorn_neutral,
-			"pos_2":      Vector2(700, 380)
+			"pos_2":      Vector2(0, 0)
 		},
 		{
 			"speaker":    "ЕДИНОРОГ",
 			"text":       "Спасибо. Ты хороший человек, Игорь. Даже если называешь меня «адаптированной лошадью».",
 			"portrait_1": portrait_unicorn_curious,
-			"pos_1":      Vector2(700, 380),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_igor_moved,
-			"pos_2":      Vector2(150, 400)
+			"pos_2":      Vector2(0, 0)
 		},
 		{
 			"speaker":    "ИГОРЬ",
 			"text":       "Прости за это. Знаешь, я больше никогда не буду скептиком.",
 			"portrait_1": portrait_igor_moved,
-			"pos_1":      Vector2(150, 400),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_unicorn_curious,
-			"pos_2":      Vector2(700, 380)
+			"pos_2":      Vector2(0, 0)
 		},
 		{
 			"speaker":    "КСЕНИЯ",
 			"text":       "Передай своему лесу – в мире людей есть те, кто верит.",
 			"portrait_1": portrait_ksenia_moved,
-			"pos_1":      Vector2(1400, 400),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_unicorn_wise,
-			"pos_2":      Vector2(700, 380)
+			"pos_2":      Vector2(0, 0)
 		},
 		# --- МОНОЛОГ АСТЕРИОНА о магии людей (рог светится) ---
 		{
 			"speaker":    "ЕДИНОРОГ",
 			"text":       "Знаете... В моём мире магия повсюду. Она в траве, в воде, в воздухе. Она даётся даром – просто потому что ты единорог. Мы не ценим её. Мы просто... живём.",
 			"portrait_1": portrait_unicorn_glowing,
-			"pos_1":      Vector2(700, 380),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": null,
 			"pos_2":      Vector2.ZERO
 		},
@@ -802,31 +802,31 @@ func _start_dialogue_farewell() -> void:
 			"speaker":    "ИГОРЬ",
 			"text":       "А мы?",
 			"portrait_1": portrait_igor_moved,
-			"pos_1":      Vector2(150, 400),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_unicorn_glowing,
-			"pos_2":      Vector2(700, 380)
+			"pos_2":      Vector2(0, 0)
 		},
 		{
 			"speaker":    "АСТЕРИОН",
 			"text":       "А вы создаёте магию сами. Из ничего. Из упрямства. Из желания жить, когда жить невозможно. Из любви к звёздам, когда до них – миллионы ваших «километров».",
 			"portrait_1": portrait_unicorn_glowing,
-			"pos_1":      Vector2(700, 380),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_igor_moved,
-			"pos_2":      Vector2(150, 400)
+			"pos_2":      Vector2(0, 0)
 		},
 		{
 			"speaker":    "АСТЕРИОН",
 			"text":       "Из надежды, что завтра будет лучше, даже если сегодня – песок во рту и сломанный джип.",
 			"portrait_1": portrait_unicorn_glowing,
-			"pos_1":      Vector2(700, 380),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_igor_moved,
-			"pos_2":      Vector2(150, 400)
+			"pos_2":      Vector2(0, 0)
 		},
 		{
 			"speaker":    "АСТЕРИОН",
 			"text":       "В моём лесу я много раз видел чудеса. Говорящие деревья. Реки, текущие вверх. Драконов, танцующих в грозу.",
 			"portrait_1": portrait_unicorn_glowing,
-			"pos_1":      Vector2(700, 380),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": null,
 			"pos_2":      Vector2.ZERO
 		},
@@ -834,7 +834,7 @@ func _start_dialogue_farewell() -> void:
 			"speaker":    "АСТЕРИОН",
 			"text":       "Но то, что делаете вы – встаёте каждое утро без магии и продолжаете идти – это... это больше, чем чудо.",
 			"portrait_1": portrait_unicorn_glowing,
-			"pos_1":      Vector2(700, 380),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": null,
 			"pos_2":      Vector2.ZERO
 		},
@@ -842,32 +842,32 @@ func _start_dialogue_farewell() -> void:
 			"speaker":    "КСЕНИЯ",
 			"text":       "Ты говоришь так, будто мы особенные...",
 			"portrait_1": portrait_ksenia_moved,
-			"pos_1":      Vector2(1400, 400),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_unicorn_glowing,
-			"pos_2":      Vector2(700, 380)
+			"pos_2":      Vector2(0, 0)
 		},
 		{
 			"speaker":    "АСТЕРИОН",
 			"text":       "Потому что вы особенные. Все вы. Даже те, кто светил мне в глаза пластинками на той шумной улице. Они просто хотели запомнить чудо.",
 			"portrait_1": portrait_unicorn_glowing,
-			"pos_1":      Vector2(700, 380),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_ksenia_moved,
-			"pos_2":      Vector2(1400, 400)
+			"pos_2":      Vector2(0, 0)
 		},
 		{
 			"speaker":    "ИГОРЬ",
 			"text":       "Мы запомним. Тебя. Обещаю.",
 			"portrait_1": portrait_igor_moved,
-			"pos_1":      Vector2(150, 400),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_unicorn_glowing,
-			"pos_2":      Vector2(700, 380)
+			"pos_2":      Vector2(0, 0)
 		},
 		# --- Единорог кланяется (медленно, с достоинством) ---
 		{
 			"speaker":    "АСТЕРИОН",
 			"text":       "Люди – вы странные. Вы слабы без магии, но ваше упорство – это и есть магия.",
 			"portrait_1": portrait_unicorn_farewell,
-			"pos_1":      Vector2(700, 380),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": null,
 			"pos_2":      Vector2.ZERO
 		},
@@ -875,7 +875,7 @@ func _start_dialogue_farewell() -> void:
 			"speaker":    "АСТЕРИОН",
 			"text":       "Магия, которую не выучить по книгам. Магия, которую не наколдовать. Магия, рождённая в сердце, которое бьётся, даже когда всё против вас. Берегите её.",
 			"portrait_1": portrait_unicorn_farewell,
-			"pos_1":      Vector2(700, 380),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": null,
 			"pos_2":      Vector2.ZERO
 		},
@@ -883,7 +883,7 @@ func _start_dialogue_farewell() -> void:
 			"speaker":    "АСТЕРИОН",
 			"text":       "И передайте Максу и Алисе – их единорог вернулся домой. И он гордится тем, что был человеком. Хотя бы пару дней.",
 			"portrait_1": portrait_unicorn_farewell,
-			"pos_1":      Vector2(700, 380),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": null,
 			"pos_2":      Vector2.ZERO
 		},
@@ -891,24 +891,24 @@ func _start_dialogue_farewell() -> void:
 			"speaker":    "ИГОРЬ",
 			"text":       "Прощай, Астерион. Ты лучший геолог, которого я знаю.",
 			"portrait_1": portrait_igor_moved,
-			"pos_1":      Vector2(150, 400),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_unicorn_farewell,
-			"pos_2":      Vector2(700, 380)
+			"pos_2":      Vector2(0, 0)
 		},
 		{
 			"speaker":    "КСЕНИЯ",
 			"text":       "Прощай. Спасибо за воду. Возвращайся снова.",
 			"portrait_1": portrait_ksenia_moved,
-			"pos_1":      Vector2(1400, 400),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_unicorn_farewell,
-			"pos_2":      Vector2(700, 380)
+			"pos_2":      Vector2(0, 0)
 		},
 		# --- Единорог у портала, последние слова ---
 		{
 			"speaker":    "АСТЕРИОН",
 			"text":       "Если когда-нибудь ваш мир станет слишком тёмным – посмотрите на звёзды. Там, за ними, есть лес. И в нём – единорог, который помнит вас.",
 			"portrait_1": portrait_unicorn_farewell,
-			"pos_1":      Vector2(700, 380),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": null,
 			"pos_2":      Vector2.ZERO
 		},
@@ -917,7 +917,7 @@ func _start_dialogue_farewell() -> void:
 			"speaker":    "ИГОРЬ",
 			"text":       "Мы тоже нашли кое-что важное...",
 			"portrait_1": portrait_igor_moved,
-			"pos_1":      Vector2(150, 400),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": null,
 			"pos_2":      Vector2.ZERO
 		},
@@ -925,17 +925,17 @@ func _start_dialogue_farewell() -> void:
 			"speaker":    "КСЕНИЯ",
 			"text":       "Что?",
 			"portrait_1": portrait_ksenia_moved,
-			"pos_1":      Vector2(1400, 400),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_igor_moved,
-			"pos_2":      Vector2(150, 400)
+			"pos_2":      Vector2(0, 0)
 		},
 		{
 			"speaker":    "ИГОРЬ",
 			"text":       "Веру.",
 			"portrait_1": portrait_igor_moved,
-			"pos_1":      Vector2(150, 400),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_ksenia_moved,
-			"pos_2":      Vector2(1400, 400)
+			"pos_2":      Vector2(0, 0)
 		}
 		# Завершение → _on_dialogue_finished → _begin_fade_to_forest
 	]
@@ -994,90 +994,90 @@ func _start_dialogue_epilogue() -> void:
 			"speaker":    "ЛУНА",
 			"text":       "Астерион! Ты вернулся!",
 			"portrait_1": portrait_luna_happy,
-			"pos_1":      Vector2(150, 400),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_asterion_smiling,
-			"pos_2":      Vector2(1400, 400)
+			"pos_2":      Vector2(0, 0)
 		},
 		{
 			"speaker":    "ГРОМ",
 			"text":       "Мы думали, тебя похитили двуногие.",
 			"portrait_1": portrait_grom_reserved,
-			"pos_1":      Vector2(500, 400),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_asterion_smiling,
-			"pos_2":      Vector2(1400, 400)
+			"pos_2":      Vector2(0, 0)
 		},
 		{
 			"speaker":    "АСТЕРИОН",
 			"text":       "Двуногие зовут себя людьми. И нет, не похитили. Помогли.",
 			"portrait_1": portrait_asterion_smiling,
-			"pos_1":      Vector2(1400, 400),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_grom_reserved,
-			"pos_2":      Vector2(500, 400)
+			"pos_2":      Vector2(0, 0)
 		},
 		{
 			"speaker":    "ЛУНА",
 			"text":       "Помогли? Разве они не опасны?",
 			"portrait_1": portrait_luna_happy,
-			"pos_1":      Vector2(150, 400),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_asterion_smiling,
-			"pos_2":      Vector2(1400, 400)
+			"pos_2":      Vector2(0, 0)
 		},
 		{
 			"speaker":    "АСТЕРИОН",
 			"text":       "Опасна только их «сессия» и отсутствие воды в пустыне. Но они создали «интернет», чтобы искать порталы, и «приложения», чтобы искать любовь. Это почти как магия.",
 			"portrait_1": portrait_asterion_smiling,
-			"pos_1":      Vector2(1400, 400),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_luna_happy,
-			"pos_2":      Vector2(150, 400)
+			"pos_2":      Vector2(0, 0)
 		},
 		{
 			"speaker":    "ГРОМ",
 			"text":       "Любовь через стеклянные пластинки?",
 			"portrait_1": portrait_grom_reserved,
-			"pos_1":      Vector2(500, 400),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_asterion_smiling,
-			"pos_2":      Vector2(1400, 400)
+			"pos_2":      Vector2(0, 0)
 		},
 		{
 			"speaker":    "АСТЕРИОН",
 			"text":       "Да. И ещё они изобрели латте. Очень странный напиток. Вкусный.",
 			"portrait_1": portrait_asterion_smiling,
-			"pos_1":      Vector2(1400, 400),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_grom_reserved,
-			"pos_2":      Vector2(500, 400)
+			"pos_2":      Vector2(0, 0)
 		},
 		{
 			"speaker":    "ЛУНА",
 			"text":       "Может... нам тоже сходить? Посмотреть на этот мир людей?",
 			"portrait_1": portrait_luna_happy,
-			"pos_1":      Vector2(150, 400),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_asterion_smiling,
-			"pos_2":      Vector2(1400, 400)
+			"pos_2":      Vector2(0, 0)
 		},
 		{
 			"speaker":    "ГРОМ",
 			"text":       "Ты серьёзно?",
 			"portrait_1": portrait_grom_reserved,
-			"pos_1":      Vector2(500, 400),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_luna_happy,
-			"pos_2":      Vector2(150, 400)
+			"pos_2":      Vector2(0, 0)
 		},
 		{
 			"speaker":    "ЛУНА",
 			"text":       "Ну а что? Астерион же вернулся живой. И с историями.",
 			"portrait_1": portrait_luna_happy,
-			"pos_1":      Vector2(150, 400),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_grom_reserved,
-			"pos_2":      Vector2(500, 400)
+			"pos_2":      Vector2(0, 0)
 		},
 		# --- Финальная реплика Астериона ---
 		{
 			"speaker":    "АСТЕРИОН",
 			"text":       "Поверьте, это только начало. Думаю, им скоро понадобится наша помощь снова. В конце концов, у них даже нет магии погоды. Только «прогноз». И он часто ошибается.",
 			"portrait_1": portrait_asterion_smiling,
-			"pos_1":      Vector2(1400, 400),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_luna_happy,
-			"pos_2":      Vector2(150, 400)
+			"pos_2":      Vector2(0, 0)
 		}
 		# Завершение → _on_dialogue_finished → _show_plashka_final
 	]

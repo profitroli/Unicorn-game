@@ -2,10 +2,12 @@
 
 [ext_resource type="Script" uid="uid://c528j71yfcptx" path="res://scripts/mission_3.gd" id="1_hvna8"]
 [ext_resource type="Script" uid="uid://dmg48kle5evsy" path="res://scripts/dialogue_manager.gd" id="1_q8smh"]
+[ext_resource type="Texture2D" uid="uid://bykob5s3ujl53" path="res://assets/foto/Gemini_Generated_Image_7myrbm7myrbm7myr (1) 1.png" id="2_7uc7w"]
 [ext_resource type="FontFile" uid="uid://desu4jund4dbp" path="res://assets/text/ArcadeJeu-Regular.otf" id="2_hvna8"]
 
 [node name="Mission3" type="Node2D" unique_id=1002992990]
 script = ExtResource("1_hvna8")
+bg_sahara_desert = ExtResource("2_7uc7w")
 
 [node name="Background" type="TextureRect" parent="." unique_id=145297760]
 offset_right = 1920.0

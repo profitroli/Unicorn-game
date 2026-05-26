@@ -652,120 +652,120 @@ func _start_dialogue_outro() -> void:
 			"speaker":    "АЛИСА",
 			"text":       "Я читала на форуме «Аномалии Земли»... Это такое сообщество, мы собираем странные случаи по миру.",
 			"portrait_1": portrait_alisa_serious,
-			"pos_1":      Vector2(1400, 420),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_unicorn_curious,
-			"pos_2":      Vector2(150, 420)
+			"pos_2":      Vector2(0, 0)
 		},
 		{
 			"speaker":    "ЕДИНОРОГ",
 			"text":       "Люди собирают странности? Это... удивительно рационально для вашего вида.",
 			"portrait_1": portrait_unicorn_curious,
-			"pos_1":      Vector2(150, 420),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_alisa_serious,
-			"pos_2":      Vector2(1400, 420)
+			"pos_2":      Vector2(0, 0)
 		},
 		{
 			"speaker":    "АЛИСА",
 			"text":       "Так, сейчас... вот! В пустыне Сахара, в районе Тенере, последние две недели наблюдают светящиеся врата в песке. Геологи думают, что это миражи. Но мираж не длится две недели, правда?",
 			"portrait_1": portrait_alisa_excited,
-			"pos_1":      Vector2(1400, 420),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_unicorn_curious,
-			"pos_2":      Vector2(150, 420)
+			"pos_2":      Vector2(0, 0)
 		},
 		{
 			"speaker":    "ЕДИНОРОГ",
 			"text":       "Сахара... Где это?",
 			"portrait_1": portrait_unicorn_curious,
-			"pos_1":      Vector2(150, 420),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_alisa_excited,
-			"pos_2":      Vector2(1400, 420)
+			"pos_2":      Vector2(0, 0)
 		},
 		{
 			"speaker":    "АЛИСА",
 			"text":       "Африка. Очень далеко и очень жарко. Но у меня есть контакт!",
 			"portrait_1": portrait_alisa_excited,
-			"pos_1":      Vector2(1400, 420),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_unicorn_curious,
-			"pos_2":      Vector2(150, 420)
+			"pos_2":      Vector2(0, 0)
 		},
 		{
 			"speaker":    "ЕДИНОРОГ",
 			"text":       "Контакт?",
 			"portrait_1": portrait_unicorn_curious,
-			"pos_1":      Vector2(150, 420),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_alisa_excited,
-			"pos_2":      Vector2(1400, 420)
+			"pos_2":      Vector2(0, 0)
 		},
 		{
 			"speaker":    "АЛИСА",
 			"text":       "Мой дядя – Игорь. Он как раз в той экспедиции, геолог. Немного сумасшедший, но лучший в своём деле. Правда, от него три дня нет вестей...",
 			"portrait_1": portrait_alisa_serious,
-			"pos_1":      Vector2(1400, 420),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_unicorn_curious,
-			"pos_2":      Vector2(150, 420)
+			"pos_2":      Vector2(0, 0)
 		},
 		{
 			"speaker":    "ЕДИНОРОГ",
 			"text":       "Значит, ему может понадобиться помощь. Как мне попасть в эту Сахару?",
 			"portrait_1": portrait_unicorn_wise,
-			"pos_1":      Vector2(150, 420),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_alisa_serious,
-			"pos_2":      Vector2(1400, 420)
+			"pos_2":      Vector2(0, 0)
 		},
 		{
 			"speaker":    "АЛИСА",
 			"text":       "Я отправлю тебя. У меня есть доступ к координатам экспедиции. Закрой глаза.",
 			"portrait_1": portrait_alisa_excited,
-			"pos_1":      Vector2(1400, 420),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_unicorn_wise,
-			"pos_2":      Vector2(150, 420)
+			"pos_2":      Vector2(0, 0)
 		},
 		{
 			"speaker":    "ЕДИНОРОГ",
 			"text":       "Что?",
 			"portrait_1": portrait_unicorn_curious,
-			"pos_1":      Vector2(150, 420),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_alisa_excited,
-			"pos_2":      Vector2(1400, 420)
+			"pos_2":      Vector2(0, 0)
 		},
 		{
 			"speaker":    "АЛИСА",
 			"text":       "Шучу! Короткая телепортация – это не ко мне. Но я знаю, где они. Иди на окраину города, там есть старая обсерватория. В подвале – портал. В детстве я нашла дневник деда.",
 			"portrait_1": portrait_alisa_serious,
-			"pos_1":      Vector2(1400, 420),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_unicorn_curious,
-			"pos_2":      Vector2(150, 420)
+			"pos_2":      Vector2(0, 0)
 		},
 		{
 			"speaker":    "АЛИСА",
 			"text":       "Он был исследователем аномалий и писал, что под старой обсерваторией есть разрыв ткани реальности. Я никогда не была там, но уверена — это то, что тебе нужно.",
 			"portrait_1": portrait_alisa_serious,
-			"pos_1":      Vector2(1400, 420),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_unicorn_curious,
-			"pos_2":      Vector2(150, 420)
+			"pos_2":      Vector2(0, 0)
 		},
 		# --- Прощание ---
 		{
 			"speaker":    "ЕДИНОРОГ",
 			"text":       "Ты удивительная, Алиса. Спасибо.",
 			"portrait_1": portrait_unicorn_wise,
-			"pos_1":      Vector2(150, 420),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_alisa_serious,
-			"pos_2":      Vector2(1400, 420)
+			"pos_2":      Vector2(0, 0)
 		},
 		{
 			"speaker":    "АЛИСА",
 			"text":       "Это тебе спасибо. Без тебя я бы так и сидела тут одна со своим латте. Передай дяде Игорю привет. И спаси его, если что.",
 			"portrait_1": portrait_alisa_happy,
-			"pos_1":      Vector2(1400, 420),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": portrait_unicorn_wise,
-			"pos_2":      Vector2(150, 420)
+			"pos_2":      Vector2(0, 0)
 		},
 		{
 			"speaker":    "ЕДИНОРОГ",
 			"text":       "Обещаю.",
 			"portrait_1": portrait_unicorn_neutral,
-			"pos_1":      Vector2(150, 420),
+			"pos_1":      Vector2(0, 0),
 			"portrait_2": null,
 			"pos_2":      Vector2.ZERO
 		}
