@@ -1,6 +1,4 @@
 # scripts/save_system.gd
-# ── Зарегистрируй как Autoload с именем "SaveSystem" ──────────────────────────
-# Project → Project Settings → Autoload → + → scripts/save_system.gd → Name: SaveSystem
 extends Node
 class_name SaveSystemManager
 
@@ -9,7 +7,6 @@ signal saves_updated
 const SAVE_PATH : String = "user://game_saves.json"
 const MAX_SLOTS : int    = 3
 
-## Человекочитаемые названия сцен для отображения в UI.
 const SCENE_LABELS: Dictionary = {
   "res://scenes/prologue.tscn":  "Пролог",
   "res://scenes/mission_1.tscn": "Миссия 1 — Студент в панике",
@@ -17,14 +14,13 @@ const SCENE_LABELS: Dictionary = {
   "res://scenes/mission_3.tscn": "Миссия 3 — Вода в пустыне",
 }
 
-# Каждый слот: { id, scene_path, label, date, time, ts }
 var _slots: Array[Dictionary] = []
 
-# ── Lifecycle ────────────────────────────────────────────────────────────────
 func _ready() -> void:
   _load_from_disk()
 
 # ── Public API ───────────────────────────────────────────────────────────────
+
 func get_slots() -> Array[Dictionary]:
   return _slots.duplicate(true)
 
@@ -37,8 +33,8 @@ func can_add() -> bool:
 func label_for(scene_path: String) -> String:
   return SCENE_LABELS.get(scene_path, "Неизвестная сцена")
 
-## Создаёт новый слот для указанной сцены.
-## Возвращает false, если достигнут лимит.
+## Создаёт новый слот. Присваивает наименьший свободный порядковый номер (1–3).
+## Возвращает false если достигнут лимит.
 func create_save(scene_path: String) -> bool:
   if not can_add():
     return false
@@ -46,17 +42,17 @@ func create_save(scene_path: String) -> bool:
   var dt := Time.get_datetime_dict_from_system()
   _slots.append({
     "id":         Time.get_ticks_msec(),
+    "number":     _get_next_slot_number(),   # ← порядковый номер
     "scene_path": scene_path,
     "label":      label_for(scene_path),
-    "date":       "%02d.%02d.%04d" % [dt.day,   dt.month, dt.year],
-    "time":       "%02d:%02d"       % [dt.hour,  dt.minute],
+    "date":       "%02d.%02d.%04d" % [dt.day, dt.month, dt.year],
+    "time":       "%02d:%02d"      % [dt.hour, dt.minute],
     "ts":          Time.get_unix_time_from_system(),
   })
   _persist()
   saves_updated.emit()
   return true
 
-## Удаляет слот по индексу (0-based).
 func delete_at(index: int) -> void:
   if index < 0 or index >= _slots.size():
     return
@@ -64,20 +60,38 @@ func delete_at(index: int) -> void:
   _persist()
   saves_updated.emit()
 
-## Удаляет последний добавленный слот.
+## Оставлен для совместимости, но теперь не используется в главном меню.
 func delete_last() -> void:
   if not _slots.is_empty():
     _slots.pop_back()
     _persist()
     saves_updated.emit()
 
-## Возвращает путь к сцене слота по индексу, "" при ошибке.
 func scene_at(index: int) -> String:
   if index < 0 or index >= _slots.size():
     return ""
   return _slots[index].get("scene_path", "")
 
+# ── Helpers ──────────────────────────────────────────────────────────────────
+
+## Возвращает наименьший незанятый номер из диапазона 1..MAX_SLOTS.
+func _get_next_slot_number() -> int:
+  # Собираем уже занятые номера
+  var used: Array[int] = []
+  for slot: Dictionary in _slots:
+    var n: int = slot.get("number", 0)
+    if n > 0:
+      used.append(n)
+
+  # Ищем первый свободный
+  for n: int in range(1, MAX_SLOTS + 1):
+    if n not in used:
+      return n
+
+  return _slots.size() + 1  # fallback (не должен достигаться при лимите 3)
+
 # ── Disk I/O ─────────────────────────────────────────────────────────────────
+
 func _persist() -> void:
   var file := FileAccess.open(SAVE_PATH, FileAccess.WRITE)
   if not file:
@@ -107,4 +121,10 @@ func _load_from_disk() -> void:
     for entry: Variant in data:
       if entry is Dictionary:
         _slots.append(entry as Dictionary)
+
+  # Миграция: старые сохранения без поля "number" получают номер по позиции
+  for i: int in range(_slots.size()):
+    if not _slots[i].has("number"):
+      _slots[i]["number"] = i + 1
+
   print("[SaveSystem] Загружено слотов: %d" % _slots.size())

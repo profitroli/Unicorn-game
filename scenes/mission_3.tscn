@@ -4,10 +4,16 @@
 [ext_resource type="Script" uid="uid://dmg48kle5evsy" path="res://scripts/dialogue_manager.gd" id="1_q8smh"]
 [ext_resource type="Texture2D" uid="uid://bykob5s3ujl53" path="res://assets/foto/Gemini_Generated_Image_7myrbm7myrbm7myr (1) 1.png" id="2_7uc7w"]
 [ext_resource type="FontFile" uid="uid://desu4jund4dbp" path="res://assets/text/ArcadeJeu-Regular.otf" id="2_hvna8"]
+[ext_resource type="Texture2D" uid="uid://dtdyoied8lp6m" path="res://assets/foto/Gemini_Generated_Image_aytbk9aytbk9aytb 1.png" id="3_175cs"]
+[ext_resource type="Texture2D" uid="uid://dtearq6pjalkb" path="res://assets/unicorn/Group 114(2).png" id="4_4m4rk"]
+[ext_resource type="Texture2D" uid="uid://bbd20yr0q8pv2" path="res://assets/unicorn/Group 133.png" id="5_tory7"]
 
 [node name="Mission3" type="Node2D" unique_id=1002992990]
 script = ExtResource("1_hvna8")
 bg_sahara_desert = ExtResource("2_7uc7w")
+bg_sahara_anomaly = ExtResource("3_175cs")
+portrait_unicorn_neutral = ExtResource("4_4m4rk")
+portrait_unicorn_curious = ExtResource("5_tory7")
 
 [node name="Background" type="TextureRect" parent="." unique_id=145297760]
 offset_right = 1920.0

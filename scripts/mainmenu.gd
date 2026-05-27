@@ -1,7 +1,11 @@
-# scripts/mainmenu.gd
 extends Control
 
 const SLOT_TEXTURE := preload("res://assets/icon/Group 113.png")
+
+# Цвета состояний слота
+const COLOR_NORMAL   := Color(1.0,  1.0,  1.0,  1.0)
+const COLOR_SELECTED := Color(0.85, 0.78, 1.0,  1.0)  # мягкий фиолетовый оттенок
+const COLOR_HINT     := Color(0.7,  0.95, 0.7,  1.0)  # зелёный hint «нажми ещё раз»
 
 @onready var saves_list: VBoxContainer = $TextureRect/Controlsave/SavesList
 
@@ -9,8 +13,10 @@ const SLOT_TEXTURE := preload("res://assets/icon/Group 113.png")
 var _selected_index: int = -1
 var _custom_font: Font
 
+## Ссылки на кнопки слотов для управления подсветкой без перестройки списка.
+var _slot_buttons: Array[Button] = []
+
 func _ready() -> void:
-  # ── Загружаем шрифт ────────────────────────────────────────
   _custom_font = load("res://assets/text/PixelifySans-VariableFont_wght.ttf")
 
   # ── Кнопки главного меню ────────────────────────────────────
@@ -33,15 +39,12 @@ func _ready() -> void:
   $TextureRect/Controlsave/add.pressed.connect(_on_add_save_pressed)
   $TextureRect/Controlsave/delete.pressed.connect(_on_delete_save_pressed)
 
-  # ── Скрываем панели ─────────────────────────────────────────
   $TextureRect/Controlvixod.visible = false
   $TextureRect/Controlset.visible   = false
   $TextureRect/Controlsave.visible  = false
 
-  # ── FPS popup стилизация ─────────────────────────────────────
   _setup_fps_popup()
 
-  # ── Подписка на обновления SaveSystem ───────────────────────
   var sys: SaveSystemManager = _get_save_system()
   if sys:
     sys.saves_updated.connect(_refresh_saves_list)
@@ -51,6 +54,7 @@ func _ready() -> void:
 # ────────────────────────────────────────────────────────────────
 # ГЛАВНОЕ МЕНЮ
 # ────────────────────────────────────────────────────────────────
+
 func _on_play_pressed() -> void:
   get_tree().change_scene_to_file("res://scenes/intro.tscn")
 
@@ -85,7 +89,6 @@ func _on_close_save_pressed() -> void:
 # СОХРАНЕНИЯ
 # ────────────────────────────────────────────────────────────────
 
-## «Добавить» — сохраняет last_played_scene, если слот доступен.
 func _on_add_save_pressed() -> void:
   var sys: SaveSystemManager = _get_save_system()
   if not sys:
@@ -99,32 +102,36 @@ func _on_add_save_pressed() -> void:
   var scene: String = g.last_played_scene if g else ""
 
   if scene == "":
-    # Нечего сохранять — нет истории прохождения
     _flash_button($TextureRect/Controlsave/add, Color.RED)
     return
 
   if sys.create_save(scene):
     _flash_button($TextureRect/Controlsave/add, Color.GREEN)
-  # _refresh_saves_list вызовется автоматически через сигнал saves_updated
+  # _refresh_saves_list вызовется автоматически через saves_updated
 
-## «Удалить» — удаляет выбранный слот или последний.
+## Удаляет ВЫБРАННЫЙ слот.
+## Если ничего не выбрано — подсвечивает кнопку красным как подсказку.
 func _on_delete_save_pressed() -> void:
   var sys: SaveSystemManager = _get_save_system()
   if not sys or sys.get_count() == 0:
     _flash_button($TextureRect/Controlsave/delete, Color.RED)
     return
-  if _selected_index >= 0 and _selected_index < sys.get_count():
-    sys.delete_at(_selected_index)
-  else:
-    sys.delete_last()
 
+  if _selected_index < 0 or _selected_index >= sys.get_count():
+    # Ничего не выбрано — намекаем игроку выбрать слот
+    _flash_button($TextureRect/Controlsave/delete, Color.RED)
+    _flash_saves_list_hint()
+    return
+
+  sys.delete_at(_selected_index)
   _selected_index = -1
-  # _refresh_saves_list вызовется автоматически через saves_updated
+  # _refresh_saves_list вызовется через saves_updated
 
-## Полностью перестраивает список слотов в UI.
+## Перестраивает список слотов.
 func _refresh_saves_list() -> void:
-  # Очищаем старые элементы
-  for child in saves_list.get_children():
+  _slot_buttons.clear()
+
+  for child: Node in saves_list.get_children():
     child.queue_free()
 
   var sys: SaveSystemManager = _get_save_system()
@@ -133,10 +140,14 @@ func _refresh_saves_list() -> void:
 
   var slots := sys.get_slots()
   for i: int in slots.size():
-    var slot_btn := _build_slot_button(slots[i], i)
-    saves_list.add_child(slot_btn)
+    var btn: Button = _build_slot_button(slots[i], i)
+    saves_list.add_child(btn)
+    _slot_buttons.append(btn)
 
-## Строит кнопку-слот с нужными данными.
+  # Восстанавливаем подсветку после перестройки
+  _update_slot_highlights()
+
+## Строит кнопку-слот.
 func _build_slot_button(slot: Dictionary, index: int) -> Button:
   var btn := Button.new()
   btn.flat = true
@@ -153,7 +164,6 @@ func _build_slot_button(slot: Dictionary, index: int) -> Button:
     bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
     btn.add_child(bg)
 
-  # --- стили ---
   var s_normal  := _make_slot_style(Color(0.0, 0.0, 0.0, 0.0))
   var s_hover   := _make_slot_style(Color(0.553, 0.459, 0.984, 0.15))
   var s_pressed := _make_slot_style(Color(0.553, 0.459, 0.984, 0.30))
@@ -161,17 +171,41 @@ func _build_slot_button(slot: Dictionary, index: int) -> Button:
   btn.add_theme_stylebox_override("hover",   s_hover)
   btn.add_theme_stylebox_override("pressed", s_pressed)
 
-  # --- метка миссии ---
+  # --- Номер сохранения (крупно, слева) ---
+  var slot_number: int = slot.get("number", index + 1)
+
+  var lbl_number := Label.new()
+  lbl_number.text     = "№%d" % slot_number
+  lbl_number.position = Vector2(18.0, 22.0)
+  lbl_number.add_theme_color_override("font_color", Color(0.553, 0.459, 0.984, 1.0))
+  if _custom_font:
+    lbl_number.add_theme_font_override("font", _custom_font)
+    lbl_number.add_theme_font_size_override("font_size", 42)
+  btn.add_child(lbl_number)
+
+  # --- Название миссии ---
   var lbl_name := Label.new()
-  lbl_name.text     = "СОХРАНЕНИЕ\n" + slot.get("label", "?")
-  lbl_name.position = Vector2(140.0, 18.0)
+  lbl_name.text     = slot.get("label", "?")
+  lbl_name.position = Vector2(115.0, 14.0)
   lbl_name.add_theme_color_override("font_color", Color.BLACK)
   if _custom_font:
     lbl_name.add_theme_font_override("font", _custom_font)
-    lbl_name.add_theme_font_size_override("font_size", 28)
+    lbl_name.add_theme_font_size_override("font_size", 26)
   btn.add_child(lbl_name)
 
-  # --- метка времени / даты ---
+  # --- Подсказка (появляется когда слот выбран) ---
+  var lbl_hint := Label.new()
+  lbl_hint.name     = "HintLabel"
+  lbl_hint.text     = "▶️ нажми ещё раз для загрузки"
+  lbl_hint.position = Vector2(115.0, 52.0)
+  lbl_hint.visible  = false
+  lbl_hint.add_theme_color_override("font_color", Color(0.2, 0.7, 0.2, 1.0))
+  if _custom_font:
+    lbl_hint.add_theme_font_override("font", _custom_font)
+    lbl_hint.add_theme_font_size_override("font_size", 20)
+  btn.add_child(lbl_hint)
+
+  # --- Дата и время (справа) ---
   var lbl_time := Label.new()
   lbl_time.text     = slot.get("time", "??:??") + "\n" + slot.get("date", "??.??.????")
   lbl_time.position = Vector2(800.0, 18.0)
@@ -181,7 +215,6 @@ func _build_slot_button(slot: Dictionary, index: int) -> Button:
     lbl_time.add_theme_font_size_override("font_size", 24)
   btn.add_child(lbl_time)
 
-  # --- обработчик нажатия ---
   btn.pressed.connect(func() -> void: _on_slot_pressed(index))
   return btn
 
@@ -191,9 +224,19 @@ func _make_slot_style(tint: Color) -> StyleBoxFlat:
   s.set_corner_radius_all(8)
   return s
 
-## Нажатие на слот → загрузить сцену.
+## Первый клик — выбор слота (подсветка).
+## Второй клик по уже выбранному — загрузка сцены.
 func _on_slot_pressed(index: int) -> void:
-  _selected_index = index
+  if _selected_index == index:
+    # Повторный клик = загрузка
+    _load_save_at(index)
+  else:
+    # Первый клик = выбор
+    _selected_index = index
+    _update_slot_highlights()
+
+## Загружает сцену из слота по индексу.
+func _load_save_at(index: int) -> void:
   var sys: SaveSystemManager = _get_save_system()
   if not sys:
     return
@@ -202,10 +245,33 @@ func _on_slot_pressed(index: int) -> void:
     get_tree().change_scene_to_file(path)
   else:
     push_warning("[MainMenu] Путь сцены не найден: '%s'" % path)
+    _flash_button(_slot_buttons[index], Color.RED)
+
+## Обновляет внешний вид всех слотов в зависимости от выбранного.
+func _update_slot_highlights() -> void:
+  for i: int in _slot_buttons.size():
+    var btn: Button = _slot_buttons[i]
+    var hint: Label = btn.get_node_or_null("HintLabel")
+    var is_selected: bool = (i == _selected_index)
+
+    # Подсветка самой кнопки
+    btn.modulate = COLOR_SELECTED if is_selected else COLOR_NORMAL
+
+    # Показываем подсказку «нажми ещё раз» только у выбранного
+    if hint:
+      hint.visible = is_selected
+
+## Мигает всеми слотами зелёным — подсказка «выбери слот для удаления».
+func _flash_saves_list_hint() -> void:
+  for btn: Button in _slot_buttons:
+    var tw := btn.create_tween()
+    tw.tween_property(btn, "modulate", Color(1.0, 0.85, 0.5, 1.0), 0.15)
+    tw.tween_property(btn, "modulate", COLOR_NORMAL,                0.35)
 
 # ────────────────────────────────────────────────────────────────
 # НАСТРОЙКИ
 # ────────────────────────────────────────────────────────────────
+
 func _on_volume_slider_value_changed(value: float) -> void:
   var bus_index := AudioServer.get_bus_index("Master")
   AudioServer.set_bus_volume_db(bus_index, value)
@@ -217,18 +283,19 @@ func _on_fps_button_item_selected(index: int) -> void:
 func _on_anti_aliasing_button_toggled(toggled_on: bool) -> void:
   var rid := get_viewport().get_viewport_rid()
   var msaa := RenderingServer.VIEWPORT_MSAA_2X if toggled_on \
-              else RenderingServer.VIEWPORT_MSAA_DISABLED
+        else RenderingServer.VIEWPORT_MSAA_DISABLED
   RenderingServer.viewport_set_msaa_2d(rid, msaa)
+
 # ────────────────────────────────────────────────────────────────
 # УТИЛИТЫ
 # ────────────────────────────────────────────────────────────────
+
 func _get_save_system() -> SaveSystemManager:
   var sys := get_node_or_null("/root/SaveSystem") as SaveSystemManager
   if not sys:
     push_error("[MainMenu] Autoload 'SaveSystem' не найден!")
   return sys
 
-## Кратко подсвечивает кнопку цветом (визуальная обратная связь).
 func _flash_button(btn: Button, color: Color) -> void:
   var tw := create_tween()
   tw.tween_property(btn, "modulate", color,       0.1)

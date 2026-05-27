@@ -23,8 +23,8 @@ func _ready() -> void:
   load_from_disk()
 
 func save_unicorn_with_colors(
-	griva: String, hvost: String, rog: String, aks: String,
-	c_griva: Color, c_hvost: Color, c_rog: Color, c_aks: Color
+    griva: String, hvost: String, rog: String, aks: String,
+    c_griva: Color, c_hvost: Color, c_rog: Color, c_aks: Color
 ) -> void:
   temp_griva_path = griva
   temp_hvost_path = hvost
@@ -47,37 +47,37 @@ func save_unicorn(griva: String, hvost: String, rog: String, aks: String) -> voi
 
 func save_to_disk() -> void:
   var data := {
-	"griva_path":        temp_griva_path,
-	"hvost_path":        temp_hvost_path,
-	"rog_path":          temp_rog_path,
-	"aks_path":          temp_aks_path,
-	"color_griva":       color_griva.to_html(true),
-	"color_hvost":       color_hvost.to_html(true),
-	"color_rog":         color_rog.to_html(true),
-	"color_aks":         color_aks.to_html(true),
-	"last_played_scene": last_played_scene,    # ← новое
+    "griva_path":        temp_griva_path,
+    "hvost_path":        temp_hvost_path,
+    "rog_path":          temp_rog_path,
+    "aks_path":          temp_aks_path,
+    "color_griva":       color_griva.to_html(true),
+    "color_hvost":       color_hvost.to_html(true),
+    "color_rog":         color_rog.to_html(true),
+    "color_aks":         color_aks.to_html(true),
+    "last_played_scene": last_played_scene,    # ← новое
   }
   var file := FileAccess.open(SAVE_PATH, FileAccess.WRITE)
   if file == null:
-	push_error("[GlobalData] Не удалось открыть файл для записи: %s" % SAVE_PATH)
-	return
+    push_error("[GlobalData] Не удалось открыть файл для записи: %s" % SAVE_PATH)
+    return
   file.store_string(JSON.stringify(data, "\t"))
   file.close()
 
 func load_from_disk() -> void:
   if not FileAccess.file_exists(SAVE_PATH):
-	return
+    return
   var file := FileAccess.open(SAVE_PATH, FileAccess.READ)
   if file == null:
-	push_error("[GlobalData] Не удалось открыть файл для чтения: %s" % SAVE_PATH)
-	return
+    push_error("[GlobalData] Не удалось открыть файл для чтения: %s" % SAVE_PATH)
+    return
   var raw := file.get_as_text()
   file.close()
 
   var json := JSON.new()
   if json.parse(raw) != OK:
-	push_error("[GlobalData] Ошибка парсинга: %s" % json.get_error_message())
-	return
+    push_error("[GlobalData] Ошибка парсинга: %s" % json.get_error_message())
+    return
 
   var data: Dictionary = json.get_data()
   temp_griva_path   = data.get("griva_path", temp_griva_path)
