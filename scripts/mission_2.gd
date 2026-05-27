@@ -31,6 +31,7 @@ var _phase: Phase = Phase.FADE_IN
 ## Фон: кафе «Луна» — приглушённый свет, гирлянды
 @export var bg_cafe_luna: Texture2D
 @export var ui_app_profile_arseniy: Texture2D
+@export var bg_sahara: Texture2D
 ## Длительность показа фона перед плашкой (сек)
 @export var background_view_time: float = 1.5
 
@@ -284,16 +285,16 @@ func _start_dialogue_intro() -> void:
             "text":       "Э-э-э... домашних животных нельзя...",
             "portrait_1": portrait_barista,          # portrait_barista — placeholder
             "pos_1":      Vector2(0, 0),
-            "portrait_2": null,
-            "pos_2":      Vector2.ZERO
+            "portrait_2": portrait_unicorn_neutral,
+            "pos_2":      Vector2(0, 0),
         },
         {
             "speaker":    "ЕДИНОРОГ",
             "text":       "Я не домашнее животное. Я ищу Алису.",
-            "portrait_1": portrait_unicorn_neutral,
+            "portrait_1": portrait_unicorn_curious,
             "pos_1":      Vector2(0, 0),
-            "portrait_2": null,
-            "pos_2":      Vector2.ZERO
+            "portrait_2": portrait_alisa_sad,
+            "pos_2":      Vector2(0, 0),
         },
         # --- Алиса замечает, удивляется ---
         {
@@ -307,7 +308,7 @@ func _start_dialogue_intro() -> void:
         {
             "speaker":    "ЕДИНОРОГ",
             "text":       "В книжках мы тоже, но я вот – живой. Ты Алиса? Макс сказал, ты разбираешься в магии.",
-            "portrait_1": portrait_unicorn_neutral,
+            "portrait_1": portrait_unicorn_curious,
             "pos_1":      Vector2(0, 0),
             "portrait_2": portrait_alisa_surprised,
             "pos_2":      Vector2(0, 0)
@@ -334,13 +335,13 @@ func _start_dialogue_intro() -> void:
             "text":       "Ох... Я просто устала быть одна. Все подруги с кем-то знакомятся, ходят на свидания... А я сижу тут, читаю фэнтези и разговариваю с воображаемыми персонажами.",
             "portrait_1": portrait_alisa_sad,
             "pos_1":      Vector2(0, 0),
-            "portrait_2": portrait_unicorn_curious,
+            "portrait_2": portrait_unicorn_neutral,
             "pos_2":      Vector2(0, 0)
         },
         {
             "speaker":    "ЕДИНОРОГ",
             "text":       "Воображаемые персонажи – отличная компания. У меня друг дракон, мы с ним... ой. Неважно.",
-            "portrait_1": portrait_unicorn_neutral,
+            "portrait_1": portrait_unicorn_curious,
             "pos_1":      Vector2(0, 0),
             "portrait_2": portrait_alisa_sad,
             "pos_2":      Vector2(0, 0)
@@ -366,7 +367,7 @@ func _start_dialogue_intro() -> void:
             "text":       "Здесь так не работает. Есть приложения для знакомств. Но я не умею преподносить себя... Всегда пишу что-то не то.",
             "portrait_1": portrait_alisa_sad,
             "pos_1":      Vector2(0, 0),
-            "portrait_2": portrait_unicorn_curious,
+            "portrait_2": portrait_unicorn_neutral,
             "pos_2":      Vector2(0, 0)
         },
         # --- Триггер мини-игры А ---
@@ -503,8 +504,8 @@ func _start_dialogue_between() -> void:
             "text":       "Готово... Ой, тут сразу кто-то лайкнул!",
             "portrait_1": portrait_alisa_excited,
             "pos_1":      Vector2(0, 0),
-            "portrait_2": null,
-            "pos_2":      Vector2.ZERO,
+            "portrait_2": portrait_unicorn_neutral,
+            "pos_2":      Vector2(0, 0),
             "show_ui":    "profile_arseniy"          # ui_app_profile_arseniy — placeholder
         },
         {
@@ -512,8 +513,8 @@ func _start_dialogue_between() -> void:
             "text":       "Арсений... У него фото со звёздами. И в описании: «Ночую на крыше, наблюдаю за галактиками. Ищу того, кто тоже смотрит вверх». Ого...",
             "portrait_1": portrait_alisa_excited,
             "pos_1":      Vector2(0, 0),
-            "portrait_2": null,
-            "pos_2":      Vector2.ZERO,
+           "portrait_2": portrait_unicorn_neutral,
+            "pos_2":      Vector2(0, 0),
             "show_ui":    "profile_arseniy"
         },
         {
@@ -601,8 +602,8 @@ func _start_dialogue_outro() -> void:
             "text":       "Он предлагает встретиться. Завтра. В книжном.",
             "portrait_1": portrait_alisa_happy,
             "pos_1":      Vector2(0, 0),
-            "portrait_2": null,
-            "pos_2":      Vector2.ZERO,
+            "portrait_2": portrait_unicorn_neutral,
+            "pos_2":       Vector2(0, 0),
             "show_ui":    "profile_arseniy"          # ui_app_profile_arseniy — placeholder
         },
         {
@@ -619,14 +620,14 @@ func _start_dialogue_outro() -> void:
             "text":       "Это идеальный знак. Я никогда не думала, что мне поможет единорог.",
             "portrait_1": portrait_alisa_laughing,
             "pos_1":      Vector2(0, 0),
-            "portrait_2": portrait_unicorn_curious,
+            "portrait_2": portrait_unicorn_neutral,
             "pos_2":      Vector2(0, 0),
             "show_ui":    ""
         },
         {
             "speaker":    "ЕДИНОРОГ",
             "text":       "Я никогда не думал, что попаду в мир без магии и найду тебе парня.",
-            "portrait_1": portrait_unicorn_neutral,
+            "portrait_1": portrait_unicorn_curious,
             "pos_1":      Vector2(0, 0),
             "portrait_2": portrait_alisa_laughing,
             "pos_2":      Vector2(0, 0)
@@ -653,7 +654,7 @@ func _start_dialogue_outro() -> void:
             "text":       "Я читала на форуме «Аномалии Земли»... Это такое сообщество, мы собираем странные случаи по миру.",
             "portrait_1": portrait_alisa_serious,
             "pos_1":      Vector2(0, 0),
-            "portrait_2": portrait_unicorn_curious,
+            "portrait_2": portrait_unicorn_neutral,
             "pos_2":      Vector2(0, 0)
         },
         {
@@ -669,7 +670,7 @@ func _start_dialogue_outro() -> void:
             "text":       "Так, сейчас... вот! В пустыне Сахара, в районе Тенере, последние две недели наблюдают светящиеся врата в песке. Геологи думают, что это миражи. Но мираж не длится две недели, правда?",
             "portrait_1": portrait_alisa_excited,
             "pos_1":      Vector2(0, 0),
-            "portrait_2": portrait_unicorn_curious,
+            "portrait_2": portrait_unicorn_neutral,
             "pos_2":      Vector2(0, 0)
         },
         {
@@ -685,7 +686,7 @@ func _start_dialogue_outro() -> void:
             "text":       "Африка. Очень далеко и очень жарко. Но у меня есть контакт!",
             "portrait_1": portrait_alisa_excited,
             "pos_1":      Vector2(0, 0),
-            "portrait_2": portrait_unicorn_curious,
+            "portrait_2": portrait_unicorn_neutral,
             "pos_2":      Vector2(0, 0)
         },
         {
@@ -701,7 +702,7 @@ func _start_dialogue_outro() -> void:
             "text":       "Мой дядя – Игорь. Он как раз в той экспедиции, геолог. Немного сумасшедший, но лучший в своём деле. Правда, от него три дня нет вестей...",
             "portrait_1": portrait_alisa_serious,
             "pos_1":      Vector2(0, 0),
-            "portrait_2": portrait_unicorn_curious,
+            "portrait_2": portrait_unicorn_neutral,
             "pos_2":      Vector2(0, 0)
         },
         {
@@ -733,7 +734,7 @@ func _start_dialogue_outro() -> void:
             "text":       "Шучу! Короткая телепортация – это не ко мне. Но я знаю, где они. Иди на окраину города, там есть старая обсерватория. В подвале – портал. В детстве я нашла дневник деда.",
             "portrait_1": portrait_alisa_serious,
             "pos_1":      Vector2(0, 0),
-            "portrait_2": portrait_unicorn_curious,
+            "portrait_2": portrait_unicorn_neutral,
             "pos_2":      Vector2(0, 0)
         },
         {
@@ -741,7 +742,7 @@ func _start_dialogue_outro() -> void:
             "text":       "Он был исследователем аномалий и писал, что под старой обсерваторией есть разрыв ткани реальности. Я никогда не была там, но уверена — это то, что тебе нужно.",
             "portrait_1": portrait_alisa_serious,
             "pos_1":      Vector2(0, 0),
-            "portrait_2": portrait_unicorn_curious,
+            "portrait_2": portrait_unicorn_neutral,
             "pos_2":      Vector2(0, 0)
         },
         # --- Прощание ---
@@ -764,10 +765,10 @@ func _start_dialogue_outro() -> void:
         {
             "speaker":    "ЕДИНОРОГ",
             "text":       "Обещаю.",
-            "portrait_1": portrait_unicorn_neutral,
+            "portrait_1": portrait_unicorn_curious,
             "pos_1":      Vector2(0, 0),
-            "portrait_2": null,
-            "pos_2":      Vector2.ZERO
+            "portrait_2": portrait_alisa_happy,
+            "pos_2":      Vector2(0, 0)
         }
     ]
 
@@ -779,17 +780,23 @@ func _start_dialogue_outro() -> void:
 # Идентично _show_plashka() из prologue.gd
 # ==============================================================
 func _show_plashka(text: String) -> void:
-    _phase = Phase.PLASHKA
-    plashka_label.text = text
+    _phase = Phase.PLASHKA 
+    plashka_label.text = text 
 
-    await get_tree().create_timer(background_view_time).timeout
+    # Устанавливаем картинку Сахары, как делали в прологе и миссии 1
+    if background and bg_sahara:
+        background.texture = bg_sahara
 
-    var tw: Tween = create_tween()
-    tw.tween_property(plashka_rect,  "color",         Color(0, 0, 0, 0.85), 0.5)
-    tw.parallel().tween_property(plashka_label, "modulate:a", 1.0,          0.5)
-    await tw.finished
+    # Ждём заданное время, давая игроку рассмотреть новый фон
+    await get_tree().create_timer(background_view_time).timeout 
 
-    await get_tree().create_timer(2.5).timeout
+    # Плавное появление плашки с текстом поверх новой картинки
+    var tw: Tween = create_tween() 
+    tw.tween_property(plashka_rect,  "color",         Color(0, 0, 0, 0.85), 0.5) 
+    tw.parallel().tween_property(plashka_label, "modulate:a", 1.0,          0.5) 
+    await tw.finished 
+
+    await get_tree().create_timer(2.5).timeout 
     _begin_fade_out()
 
 # ==============================================================

@@ -5,15 +5,40 @@
 [ext_resource type="Texture2D" uid="uid://bykob5s3ujl53" path="res://assets/foto/Gemini_Generated_Image_7myrbm7myrbm7myr (1) 1.png" id="2_7uc7w"]
 [ext_resource type="FontFile" uid="uid://desu4jund4dbp" path="res://assets/text/ArcadeJeu-Regular.otf" id="2_hvna8"]
 [ext_resource type="Texture2D" uid="uid://dtdyoied8lp6m" path="res://assets/foto/Gemini_Generated_Image_aytbk9aytbk9aytb 1.png" id="3_175cs"]
-[ext_resource type="Texture2D" uid="uid://dtearq6pjalkb" path="res://assets/unicorn/Group 114(2).png" id="4_4m4rk"]
-[ext_resource type="Texture2D" uid="uid://bbd20yr0q8pv2" path="res://assets/unicorn/Group 133.png" id="5_tory7"]
+[ext_resource type="Texture2D" uid="uid://b6hyxsm0fhy57" path="res://assets/unicorn/Group 133(2).png" id="4_4m4rk"]
+[ext_resource type="Texture2D" uid="uid://bh40uj1131li7" path="res://assets/kseniya/Group 133(4).png" id="4_tk4rw"]
+[ext_resource type="Texture2D" uid="uid://5ax25p7letwq" path="res://assets/unicorn/Group 133(1).png" id="5_4m4rk"]
+[ext_resource type="Texture2D" uid="uid://c3kpyjvg0thp7" path="res://assets/kseniya/Group 133(6).png" id="5_eot8g"]
+[ext_resource type="Texture2D" uid="uid://pns388tctuaf" path="res://assets/kseniya/Group 133(5).png" id="6_8h1x1"]
+[ext_resource type="Texture2D" uid="uid://csl7usw7a36gk" path="res://assets/kseniya/Group 133(8).png" id="7_03feh"]
+[ext_resource type="Texture2D" uid="uid://b0qtdhf13lyxq" path="res://assets/kseniya/Group 133(9).png" id="8_73187"]
+[ext_resource type="Texture2D" uid="uid://b6sam7ce10dw5" path="res://assets/unicorn/Group 133(10).png" id="9_jpaxb"]
+[ext_resource type="Texture2D" uid="uid://bdpl5yjkl6irn" path="res://assets/kseniya/Group 133(3).png" id="9_t3olm"]
+[ext_resource type="Texture2D" uid="uid://cuqvuvv763jrn" path="res://assets/kseniya/Group 133(15).png" id="10_al3hx"]
+[ext_resource type="Texture2D" uid="uid://bnmr6pw2k5p50" path="res://assets/kseniya/Group 133(16).png" id="11_awe37"]
+[ext_resource type="Texture2D" uid="uid://wvkxewuwo1rf" path="res://assets/unicorn/Group 133(11).png" id="12_t3olm"]
+[ext_resource type="Texture2D" uid="uid://bwvonsi5vti4h" path="res://assets/unicorn/Group 133(12).png" id="16_caqw1"]
+[ext_resource type="Texture2D" uid="uid://cauxabo1p3cix" path="res://assets/unicorn/Group 133(13).png" id="17_mxh81"]
 
 [node name="Mission3" type="Node2D" unique_id=1002992990]
 script = ExtResource("1_hvna8")
 bg_sahara_desert = ExtResource("2_7uc7w")
 bg_sahara_anomaly = ExtResource("3_175cs")
+portrait_ksenia_weak = ExtResource("4_tk4rw")
+portrait_ksenia_squinting = ExtResource("5_eot8g")
+portrait_ksenia_hopeful = ExtResource("6_8h1x1")
+portrait_ksenia_happy = ExtResource("7_03feh")
+portrait_ksenia_grateful = ExtResource("8_73187")
+portrait_ksenia_moved = ExtResource("8_73187")
+portrait_igor_focused = ExtResource("9_t3olm")
+portrait_igor_frozen = ExtResource("10_al3hx")
+portrait_igor_believer = ExtResource("11_awe37")
+portrait_unicorn_dusty = ExtResource("9_jpaxb")
 portrait_unicorn_neutral = ExtResource("4_4m4rk")
-portrait_unicorn_curious = ExtResource("5_tory7")
+portrait_unicorn_curious = ExtResource("5_4m4rk")
+portrait_unicorn_wise = ExtResource("12_t3olm")
+portrait_unicorn_glowing = ExtResource("16_caqw1")
+portrait_unicorn_farewell = ExtResource("17_mxh81")
 
 [node name="Background" type="TextureRect" parent="." unique_id=145297760]
 offset_right = 1920.0
@@ -24,6 +49,10 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="CharacterPortrait2" type="TextureRect" parent="." unique_id=1271020969]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="CharacterPortrait3" type="TextureRect" parent="." unique_id=139714122]
 offset_right = 40.0
 offset_bottom = 40.0
 

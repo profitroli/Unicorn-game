@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c15sr2qw3hmk4"
-path="res://.godot/imported/Group 137(2).png-d10076f85a39ab385077a037bcb7e6d4.ctex"
+uid="uid://fya5pmdofgj5"
+path="res://.godot/imported/Говорит смотрит в экран(1).png-377d59cfedd325da502f3cf7748801b3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/alisa/Group 137(2).png"
-dest_files=["res://.godot/imported/Group 137(2).png-d10076f85a39ab385077a037bcb7e6d4.ctex"]
+source_file="res://assets/alisa/Говорит смотрит в экран(1).png"
+dest_files=["res://.godot/imported/Говорит смотрит в экран(1).png-377d59cfedd325da502f3cf7748801b3.ctex"]
 
 [params]
 

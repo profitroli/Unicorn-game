@@ -89,7 +89,7 @@ var _phase: Phase = Phase.FADE_IN
 @onready var dialogue_box: Control            = $DialogueBox
 @onready var character_portrait_1: TextureRect = $CharacterPortrait1
 @onready var character_portrait_2: TextureRect = $CharacterPortrait2
-#@onready var character_portrait_3: TextureRect = $CharacterPortrait3
+@onready var character_portrait_3: TextureRect = $CharacterPortrait3
 @onready var plashka_rect: ColorRect          = $PlashkaLayer/PlashkaRect
 @onready var plashka_label: Label             = $PlashkaLayer/PlashkaLabel
 @onready var minigame_layer: CanvasLayer      = $MinigameLayer
@@ -169,6 +169,7 @@ func _ready() -> void:
 
     if character_portrait_1: character_portrait_1.visible = false
     if character_portrait_2: character_portrait_2.visible = false
+    if character_portrait_3: character_portrait_3.visible = false
 
     plashka_label.modulate.a = 0.0
     plashka_rect.color       = Color(0, 0, 0, 0.0)
@@ -262,13 +263,13 @@ func _start_dialogue_intro() -> void:
             "text":       "...Так. Я сплю. Или переработал. Или это побочка от пятой чашки кофе.",
             "portrait_1": portrait_max_surprised,
             "pos_1":      Vector2(0, 0),
-            "portrait_2": portrait_unicorn_curious,
+            "portrait_2": portrait_unicorn_neutral,
             "pos_2":      Vector2(0, 0)
         },
         {
             "speaker":    "ЕДИНОРОГ",
             "text":       "Ты не спишь. Я Астерион. Из Волшебного леса. Портал, случайность, долгая история... Тебе нужна помощь – я чувствую это вот здесь.",
-            "portrait_1": portrait_unicorn_neutral,
+            "portrait_1": portrait_unicorn_curious,
             "pos_1":      Vector2(0, 0),
             "portrait_2": portrait_max_surprised,
             "pos_2":      Vector2(0, 0)
@@ -293,7 +294,7 @@ func _start_dialogue_intro() -> void:
         {
             "speaker":    "ЕДИНОРОГ",
             "text":       "В моём мире я помогал лесу расти, а рекам – не пересыхать. Учебный день? Должен справиться. Что нужно?",
-            "portrait_1": portrait_unicorn_wise,
+            "portrait_1": portrait_unicorn_curious,
             "pos_1":      Vector2(0, 0),
             "portrait_2": portrait_max_resigned,
             "pos_2":      Vector2(0, 0)
@@ -303,13 +304,13 @@ func _start_dialogue_intro() -> void:
             "text":       "ВСЁ! Реферат по философии, зачёт по социологии, групповой проект, который я делаю один... Если я всё провалю – отец меня убьёт. Он говорит, я позор семьи, потому что ничего не довожу до конца.",
             "portrait_1": portrait_max_desperate,
             "pos_1":      Vector2(0, 0),
-            "portrait_2": portrait_unicorn_wise,
+            "portrait_2": portrait_unicorn_neutral,
             "pos_2":      Vector2(0, 0)
         },
         {
             "speaker":    "ЕДИНОРОГ",
             "text":       "Сурово. Но мы справимся. Показывай свой первый «гримуар».",
-            "portrait_1": portrait_unicorn_wise,
+            "portrait_1": portrait_unicorn_curious,
             "pos_1":      Vector2(0, 0),
             "portrait_2": portrait_max_desperate,
             "pos_2":      Vector2(0, 0)
@@ -328,14 +329,14 @@ func _start_dialogue_intro() -> void:
             "text":       "Это хуже магии. Это Google Docs. Мне надо написать реферат по философии на тему «Этические дилеммы в современном мире». У меня куча заметок, но я не могу собрать их в кучу.",
             "portrait_1": portrait_max_laughing,
             "pos_1":      Vector2(0, 0),
-            "portrait_2": portrait_unicorn_curious,
+            "portrait_2": portrait_unicorn_neutral,
             "pos_2":      Vector2(0, 0)
         },
         # --- Переход к мини-игре ---
         {
             "speaker":    "ЕДИНОРОГ",
             "text":       "Я помогу. В лесу я часто соединял разрозненные тропинки в одну. Давай посмотрим на эти… заметки.",
-            "portrait_1": portrait_unicorn_wise,
+            "portrait_1": portrait_unicorn_curious,
             "pos_1":      Vector2(0, 0),
             "portrait_2": portrait_max_laughing,
             "pos_2":      Vector2(0, 0)
@@ -347,6 +348,7 @@ func _start_dialogue_intro() -> void:
 func _on_dialogue_finished() -> void:
     if character_portrait_1: character_portrait_1.visible = false
     if character_portrait_2: character_portrait_2.visible = false
+    if character_portrait_3: character_portrait_3.visible = false
 
     match _phase:
         Phase.DIALOGUE_INTRO:
@@ -382,6 +384,15 @@ func _on_dialogue_line_changed(line_data: Dictionary) -> void:
             character_portrait_2.texture        = tex_2
             character_portrait_2.visible        = true
             character_portrait_2.global_position = line_data.get("pos_2", Vector2.ZERO)
+            
+    if character_portrait_3:
+        var tex_3: Texture2D = line_data.get("portrait_3", null)
+        if tex_3 == null:
+            character_portrait_3.visible = false
+        else:
+            character_portrait_3.texture         = tex_3
+            character_portrait_3.visible         = true
+            character_portrait_3.global_position = line_data.get("pos_3", Vector2.ZERO)
 
 # ==============================================================
 # ФАЗА 3 — МИНИ-ИГРА 1: «Собери реферат»
@@ -443,7 +454,7 @@ func _start_dialogue_post_mg1() -> void:
             "text":       "Ого... Это реально похоже на связный реферат! Спасибо, Астерион! Осталось пережить зачёт и групповой проект...",
             "portrait_1": portrait_max_laughing,
             "pos_1":      Vector2(0, 0),
-            "portrait_2": portrait_unicorn_wise,
+            "portrait_2": portrait_unicorn_neutral,
             "pos_2":      Vector2(0, 0)
         },
         {
@@ -451,7 +462,7 @@ func _start_dialogue_post_mg1() -> void:
             "text":       "Веди меня. Только объясни, что такое «зачёт». Это битва с чудовищем?",
             "portrait_1": portrait_max_resigned,
             "pos_1":      Vector2(0, 0),
-            "portrait_2": portrait_max_happy,
+            "portrait_2": portrait_unicorn_curious,
             "pos_2":      Vector2(0, 0)
         },
         {
@@ -459,7 +470,7 @@ func _start_dialogue_post_mg1() -> void:
             "text":       "Хуже. Это профессор Всезнайкин!",
             "portrait_1": portrait_max_resigned,
             "pos_1":      Vector2(0, 0),
-            "portrait_2": portrait_unicorn_curious,
+            "portrait_2": portrait_unicorn_neutral,
             "pos_2":      Vector2(0, 0)
         }
     ]
@@ -487,7 +498,9 @@ func _start_dialogue_exam_before() -> void:
             "portrait_1": portrait_professor_strict,
             "pos_1":      Vector2(0, 0),
             "portrait_2": portrait_max_embarrassed,
-            "pos_2":      Vector2(0, 0)
+            "pos_2":      Vector2(0, 0),
+            "portrait_3": portrait_unicorn_neutral,
+            "pos_3":      Vector2(0, 0) 
         },
         {
             "speaker":    "МАКС",
@@ -495,24 +508,30 @@ func _start_dialogue_exam_before() -> void:
             "portrait_1": portrait_max_embarrassed,
             "pos_1":      Vector2(0, 0),
             "portrait_2": portrait_professor_strict,
-            "pos_2":      Vector2(0, 0)
+            "pos_2":      Vector2(0, 0),
+            "portrait_3": portrait_unicorn_neutral,
+            "pos_3":      Vector2(0, 0) 
         },
         # --- Единорог тихо касается рогом плеча Макса (шёпот) ---
         {
             "speaker":    "ЕДИНОРОГ",
             "text":       "Я усилю твою память. Просто слушай свой внутренний голос.",
-            "portrait_1": portrait_unicorn_whisper,
+            "portrait_1": portrait_unicorn_curious,
             "pos_1":      Vector2(0, 0),   # Прячется за Максом — ближе к центру
-            "portrait_2": portrait_max_whisper,
-            "pos_2":      Vector2(0, 0)
+            "portrait_2": portrait_max_embarrassed,
+            "pos_2":      Vector2(0, 0),
+            "portrait_3": portrait_professor_strict,
+            "pos_3":      Vector2(0, 0)
         },
         {
             "speaker":    "МАКС",
             "text":       "Надеюсь, он звучит не как ржущий конь...",
             "portrait_1": portrait_max_whisper,
             "pos_1":      Vector2(0, 0),
-            "portrait_2": portrait_unicorn_whisper,
-            "pos_2":      Vector2(0, 0)
+            "portrait_2": portrait_unicorn_neutral,
+            "pos_2":      Vector2(0, 0),
+            "portrait_3": portrait_professor_strict,
+            "pos_3":      Vector2(0, 0)
         }
         # Завершение → _on_dialogue_finished → _show_plashka_15min
     ]
@@ -569,7 +588,9 @@ func _start_dialogue_exam_after() -> void:
             "portrait_1": portrait_professor_raised_brow,
             "pos_1":      Vector2(0, 0),
             "portrait_2": portrait_max_embarrassed,
-            "pos_2":      Vector2(0, 0)
+            "pos_2":      Vector2(0, 0),
+            "portrait_3": portrait_unicorn_confident,
+            "pos_3":      Vector2(0, 0) 
         },
         {
             "speaker":    "МАКС",
@@ -577,7 +598,9 @@ func _start_dialogue_exam_after() -> void:
             "portrait_1": portrait_max_embarrassed,
             "pos_1":      Vector2(0, 0),
             "portrait_2": portrait_professor_raised_brow,
-            "pos_2":      Vector2(0, 0)
+            "pos_2":      Vector2(0, 0),
+            "portrait_3": portrait_unicorn_confident,
+            "pos_3":      Vector2(0, 0) 
         },
         # --- Профессор замечает край сияющей гривы ---
         {
@@ -586,7 +609,9 @@ func _start_dialogue_exam_after() -> void:
             "portrait_1": portrait_professor_squinting,
             "pos_1":      Vector2(0, 0),
             "portrait_2": portrait_max_embarrassed,
-            "pos_2":      Vector2(0, 0)
+            "pos_2":      Vector2(0, 0),
+            "portrait_3": portrait_unicorn_confident,
+            "pos_3":      Vector2(0, 0) 
         },
         {
             "speaker":    "МАКС",
@@ -594,7 +619,9 @@ func _start_dialogue_exam_after() -> void:
             "portrait_1": portrait_max_embarrassed,
             "pos_1":      Vector2(0, 0),
             "portrait_2": portrait_professor_squinting,
-            "pos_2":      Vector2(0, 0)
+            "pos_2":      Vector2(0, 0),
+            "portrait_3": portrait_unicorn_confident,
+            "pos_3":      Vector2(0, 0) 
         },
         {
             "speaker":    "ПРОФЕССОР ВСЕЗНАЙКИН",
@@ -602,7 +629,9 @@ func _start_dialogue_exam_after() -> void:
             "portrait_1": portrait_professor_neutral,
             "pos_1":      Vector2(0, 0),
             "portrait_2": portrait_max_embarrassed,
-            "pos_2":      Vector2(0, 0)
+            "pos_2":      Vector2(0, 0),
+            "portrait_3": portrait_unicorn_confident,
+            "pos_3":      Vector2(0, 0) 
         }
         # Завершение → _on_dialogue_finished → _start_dialogue_group_project
     ]
@@ -628,42 +657,52 @@ func _start_dialogue_group_project() -> void:
         {
             "speaker":    "МАКС",
             "text":       "Ну и? Презентация?",
-            "portrait_1": portrait_max_angry,
-            "pos_1":      Vector2(0, 0),
-            "portrait_2": null,
-            "pos_2":      Vector2.ZERO
+            "portrait_1": portrait_unicorn_neutral,
+            "pos_1":      Vector2(0, 0), 
+            "portrait_2": portrait_kira_guilty,
+            "pos_2":      Vector2(0, 0),
+            "portrait_3": portrait_max_angry,
+            "pos_3":      Vector2(0, 0) 
         },
         {
             "speaker":    "КИРА",
             "text":       "Макс, прости... У меня были дела...",
-            "portrait_1": portrait_kira_guilty,
-            "pos_1":      Vector2(0, 0),
-            "portrait_2": portrait_max_angry,
-            "pos_2":      Vector2(0, 0)
+            "portrait_1": portrait_unicorn_neutral,
+            "pos_1":      Vector2(0, 0), 
+            "portrait_2": portrait_kira_guilty,
+            "pos_2":      Vector2(0, 0),
+            "portrait_3": portrait_max_angry,
+            "pos_3":      Vector2(0, 0)
         },
         {
             "speaker":    "ДИМА",
             "text":       "А я думал, что Юля сделает...",
-            "portrait_1": portrait_dima_guilty,
-            "pos_1":      Vector2(0, 0),
-            "portrait_2": portrait_max_angry,
-            "pos_2":      Vector2(0, 0)
+            "portrait_1": portrait_unicorn_neutral,
+            "pos_1":      Vector2(0, 0), 
+            "portrait_2": portrait_dima_guilty,
+            "pos_2":      Vector2(0, 0),
+            "portrait_3": portrait_max_angry,
+            "pos_3":      Vector2(0, 0)
         },
         {
             "speaker":    "ЮЛЯ",
             "text":       "Почему сразу я?!",
-            "portrait_1": portrait_yulia_indignant,
-            "pos_1":      Vector2(0, 0),
-            "portrait_2": portrait_max_angry,
-            "pos_2":      Vector2(0, 0)
+            "portrait_1": portrait_unicorn_neutral,
+            "pos_1":      Vector2(0, 0), 
+            "portrait_2": portrait_yulia_indignant,
+            "pos_2":      Vector2(0, 0),
+            "portrait_3": portrait_max_angry,
+            "pos_3":      Vector2(0, 0)
         },
         {
             "speaker":    "МАКС",
             "text":       "Вы серьёзно?! Через час сдача! Мы месяц готовились! Точнее, я готовился!",
-            "portrait_1": portrait_max_angry,
-            "pos_1":      Vector2(0, 0),
-            "portrait_2": portrait_kira_guilty,
-            "pos_2":      Vector2(0, 0)
+            "portrait_1": portrait_unicorn_neutral,
+            "pos_1":      Vector2(0, 0), 
+            "portrait_2": portrait_max_angry,
+            "pos_2":      Vector2(0, 0),
+            "portrait_3": portrait_kira_guilty,
+            "pos_3":      Vector2(0, 0)
         },
         # --- Единорог выходит вперёд. В комнате повисает тишина. ---
         {
@@ -671,32 +710,41 @@ func _start_dialogue_group_project() -> void:
             "text":       "Это... единорог?",
             "portrait_1": portrait_kira_guilty,
             "pos_1":      Vector2(0, 0),
-            "portrait_2": portrait_unicorn_confident,
-            "pos_2":      Vector2(0, 0)
+            "portrait_2": portrait_unicorn_wise,
+            "pos_2":      Vector2(0, 0),
+            "portrait_3": portrait_max_angry,
+            "pos_3":      Vector2(0, 0)
         },
         {
             "speaker":    "ДИМА",
             "text":       "Макс, ты привёл коня? На проект?",
             "portrait_1": portrait_dima_guilty,
             "pos_1":      Vector2(0, 0),
-            "portrait_2": portrait_unicorn_confident,
-            "pos_2":      Vector2(0, 0)
+            "portrait_2": portrait_unicorn_wise,
+            "pos_2":      Vector2(0, 0),
+            "portrait_3": portrait_max_angry,
+            "pos_3":      Vector2(0, 0)
+            
         },
         {
             "speaker":    "ЕДИНОРОГ",
             "text":       "Я Астерион. Я здесь, чтобы помочь Максу. Потому что, судя по всему, вы этого делать не собирались.",
-            "portrait_1": portrait_unicorn_confident,
+            "portrait_1": portrait_unicorn_wise,
             "pos_1":      Vector2(0, 0),
             "portrait_2": portrait_kira_guilty,
-            "pos_2":      Vector2(0, 0)
+            "pos_2":      Vector2(0, 0),
+            "portrait_3": portrait_max_angry,
+            "pos_3":      Vector2(0, 0)
         },
         {
             "speaker":    "ЮЛЯ",
             "text":       "Мне стыдно.",
             "portrait_1": portrait_yulia_ashamed,
             "pos_1":      Vector2(0, 0),
-            "portrait_2": portrait_unicorn_confident,
-            "pos_2":      Vector2(0, 0)
+            "portrait_2": portrait_unicorn_wise,
+            "pos_2":      Vector2(0, 0),
+            "portrait_3": portrait_max_angry,
+            "pos_3":      Vector2(0, 0)
         },
         {
             "speaker":    "ЕДИНОРОГ",
@@ -704,7 +752,9 @@ func _start_dialogue_group_project() -> void:
             "portrait_1": portrait_unicorn_wise,
             "pos_1":      Vector2(0, 0),
             "portrait_2": portrait_yulia_ashamed,
-            "pos_2":      Vector2(0, 0)
+            "pos_2":      Vector2(0, 0),
+            "portrait_3": portrait_max_angry,
+            "pos_3":      Vector2(0, 0)
         },
         {
             "speaker":    "КИРА",
@@ -712,7 +762,9 @@ func _start_dialogue_group_project() -> void:
             "portrait_1": portrait_kira_guilty,
             "pos_1":      Vector2(0, 0),
             "portrait_2": portrait_unicorn_wise,
-            "pos_2":      Vector2(0, 0)
+            "pos_2":      Vector2(0, 0),
+            "portrait_3": portrait_max_angry,
+            "pos_3":      Vector2(0, 0)
         },
         {
             "speaker":    "ДИМА",
@@ -720,7 +772,9 @@ func _start_dialogue_group_project() -> void:
             "portrait_1": portrait_dima_guilty,
             "pos_1":      Vector2(0, 0),
             "portrait_2": portrait_unicorn_wise,
-            "pos_2":      Vector2(0, 0)
+            "pos_2":      Vector2(0, 0),
+            "portrait_3": portrait_max_angry,
+            "pos_3":      Vector2(0, 0)
         },
         {
             "speaker":    "ЮЛЯ",
@@ -728,15 +782,19 @@ func _start_dialogue_group_project() -> void:
             "portrait_1": portrait_yulia_ashamed,
             "pos_1":      Vector2(0, 0),
             "portrait_2": portrait_unicorn_wise,
-            "pos_2":      Vector2(0, 0)
+            "pos_2":      Vector2(0, 0),
+            "portrait_3": portrait_max_angry,
+            "pos_3":      Vector2(0, 0)
         },
         {
             "speaker":    "МАКС",
             "text":       "Так у нас всё есть! Просто нужно собрать. Астерион, поможешь?",
-            "portrait_1": portrait_max_surprised,
-            "pos_1":      Vector2(0, 0),
-            "portrait_2": portrait_unicorn_wise,
-            "pos_2":      Vector2(0, 0)
+            "portrait_1": portrait_unicorn_wise,
+            "pos_1":      Vector2(0, 0), 
+            "portrait_2": portrait_max_happy,
+            "pos_2":      Vector2(0, 0),
+            "portrait_3": portrait_dima_guilty,
+            "pos_3":      Vector2(0, 0)
         },
         # --- Последняя реплика перед мини-игрой ---
         {
@@ -744,8 +802,10 @@ func _start_dialogue_group_project() -> void:
             "text":       "Для этого я здесь.",
             "portrait_1": portrait_unicorn_wise,
             "pos_1":      Vector2(0, 0),
-            "portrait_2": portrait_max_surprised,
-            "pos_2":      Vector2(0, 0)
+            "portrait_2": portrait_max_happy,
+            "pos_2":      Vector2(0, 0),
+            "portrait_3": portrait_dima_guilty,
+            "pos_3":      Vector2(0, 0)
         }
         # Завершение → _on_dialogue_finished → _start_minigame_2
     ]
@@ -802,83 +862,93 @@ func _start_dialogue_post_mg2() -> void:
         {
             "speaker":    "МАКС",
             "text":       "Готово. Ребята... спасибо, что хотя бы данные собрали.",
-            "portrait_1": portrait_max_happy,
-            "pos_1":      Vector2(0, 0),
-            "portrait_2": portrait_kira_guilty,
-            "pos_2":      Vector2(0, 0)
+            "portrait_1": portrait_unicorn_wise,
+            "pos_1":      Vector2(0, 0), 
+            "portrait_2": portrait_max_happy,
+            "pos_2":      Vector2(0, 0),
+            "portrait_3": portrait_kira_guilty,
+            "pos_3":      Vector2(0, 0)
         },
         {
             "speaker":    "КИРА",
             "text":       "Макс, прости нас. Серьёзно. Мы больше так не будем.",
-            "portrait_1": portrait_kira_guilty,
-            "pos_1":      Vector2(0, 0),
-            "portrait_2": portrait_max_happy,
-            "pos_2":      Vector2(0, 0)
+            "portrait_1": portrait_unicorn_wise,
+            "pos_1":      Vector2(0, 0), 
+            "portrait_2": portrait_kira_guilty,
+            "pos_2":      Vector2(0, 0),
+            "portrait_3": portrait_max_happy,
+            "pos_3":      Vector2(0, 0)
         },
         {
             "speaker":    "ДИМА",
             "text":       "Может, пойдём сдавать вместе? Как настоящая команда?",
-            "portrait_1": portrait_dima_guilty,
-            "pos_1":      Vector2(0, 0),
-            "portrait_2": portrait_max_happy,
-            "pos_2":      Vector2(0, 0)
+            "portrait_1": portrait_unicorn_wise,
+            "pos_1":      Vector2(0, 0), 
+            "portrait_2": portrait_dima_guilty,
+            "pos_2":      Vector2(0, 0),
+            "portrait_3": portrait_max_happy,
+            "pos_3":      Vector2(0, 0)
         },
         {
             "speaker":    "ЮЛЯ",
             "text":       "Я пойду. Стыдно, но пойду.",
-            "portrait_1": portrait_yulia_ashamed,
-            "pos_1":      Vector2(0, 0),
-            "portrait_2": portrait_max_happy,
-            "pos_2":      Vector2(0, 0)
+            "portrait_1": portrait_unicorn_wise,
+            "pos_1":      Vector2(0, 0), 
+            "portrait_2": portrait_yulia_ashamed,
+            "pos_2":      Vector2(0, 0),
+            "portrait_3": portrait_max_happy,
+            "pos_3":      Vector2(0, 0)
         },
         {
             "speaker":    "МАКС",
             "text":       "Астерион... спасибо.",
-            "portrait_1": portrait_max_happy,
-            "pos_1":      Vector2(0, 0),
-            "portrait_2": portrait_unicorn_wise,
-            "pos_2":      Vector2(0, 0)
+            "portrait_1": portrait_unicorn_wise,
+            "pos_1":      Vector2(0, 0), 
+            "portrait_2": portrait_max_happy,
+            "pos_2":      Vector2(0, 0),
+            "portrait_3": portrait_dima_guilty,
+            "pos_3":      Vector2(0, 0)
         },
         # --- Профессор Всезнайкин заглядывает в дверь ---
         {
             "speaker":    "ПРОФЕССОР ВСЕЗНАЙКИН",
             "text":       "Максим, группа готова?",
-            "portrait_1": portrait_professor_neutral,
+            "portrait_1": portrait_unicorn_whisper,
             "pos_1":      Vector2(0, 0),
-            "portrait_2": portrait_max_happy,
+            "portrait_2": portrait_dima_guilty,
             "pos_2":      Vector2(0, 0)
         },
         {
             "speaker":    "МАКС",
             "text":       "Да, профессор. Мы готовы. Все вместе.",
-            "portrait_1": portrait_max_happy,
+            "portrait_1": portrait_unicorn_whisper,
             "pos_1":      Vector2(0, 0),
-            "portrait_2": portrait_professor_neutral,
+            "portrait_2": portrait_dima_guilty,
             "pos_2":      Vector2(0, 0)
         },
         # --- Профессор замечает Единорога ---
         {
             "speaker":    "ПРОФЕССОР ВСЕЗНАЙКИН",
             "text":       "Максим... почему у вас в команде лошадь?",
-            "portrait_1": portrait_professor_squinting,
+            "portrait_1": portrait_unicorn_whisper,
             "pos_1":      Vector2(0, 0),
-            "portrait_2": portrait_unicorn_confident,
+            "portrait_2": portrait_dima_guilty,
             "pos_2":      Vector2(0, 0)
         },
         {
             "speaker":    "ЕДИНОРОГ",
             "text":       "Я – консультант по командной работе.",
-            "portrait_1": portrait_unicorn_confident,
+            "portrait_1": portrait_unicorn_whisper,
             "pos_1":      Vector2(0, 0),
-            "portrait_2": portrait_professor_squinting,
+            "portrait_2": portrait_dima_guilty,
             "pos_2":      Vector2(0, 0)
         },
         {
             "speaker":    "ПРОФЕССОР ВСЕЗНАЙКИН",
             "text":       "...Поставил бы «отлично», но боюсь, меня уволят за веру в единорогов. Идите сдавать.",
-            "portrait_1": portrait_professor_neutral,
+            "portrait_1": portrait_unicorn_whisper,
             "pos_1":      Vector2(0, 0),
-            "portrait_2": portrait_unicorn_confident,
+            "portrait_2": portrait_dima_guilty,
             "pos_2":      Vector2(0, 0)
         }
         # Завершение → _on_dialogue_finished → _start_dialogue_finale
@@ -904,7 +974,7 @@ func _start_dialogue_finale() -> void:
         {
             "speaker":    "МАКС",
             "text":       "Всё сдал. Реферат приняли, зачёт – отлично, проект – похвалили. Отец будет гордиться.",
-            "portrait_1": portrait_max_happy,
+            "portrait_1": portrait_max_laughing,
             "pos_1":      Vector2(0, 0),
             "portrait_2": portrait_unicorn_neutral,
             "pos_2":      Vector2(0, 0)
@@ -914,13 +984,13 @@ func _start_dialogue_finale() -> void:
             "text":       "Рад за тебя. А теперь скажи, Макс... ты не знаешь, как в вашем мире найти портал? Мне нужно вернуться домой, в Волшебный лес.",
             "portrait_1": portrait_unicorn_curious,
             "pos_1":      Vector2(0, 0),
-            "portrait_2": portrait_max_happy,
+            "portrait_2": portrait_max_laughing,
             "pos_2":      Vector2(0, 0)
         },
         {
             "speaker":    "МАКС",
             "text":       "Порталы? Слушай, это не ко мне. Но у меня есть подруга – Алиса. Она фанатка фэнтези, аниме, магии, всего такого. Если кто и знает – то она. Она сейчас в кафе Жбан через дорогу.",
-            "portrait_1": portrait_max_happy,
+            "portrait_1": portrait_max_laughing,
             "pos_1":      Vector2(0, 0),
             "portrait_2": portrait_unicorn_curious,
             "pos_2":      Vector2(0, 0)
@@ -928,15 +998,15 @@ func _start_dialogue_finale() -> void:
         {
             "speaker":    "ЕДИНОРОГ",
             "text":       "Спасибо, Макс.",
-            "portrait_1": portrait_unicorn_neutral,
+            "portrait_1": portrait_unicorn_curious,
             "pos_1":      Vector2(0, 0),
-            "portrait_2": portrait_max_happy,
+            "portrait_2": portrait_max_laughing,
             "pos_2":      Vector2(0, 0)
         },
         {
             "speaker":    "МАКС",
             "text":       "Это тебе спасибо. Если бы не ты... я бы всё провалил. Удачи, Астерион.",
-            "portrait_1": portrait_max_happy,
+            "portrait_1": portrait_max_laughing,
             "pos_1":      Vector2(0, 0),
             "portrait_2": portrait_unicorn_neutral,
             "pos_2":      Vector2(0, 0)
@@ -945,10 +1015,10 @@ func _start_dialogue_finale() -> void:
         {
             "speaker":    "ЕДИНОРОГ",
             "text":       "И тебе. И помни – ты сильнее, чем думаешь. Даже без магии.",
-            "portrait_1": portrait_unicorn_wise,
+            "portrait_1": portrait_unicorn_curious,
             "pos_1":      Vector2(0, 0),
-            "portrait_2": null,
-            "pos_2":      Vector2.ZERO
+            "portrait_2": portrait_max_laughing,
+            "pos_2":      Vector2(0, 0)
         }
         # Завершение → _on_dialogue_finished → _show_plashka_finale
     ]

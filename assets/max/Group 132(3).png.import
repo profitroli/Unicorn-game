@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bfw7hq3hte16k"
-path="res://.godot/imported/Бариста.png-52c8073f254c6228e5ede331bcfd616e.ctex"
+uid="uid://bwnt6yvy6o12i"
+path="res://.godot/imported/Group 132(3).png-713d40b3cfa6eb86a88c3b8053068cee.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/alisa/Бариста.png"
-dest_files=["res://.godot/imported/Бариста.png-52c8073f254c6228e5ede331bcfd616e.ctex"]
+source_file="res://assets/max/Group 132(3).png"
+dest_files=["res://.godot/imported/Group 132(3).png-713d40b3cfa6eb86a88c3b8053068cee.ctex"]
 
 [params]
 

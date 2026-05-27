@@ -157,6 +157,7 @@ const MINIGAME_PORTAL_CONFIG: Dictionary = {
 @onready var dialogue_box: Control             = $DialogueBox
 @onready var character_portrait_1: TextureRect = $CharacterPortrait1
 @onready var character_portrait_2: TextureRect = $CharacterPortrait2
+@onready var character_portrait_3: TextureRect = $CharacterPortrait3
 @onready var plashka_rect: ColorRect           = $PlashkaLayer/PlashkaRect
 @onready var plashka_label: Label              = $PlashkaLayer/PlashkaLabel
 @onready var minigame_layer: CanvasLayer       = $MinigameLayer
@@ -169,6 +170,7 @@ func _ready() -> void:
 
     if character_portrait_1: character_portrait_1.visible = false
     if character_portrait_2: character_portrait_2.visible = false
+    if character_portrait_3: character_portrait_3.visible = false
 
     plashka_label.modulate.a = 0.0
     plashka_rect.color       = Color(0, 0, 0, 0.0)
@@ -225,6 +227,7 @@ func _reset_plashka() -> void:
 func _hide_portraits() -> void:
     if character_portrait_1: character_portrait_1.visible = false
     if character_portrait_2: character_portrait_2.visible = false
+    if character_portrait_3: character_portrait_3.visible = false
 
 # ==============================================================
 # РОУТЕР ЗАВЕРШЕНИЯ ДИАЛОГОВ
@@ -262,6 +265,15 @@ func _on_dialogue_line_changed(line_data: Dictionary) -> void:
             character_portrait_2.texture         = tex_2
             character_portrait_2.visible         = true
             character_portrait_2.global_position = line_data.get("pos_2", Vector2.ZERO)
+            
+    if character_portrait_3:
+        var tex_3: Texture2D = line_data.get("portrait_3", null)
+        if tex_3 == null:
+            character_portrait_3.visible = false
+        else:
+            character_portrait_3.texture         = tex_3
+            character_portrait_3.visible         = true
+            character_portrait_3.global_position = line_data.get("pos_3", Vector2.ZERO)
 
 # ==============================================================
 # ФАЗА 1 — FADE IN
@@ -335,8 +347,10 @@ func _start_dialogue_desert_intro() -> void:
             "text":       "Фух. Песок. Везде песок. Даже в гриве.",
             "portrait_1": portrait_unicorn_dusty,
             "pos_1":      Vector2(0, 0),
-            "portrait_2": null,
-            "pos_2":      Vector2.ZERO
+            "portrait_2": portrait_igor_frozen,
+            "pos_2":      Vector2(0, 0),
+            "portrait_3": portrait_ksenia_squinting,
+            "pos_3":      Vector2(0, 0)
         },
         {
             "speaker":    "ИГОРЬ",
@@ -344,7 +358,9 @@ func _start_dialogue_desert_intro() -> void:
             "portrait_1": portrait_igor_frozen,
             "pos_1":      Vector2(0, 0),
             "portrait_2": portrait_unicorn_dusty,
-            "pos_2":      Vector2(0, 0)
+            "pos_2":      Vector2(0, 0),
+            "portrait_3": portrait_ksenia_squinting,
+            "pos_3":      Vector2(0, 0)
         },
         {
             "speaker":    "КСЕНИЯ",
@@ -352,7 +368,9 @@ func _start_dialogue_desert_intro() -> void:
             "portrait_1": portrait_ksenia_squinting,
             "pos_1":      Vector2(0, 0),
             "portrait_2": portrait_unicorn_dusty,
-            "pos_2":      Vector2(0, 0)
+            "pos_2":      Vector2(0, 0),
+            "portrait_3": portrait_igor_frozen,
+            "pos_3":      Vector2(0, 0)
         },
         {
             "speaker":    "ИГОРЬ",
@@ -360,16 +378,20 @@ func _start_dialogue_desert_intro() -> void:
             "portrait_1": portrait_igor_crisis,
             "pos_1":      Vector2(0, 0),
             "portrait_2": portrait_unicorn_dusty,
-            "pos_2":      Vector2(0, 0)
+            "pos_2":      Vector2(0, 0),
+            "portrait_3": portrait_ksenia_weak,
+            "pos_3":      Vector2(0, 0)
         },
         # --- Единорог представляется ---
         {
             "speaker":    "ЕДИНОРОГ",
             "text":       "Я не «адаптированная лошадь». Я Астерион. Из Волшебного леса. Меня прислала Алиса. Твоя племянница.",
-            "portrait_1": portrait_unicorn_neutral,
+            "portrait_1": portrait_unicorn_curious,
             "pos_1":      Vector2(0, 0),
             "portrait_2": portrait_igor_crisis,
-            "pos_2":      Vector2(0, 0)
+            "pos_2":      Vector2(0, 0),
+            "portrait_3": portrait_ksenia_weak,
+            "pos_3":      Vector2(0, 0),
         },
         {
             "speaker":    "ИГОРЬ",
@@ -377,7 +399,9 @@ func _start_dialogue_desert_intro() -> void:
             "portrait_1": portrait_igor_frozen,
             "pos_1":      Vector2(0, 0),
             "portrait_2": portrait_unicorn_neutral,
-            "pos_2":      Vector2(0, 0)
+            "pos_2":      Vector2(0, 0),
+            "portrait_3": portrait_ksenia_squinting,
+            "pos_3":      Vector2(0, 0),
         },
         {
             "speaker":    "ЕДИНОРОГ",
@@ -385,48 +409,60 @@ func _start_dialogue_desert_intro() -> void:
             "portrait_1": portrait_unicorn_curious,
             "pos_1":      Vector2(0, 0),
             "portrait_2": portrait_igor_frozen,
-            "pos_2":      Vector2(0, 0)
+            "pos_2":      Vector2(0, 0),
+            "portrait_3": portrait_ksenia_squinting,
+            "pos_3":      Vector2(0, 0)
         },
         {
             "speaker":    "ИГОРЬ",
             "text":       "Ну всё. Моя племянница дружит с магическим существом. С одной стороны – я горжусь. С другой – у меня кризис мировоззрения.",
             "portrait_1": portrait_igor_crisis,
             "pos_1":      Vector2(0, 0),
-            "portrait_2": portrait_unicorn_curious,
-            "pos_2":      Vector2(0, 0)
+            "portrait_2": portrait_unicorn_neutral,
+            "pos_2":      Vector2(0, 0),
+             "portrait_3": portrait_ksenia_weak,
+            "pos_3":      Vector2(0, 0)
         },
         {
             "speaker":    "КСЕНИЯ",
             "text":       "Подожди... Алиса сказала, где мы? Значит, ты пришёл нам на помощь...?",
             "portrait_1": portrait_ksenia_squinting,
             "pos_1":      Vector2(0, 0),
-            "portrait_2": portrait_unicorn_curious,
-            "pos_2":      Vector2(0, 0)
+            "portrait_2": portrait_unicorn_neutral,
+            "pos_2":      Vector2(0, 0),
+            "portrait_3": portrait_igor_frozen,
+            "pos_3":      Vector2(0, 0)
         },
         # --- Единорог принюхивается → родник ---
         {
             "speaker":    "ЕДИНОРОГ",
             "text":       "Я чувствую воду. Она глубоко под песком. Родник.",
-            "portrait_1": portrait_unicorn_curious,
+            "portrait_1": portrait_unicorn_glowing,
             "pos_1":      Vector2(0, 0),
             "portrait_2": portrait_ksenia_squinting,
-            "pos_2":      Vector2(0, 0)
+            "pos_2":      Vector2(0, 0),
+            "portrait_3": portrait_igor_frozen,
+            "pos_3":      Vector2(0, 0)
         },
         {
             "speaker":    "ИГОРЬ",
             "text":       "Родник?! Я же говорил! Я говорил, что под этим плато должна быть вода! Где?! Где копать?!",
             "portrait_1": portrait_igor_excited,
             "pos_1":      Vector2(0, 0),
-            "portrait_2": portrait_unicorn_curious,
-            "pos_2":      Vector2(0, 0)
+            "portrait_2": portrait_unicorn_glowing,
+            "pos_2":      Vector2(0, 0),
+            "portrait_3": portrait_ksenia_squinting,
+            "pos_3":      Vector2(0, 0)
         },
         {
             "speaker":    "ЕДИНОРОГ",
             "text":       "Мой рог чувствует магию воды. Но копать копытами я не могу – в лесу земля мягкая, а здесь... сплошной камень под песком. Нужна ваша помощь.",
-            "portrait_1": portrait_unicorn_neutral,
+            "portrait_1": portrait_unicorn_glowing,
             "pos_1":      Vector2(0, 0),
             "portrait_2": portrait_igor_excited,
-            "pos_2":      Vector2(0, 0)
+            "pos_2":      Vector2(0, 0),
+            "portrait_3": portrait_ksenia_squinting,
+            "pos_3":      Vector2(0, 0)
         },
         # --- Ксения хватает лопату --- (последняя реплика → МГ)
         {
@@ -434,8 +470,10 @@ func _start_dialogue_desert_intro() -> void:
             "text":       "Показывай. Я больше никогда в жизни не буду жаловаться на дождь. Обещаю.",
             "portrait_1": portrait_ksenia_hopeful,
             "pos_1":      Vector2(0, 0),
-            "portrait_2": portrait_unicorn_neutral,
-            "pos_2":      Vector2(0, 0)
+            "portrait_2": portrait_unicorn_glowing,
+            "pos_2":      Vector2(0, 0),
+            "portrait_3": portrait_igor_excited,
+            "pos_3":      Vector2(0, 0)
         }
         # Завершение → _on_dialogue_finished → _start_minigame_water
     ]
@@ -505,8 +543,10 @@ func _start_dialogue_post_water() -> void:
             "text":       "Есть! Вода! Ксюша, тащи канистры!",
             "portrait_1": portrait_igor_excited,
             "pos_1":      Vector2(0, 0),
-            "portrait_2": null,
-            "pos_2":      Vector2.ZERO
+            "portrait_2": portrait_ksenia_hopeful,
+            "pos_2":       Vector2(0, 0),
+            "portrait_3": portrait_unicorn_glowing,
+            "pos_3":      Vector2(0, 0),
         },
         {
             "speaker":    "КСЕНИЯ",
@@ -514,7 +554,9 @@ func _start_dialogue_post_water() -> void:
             "portrait_1": portrait_ksenia_happy,
             "pos_1":      Vector2(0, 0),
             "portrait_2": portrait_igor_drinking,
-            "pos_2":      Vector2(0, 0)
+            "pos_2":      Vector2(0, 0),
+            "portrait_3": portrait_unicorn_neutral,
+            "pos_3":      Vector2(0, 0),
         },
         {
             "speaker":    "ИГОРЬ",
@@ -522,7 +564,9 @@ func _start_dialogue_post_water() -> void:
             "portrait_1": portrait_igor_drinking,
             "pos_1":      Vector2(0, 0),
             "portrait_2": portrait_ksenia_happy,
-            "pos_2":      Vector2(0, 0)
+            "pos_2":      Vector2(0, 0),
+            "portrait_3": portrait_unicorn_neutral,
+            "pos_3":      Vector2(0, 0),
         },
         {
             "speaker":    "КСЕНИЯ",

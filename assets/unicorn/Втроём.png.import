@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://jxtmwpxt1sq"
-path="res://.godot/imported/Group 137(7).png-9771c1f6a4a48efb58fab35836efb5b5.ctex"
+uid="uid://cb7hxncv78r22"
+path="res://.godot/imported/Втроём.png-36ca6875bff88763eccf2d288d242a66.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/max/Group 137(7).png"
-dest_files=["res://.godot/imported/Group 137(7).png-9771c1f6a4a48efb58fab35836efb5b5.ctex"]
+source_file="res://assets/unicorn/Втроём.png"
+dest_files=["res://.godot/imported/Втроём.png-36ca6875bff88763eccf2d288d242a66.ctex"]
 
 [params]
 

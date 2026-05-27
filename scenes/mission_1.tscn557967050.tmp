@@ -8,8 +8,8 @@
 [ext_resource type="Texture2D" uid="uid://ci31edi341ct7" path="res://assets/foto/Max_a_убери_стулья_и_стол_ 1.png" id="4_486iq"]
 [ext_resource type="Texture2D" uid="uid://yjdeeoxt3ajh" path="res://assets/max/Group 128.png" id="4_t704a"]
 [ext_resource type="Texture2D" uid="uid://dc42gq8njowa5" path="res://assets/max/Group 131.png" id="5_m7cak"]
+[ext_resource type="Texture2D" uid="uid://b7nvpareptty5" path="res://assets/max/Group 132.png" id="6_66ryj"]
 [ext_resource type="Texture2D" uid="uid://dtearq6pjalkb" path="res://assets/unicorn/Group 114(2).png" id="7_k6fn8"]
-[ext_resource type="Texture2D" uid="uid://bwnt6yvy6o12i" path="res://assets/max/Group 132(3).png" id="7_qw3v4"]
 [ext_resource type="Texture2D" uid="uid://bbd20yr0q8pv2" path="res://assets/unicorn/Group 133.png" id="8_k6fn8"]
 [ext_resource type="Texture2D" uid="uid://btlcevya8kdd5" path="res://assets/max/Group 132(1).png" id="8_yk1gs"]
 [ext_resource type="Texture2D" uid="uid://61vagp35jfwv" path="res://assets/max/Group 132(2).png" id="9_qw3v4"]
@@ -19,14 +19,11 @@
 [ext_resource type="Texture2D" uid="uid://c16l1oyc3mue4" path="res://assets/max/Удивлённый.png" id="11_k1jio"]
 [ext_resource type="Texture2D" uid="uid://jby4cqniefbm" path="res://assets/max/Group 138.png" id="11_x141m"]
 [ext_resource type="Texture2D" uid="uid://c83820voo1li1" path="res://assets/max/Удивлённый(3).png" id="12_av04y"]
-[ext_resource type="Texture2D" uid="uid://b7himsf0dodfo" path="res://assets/max/Group 137(11).png" id="12_qw3v4"]
-[ext_resource type="Texture2D" uid="uid://dcuuhdohi022v" path="res://assets/max/Group 137(12).png" id="12_x141m"]
 [ext_resource type="Texture2D" uid="uid://bgy2wnkhcpvu1" path="res://assets/max/Удивлённый(2).png" id="13_qxv5n"]
-[ext_resource type="Texture2D" uid="uid://byupjqqxka5d1" path="res://assets/unicorn/Group 137(13).png" id="16_iuq4n"]
-[ext_resource type="Texture2D" uid="uid://cb7hxncv78r22" path="res://assets/unicorn/Втроём.png" id="17_iuq4n"]
-[ext_resource type="Texture2D" uid="uid://dj68h53gyc73g" path="res://assets/unicorn/Светиться.png" id="18_swxjb"]
-[ext_resource type="Texture2D" uid="uid://c6otbrl8b3lk0" path="res://assets/max/Group 137(9).png" id="18_yk1gs"]
-[ext_resource type="Texture2D" uid="uid://dupod7nfax7t" path="res://assets/max/Group 137(10).png" id="19_qw3v4"]
+[ext_resource type="Texture2D" uid="uid://ceqib6nqs8wal" path="res://assets/max/Group 137(4).png" id="14_cydlw"]
+[ext_resource type="Texture2D" uid="uid://bxcpap4qy05h5" path="res://assets/max/Group 137(3).png" id="15_w672d"]
+[ext_resource type="Texture2D" uid="uid://bmv40o6c2bjdl" path="res://assets/max/Group 137(8).png" id="16_yk1gs"]
+[ext_resource type="Texture2D" uid="uid://jxtmwpxt1sq" path="res://assets/max/Group 137(7).png" id="17_qw3v4"]
 
 [node name="Mission1" type="Node2D" unique_id=755943032]
 script = ExtResource("1_besfq")
@@ -35,26 +32,21 @@ bg_classroom = ExtResource("3_v2c3a")
 bg_meeting_room = ExtResource("4_486iq")
 portrait_max_tired = ExtResource("4_t704a")
 portrait_max_surprised = ExtResource("5_m7cak")
-portrait_max_resigned = ExtResource("7_qw3v4")
+portrait_max_resigned = ExtResource("6_66ryj")
 portrait_max_desperate = ExtResource("8_yk1gs")
 portrait_max_laughing = ExtResource("9_qw3v4")
 portrait_max_whisper = ExtResource("10_p8lpb")
 portrait_max_embarrassed = ExtResource("11_x141m")
-portrait_max_happy = ExtResource("12_x141m")
-portrait_max_angry = ExtResource("12_qw3v4")
 portrait_unicorn_neutral = ExtResource("7_k6fn8")
 portrait_unicorn_curious = ExtResource("8_k6fn8")
-portrait_unicorn_wise = ExtResource("16_iuq4n")
-portrait_unicorn_whisper = ExtResource("17_iuq4n")
-portrait_unicorn_confident = ExtResource("18_swxjb")
 portrait_professor_strict = ExtResource("10_brvs1")
 portrait_professor_raised_brow = ExtResource("11_k1jio")
 portrait_professor_squinting = ExtResource("12_av04y")
 portrait_professor_neutral = ExtResource("13_qxv5n")
-portrait_kira_guilty = ExtResource("18_yk1gs")
-portrait_dima_guilty = ExtResource("18_yk1gs")
-portrait_yulia_indignant = ExtResource("18_yk1gs")
-portrait_yulia_ashamed = ExtResource("19_qw3v4")
+portrait_kira_guilty = ExtResource("14_cydlw")
+portrait_dima_guilty = ExtResource("15_w672d")
+portrait_yulia_indignant = ExtResource("16_yk1gs")
+portrait_yulia_ashamed = ExtResource("17_qw3v4")
 finale_background_texture = ExtResource("10_486iq")
 
 [node name="Background" type="TextureRect" parent="." unique_id=82767682]
