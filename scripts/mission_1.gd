@@ -49,6 +49,7 @@ var _phase: Phase = Phase.FADE_IN
 @export var portrait_max_happy: Texture2D
 ## Макс закипает от злости — бросила группа
 @export var portrait_max_angry: Texture2D
+@export var portrait_max_kofa: Texture2D
 
 @export_category("Portraits — Единорог")
 ## Нейтральный / спокойный
@@ -264,7 +265,9 @@ func _start_dialogue_intro() -> void:
             "portrait_1": portrait_max_surprised,
             "pos_1":      Vector2(0, 0),
             "portrait_2": portrait_unicorn_neutral,
-            "pos_2":      Vector2(0, 0)
+            "pos_2":      Vector2(0, 0),
+            "portrait_3": portrait_max_kofa,
+            "pos_3":      Vector2(0, 0),
         },
         {
             "speaker":    "ЕДИНОРОГ",

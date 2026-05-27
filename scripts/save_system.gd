@@ -9,9 +9,9 @@ const MAX_SLOTS : int    = 3
 
 const SCENE_LABELS: Dictionary = {
   "res://scenes/prologue.tscn":  "Пролог",
-  "res://scenes/mission_1.tscn": "Миссия 1 — Студент в панике",
-  "res://scenes/mission_2.tscn": "Миссия 2 — Личная жизнь Алисы",
-  "res://scenes/mission_3.tscn": "Миссия 3 — Вода в пустыне",
+  "res://scenes/mission_1.tscn": "Студент в панике",
+  "res://scenes/mission_2.tscn": "Личная жизнь Алисы",
+  "res://scenes/mission_3.tscn": "Вода в пустыне",
 }
 
 var _slots: Array[Dictionary] = []

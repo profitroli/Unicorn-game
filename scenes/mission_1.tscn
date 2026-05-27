@@ -22,6 +22,7 @@
 [ext_resource type="Texture2D" uid="uid://b7himsf0dodfo" path="res://assets/max/Group 137(11).png" id="12_qw3v4"]
 [ext_resource type="Texture2D" uid="uid://dcuuhdohi022v" path="res://assets/max/Group 137(12).png" id="12_x141m"]
 [ext_resource type="Texture2D" uid="uid://bgy2wnkhcpvu1" path="res://assets/max/Удивлённый(2).png" id="13_qxv5n"]
+[ext_resource type="Texture2D" uid="uid://cfbcotvcqr1xo" path="res://assets/max/Group 137(14).png" id="14_kajvk"]
 [ext_resource type="Texture2D" uid="uid://byupjqqxka5d1" path="res://assets/unicorn/Group 137(13).png" id="16_iuq4n"]
 [ext_resource type="Texture2D" uid="uid://cb7hxncv78r22" path="res://assets/unicorn/Втроём.png" id="17_iuq4n"]
 [ext_resource type="Texture2D" uid="uid://dj68h53gyc73g" path="res://assets/unicorn/Светиться.png" id="18_swxjb"]
@@ -42,6 +43,7 @@ portrait_max_whisper = ExtResource("10_p8lpb")
 portrait_max_embarrassed = ExtResource("11_x141m")
 portrait_max_happy = ExtResource("12_x141m")
 portrait_max_angry = ExtResource("12_qw3v4")
+portrait_max_kofa = ExtResource("14_kajvk")
 portrait_unicorn_neutral = ExtResource("7_k6fn8")
 portrait_unicorn_curious = ExtResource("8_k6fn8")
 portrait_unicorn_wise = ExtResource("16_iuq4n")

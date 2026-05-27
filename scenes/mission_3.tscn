@@ -6,6 +6,7 @@
 [ext_resource type="FontFile" uid="uid://desu4jund4dbp" path="res://assets/text/ArcadeJeu-Regular.otf" id="2_hvna8"]
 [ext_resource type="Texture2D" uid="uid://dtdyoied8lp6m" path="res://assets/foto/Gemini_Generated_Image_aytbk9aytbk9aytb 1.png" id="3_175cs"]
 [ext_resource type="Texture2D" uid="uid://b6hyxsm0fhy57" path="res://assets/unicorn/Group 133(2).png" id="4_4m4rk"]
+[ext_resource type="Texture2D" uid="uid://w2kbvdq66fth" path="res://assets/foto/Gemini_Generated_Image_1eep9q1eep9q1eep 1.png" id="4_mxh81"]
 [ext_resource type="Texture2D" uid="uid://bh40uj1131li7" path="res://assets/kseniya/Group 133(4).png" id="4_tk4rw"]
 [ext_resource type="Texture2D" uid="uid://5ax25p7letwq" path="res://assets/unicorn/Group 133(1).png" id="5_4m4rk"]
 [ext_resource type="Texture2D" uid="uid://c3kpyjvg0thp7" path="res://assets/kseniya/Group 133(6).png" id="5_eot8g"]
@@ -16,14 +17,25 @@
 [ext_resource type="Texture2D" uid="uid://bdpl5yjkl6irn" path="res://assets/kseniya/Group 133(3).png" id="9_t3olm"]
 [ext_resource type="Texture2D" uid="uid://cuqvuvv763jrn" path="res://assets/kseniya/Group 133(15).png" id="10_al3hx"]
 [ext_resource type="Texture2D" uid="uid://bnmr6pw2k5p50" path="res://assets/kseniya/Group 133(16).png" id="11_awe37"]
+[ext_resource type="Texture2D" uid="uid://bc5xb1ct2vni7" path="res://assets/kseniya/Group 133(17).png" id="11_caqw1"]
+[ext_resource type="Texture2D" uid="uid://c3lqpt03davl1" path="res://assets/kseniya/Group 133(18).png" id="12_mxh81"]
 [ext_resource type="Texture2D" uid="uid://wvkxewuwo1rf" path="res://assets/unicorn/Group 133(11).png" id="12_t3olm"]
+[ext_resource type="Texture2D" uid="uid://0e5m4krjgo76" path="res://assets/kseniya/Group 133(20).png" id="14_xggyk"]
+[ext_resource type="Texture2D" uid="uid://s8rkfkw5emgy" path="res://assets/kseniya/Group 133(19).png" id="15_ro82c"]
 [ext_resource type="Texture2D" uid="uid://bwvonsi5vti4h" path="res://assets/unicorn/Group 133(12).png" id="16_caqw1"]
 [ext_resource type="Texture2D" uid="uid://cauxabo1p3cix" path="res://assets/unicorn/Group 133(13).png" id="17_mxh81"]
+[ext_resource type="Texture2D" uid="uid://dxdb2mxn5vsv6" path="res://assets/friend/Group 138(5).png" id="23_ro82c"]
+[ext_resource type="Texture2D" uid="uid://c5xtekwiokk84" path="res://assets/friend/Group 138(9).png" id="24_x7mxi"]
+[ext_resource type="Texture2D" uid="uid://bay8tdkqerfkv" path="res://assets/friend/Group 138(7).png" id="25_nnahl"]
+[ext_resource type="Texture2D" uid="uid://ilq5p76xuf0x" path="res://assets/friend/Group 138(10).png" id="26_g2kdn"]
+[ext_resource type="Texture2D" uid="uid://dtearq6pjalkb" path="res://assets/unicorn/Group 114(2).png" id="27_nnahl"]
+[ext_resource type="Texture2D" uid="uid://bbd20yr0q8pv2" path="res://assets/unicorn/Group 133.png" id="28_g2kdn"]
 
 [node name="Mission3" type="Node2D" unique_id=1002992990]
 script = ExtResource("1_hvna8")
 bg_sahara_desert = ExtResource("2_7uc7w")
 bg_sahara_anomaly = ExtResource("3_175cs")
+bg_magic_forest = ExtResource("4_mxh81")
 portrait_ksenia_weak = ExtResource("4_tk4rw")
 portrait_ksenia_squinting = ExtResource("5_eot8g")
 portrait_ksenia_hopeful = ExtResource("6_8h1x1")
@@ -32,13 +44,23 @@ portrait_ksenia_grateful = ExtResource("8_73187")
 portrait_ksenia_moved = ExtResource("8_73187")
 portrait_igor_focused = ExtResource("9_t3olm")
 portrait_igor_frozen = ExtResource("10_al3hx")
+portrait_igor_excited = ExtResource("11_caqw1")
+portrait_igor_crisis = ExtResource("12_mxh81")
 portrait_igor_believer = ExtResource("11_awe37")
+portrait_igor_drinking = ExtResource("14_xggyk")
+portrait_igor_moved = ExtResource("15_ro82c")
 portrait_unicorn_dusty = ExtResource("9_jpaxb")
 portrait_unicorn_neutral = ExtResource("4_4m4rk")
 portrait_unicorn_curious = ExtResource("5_4m4rk")
 portrait_unicorn_wise = ExtResource("12_t3olm")
 portrait_unicorn_glowing = ExtResource("16_caqw1")
 portrait_unicorn_farewell = ExtResource("17_mxh81")
+portrait_luna_happy = ExtResource("23_ro82c")
+portrait_luna_happy1 = ExtResource("24_x7mxi")
+portrait_grom_reserved = ExtResource("25_nnahl")
+portrait_grom_reserved1 = ExtResource("26_g2kdn")
+portrait_asterion_smiling = ExtResource("27_nnahl")
+portrait_asterion_smiling1 = ExtResource("28_g2kdn")
 
 [node name="Background" type="TextureRect" parent="." unique_id=145297760]
 offset_right = 1920.0

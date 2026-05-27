@@ -19,7 +19,6 @@
 [node name="Mission2" type="Node2D" unique_id=2125656525]
 script = ExtResource("1_nob6w")
 bg_cafe_luna = ExtResource("2_o0vid")
-ui_app_profile_arseniy = ExtResource("13_86xye")
 bg_sahara = ExtResource("3_p46r1")
 portrait_alisa_sad = ExtResource("3_lfy82")
 portrait_alisa_surprised = ExtResource("3_xbahv")

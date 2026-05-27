@@ -12,12 +12,14 @@ const COLOR_HINT     := Color(0.7,  0.95, 0.7,  1.0)  # зелёный hint «н
 ## Индекс выбранного слота (−1 = ничего не выбрано).
 var _selected_index: int = -1
 var _custom_font: Font
+var _custom_font1: Font
 
 ## Ссылки на кнопки слотов для управления подсветкой без перестройки списка.
 var _slot_buttons: Array[Button] = []
 
 func _ready() -> void:
   _custom_font = load("res://assets/text/PixelifySans-VariableFont_wght.ttf")
+  _custom_font1 = load("res://assets/text/ArcadeJeu-Regular.otf")
 
   # ── Кнопки главного меню ────────────────────────────────────
   $TextureRect/PlayButton.pressed.connect(_on_play_pressed)
@@ -152,7 +154,7 @@ func _build_slot_button(slot: Dictionary, index: int) -> Button:
   var btn := Button.new()
   btn.flat = true
   btn.focus_mode = Control.FOCUS_NONE
-  btn.custom_minimum_size = Vector2(0.0, 110.0)
+  btn.custom_minimum_size = Vector2(0.0, 150.0)
 
   # --- фоновая текстура ---
   if SLOT_TEXTURE:
@@ -175,43 +177,43 @@ func _build_slot_button(slot: Dictionary, index: int) -> Button:
   var slot_number: int = slot.get("number", index + 1)
 
   var lbl_number := Label.new()
-  lbl_number.text     = "№%d" % slot_number
-  lbl_number.position = Vector2(18.0, 22.0)
-  lbl_number.add_theme_color_override("font_color", Color(0.553, 0.459, 0.984, 1.0))
+  lbl_number.text     = "%d" % slot_number
+  lbl_number.position = Vector2(62.0, 62.0)
+  lbl_number.add_theme_color_override("font_color", Color(0, 0, 0, 1.0))
   if _custom_font:
-    lbl_number.add_theme_font_override("font", _custom_font)
+    lbl_number.add_theme_font_override("font", _custom_font1)
     lbl_number.add_theme_font_size_override("font_size", 42)
   btn.add_child(lbl_number)
 
   # --- Название миссии ---
   var lbl_name := Label.new()
   lbl_name.text     = slot.get("label", "?")
-  lbl_name.position = Vector2(115.0, 14.0)
+  lbl_name.position = Vector2(148.0, 40.0)
   lbl_name.add_theme_color_override("font_color", Color.BLACK)
   if _custom_font:
-    lbl_name.add_theme_font_override("font", _custom_font)
-    lbl_name.add_theme_font_size_override("font_size", 26)
+    lbl_name.add_theme_font_override("font", _custom_font1)
+    lbl_name.add_theme_font_size_override("font_size", 35)
   btn.add_child(lbl_name)
 
   # --- Подсказка (появляется когда слот выбран) ---
   var lbl_hint := Label.new()
   lbl_hint.name     = "HintLabel"
-  lbl_hint.text     = "▶️ нажми ещё раз для загрузки"
-  lbl_hint.position = Vector2(115.0, 52.0)
+  lbl_hint.text     = "▶ Нажми ещё раз для загрузки"
+  lbl_hint.position = Vector2(120.0, 62.0)
   lbl_hint.visible  = false
-  lbl_hint.add_theme_color_override("font_color", Color(0.2, 0.7, 0.2, 1.0))
+  lbl_hint.add_theme_color_override("font_color", Color(0.618, 0.003, 0.88, 1.0))
   if _custom_font:
-    lbl_hint.add_theme_font_override("font", _custom_font)
-    lbl_hint.add_theme_font_size_override("font_size", 20)
+    lbl_hint.add_theme_font_override("font", _custom_font1)
+    lbl_hint.add_theme_font_size_override("font_size", 30)
   btn.add_child(lbl_hint)
 
   # --- Дата и время (справа) ---
   var lbl_time := Label.new()
   lbl_time.text     = slot.get("time", "??:??") + "\n" + slot.get("date", "??.??.????")
-  lbl_time.position = Vector2(800.0, 18.0)
+  lbl_time.position = Vector2(966.0, 52.0)
   lbl_time.add_theme_color_override("font_color", Color.BLACK)
   if _custom_font:
-    lbl_time.add_theme_font_override("font", _custom_font)
+    lbl_time.add_theme_font_override("font", _custom_font1)
     lbl_time.add_theme_font_size_override("font_size", 24)
   btn.add_child(lbl_time)
 
@@ -265,7 +267,7 @@ func _update_slot_highlights() -> void:
 func _flash_saves_list_hint() -> void:
   for btn: Button in _slot_buttons:
     var tw := btn.create_tween()
-    tw.tween_property(btn, "modulate", Color(1.0, 0.85, 0.5, 1.0), 0.15)
+    tw.tween_property(btn, "modulate", Color(1.0, 0.404, 0.502, 1.0), 0.15)
     tw.tween_property(btn, "modulate", COLOR_NORMAL,                0.35)
 
 # ────────────────────────────────────────────────────────────────
