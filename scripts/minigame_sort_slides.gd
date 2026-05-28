@@ -50,7 +50,7 @@ const C_GHOST_BOR := Color(0.40, 0.55, 0.90, 1.00)
 
 const SCREEN_W := 680.0
 const SCREEN_H := 520.0
-const ROW_H    := 56.0
+const ROW_H    := 130
 const ROW_SEP  :=  5.0
 
 # ─── Публичный API ───────────────────────────────────────────────────────────
@@ -131,8 +131,8 @@ func _build_ui() -> void:
 
     # Шапка
     var header := Panel.new()
-    header.position = Vector2(0, 0)
-    header.size     = Vector2(SCREEN_W, 50)
+    header.position = Vector2(-350, -250)
+    header.size     = Vector2(1600, 100)
     _mk_panel(header, C_HEADER, C_BORDER, 1, 0)
     # Скруглим только верхние углы шапки
     var hs := header.get_theme_stylebox("panel") as StyleBoxFlat
@@ -141,38 +141,40 @@ func _build_ui() -> void:
         hs.corner_radius_top_right = 6
     _screen_panel.add_child(header)
 
-    # Таймер
-    _timer_lbl = _lbl("⏱  " + _fmt(ceili(_time_left)), 17, C_TIMER)
-    _timer_lbl.position = Vector2(14, 13)
-    _timer_lbl.size     = Vector2(138, 28)
+    # === ТАЙМЕР БЕЗ СТИКЕРА ===
+    _timer_lbl = _lbl("Таймер: 00:00", 35, C_TIMER)
+    _timer_lbl.position = Vector2(1300, 22)
+    _timer_lbl.size     = Vector2(300, 40)
+    _timer_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+    _timer_lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
     header.add_child(_timer_lbl)
 
     # Заголовок «ПРЕЗЕНТАЦИЯ»
-    var title := _lbl("ПРЕЗЕНТАЦИЯ", 21, C_TEXT)
-    title.position = Vector2(0, 13)
+    var title := _lbl("МИНИ-ИГРА 2: СОБЕРИ ПРЕЗЕНТАЦИЮ", 40, C_TEXT)
+    title.position = Vector2(70, 30)
     title.size     = Vector2(SCREEN_W, 28)
     title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+    title.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
     header.add_child(title)
 
     # VBox строк
     _list_vbox = VBoxContainer.new()
-    _list_vbox.position = Vector2(20, 58)
-    _list_vbox.size     = Vector2(SCREEN_W - 40,
-                                  float(_slides_data.size()) * (ROW_H + ROW_SEP))
+    _list_vbox.position = Vector2(-350, -144)
+    _list_vbox.size     = Vector2(1600, 800)
     _list_vbox.add_theme_constant_override("separation", int(ROW_SEP))
     _screen_panel.add_child(_list_vbox)
 
     _rebuild_rows()
-
+    
     # Кнопка «ГОТОВО К ЗАЩИТЕ!»
     _submit_btn = Button.new()
-    _submit_btn.text      = "ГОТОВО К ЗАЩИТЕ!"
-    _submit_btn.position  = Vector2((SCREEN_W - 244.0) * 0.5, SCREEN_H - 52)
-    _submit_btn.size      = Vector2(244, 40)
+    _submit_btn.text      = " ГОТОВО К ЗАЩИТЕ!"
+    _submit_btn.position  = Vector2(160, 700)
+    _submit_btn.size      = Vector2(320, 70)
     _submit_btn.focus_mode = Control.FOCUS_NONE
     if _font:
         _submit_btn.add_theme_font_override("font", _font)
-    _submit_btn.add_theme_font_size_override("font_size", 16)
+    _submit_btn.add_theme_font_size_override("font_size", 40)
     _submit_btn.add_theme_color_override("font_color", C_TEXT)
 
     var ss := _mk_style(C_BTN, C_BTN_BOR, 2, 6)
@@ -207,7 +209,7 @@ func _create_row(disp_pos: int, data_idx: int) -> Panel:
     row.set_meta("data_idx", data_idx)
 
     # Номер строки
-    var num := _lbl("%d." % (disp_pos + 1), 15, C_NUM)
+    var num := _lbl("%d." % (disp_pos + 1), 35, C_NUM)
     num.name     = "NumLabel"
     num.position = Vector2(10, 0)
     num.size     = Vector2(30, ROW_H)
@@ -215,15 +217,15 @@ func _create_row(disp_pos: int, data_idx: int) -> Panel:
     row.add_child(num)
 
     # Текст слайда
-    var title := _lbl(_slides_data[data_idx].get("title", "?"), 17, C_TEXT)
-    title.position = Vector2(44, 0)
+    var title := _lbl(_slides_data[data_idx].get("title", "?"), 35, C_TEXT)
+    title.position = Vector2(80, 0)
     title.size     = Vector2(SCREEN_W - 112, ROW_H)
     title.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
     row.add_child(title)
 
     # Ручка перетаскивания ↕
-    var handle := _lbl("↕", 22, C_HANDLE)
-    handle.position = Vector2(SCREEN_W - 82, 0)
+    var handle := _lbl("↕", 45, C_HANDLE)
+    handle.position = Vector2(1500, 0)
     handle.size     = Vector2(42, ROW_H)
     handle.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
     handle.vertical_alignment   = VERTICAL_ALIGNMENT_CENTER
@@ -268,14 +270,14 @@ func _start_drag(from_pos: int) -> void:
 
     # Иконка + текст на ghost
     var data_idx: int = _current_order[from_pos]
-    var gtitle := _lbl(_slides_data[data_idx].get("title", "?"), 17, C_TEXT)
-    gtitle.position = Vector2(44, 0)
+    var gtitle := _lbl(_slides_data[data_idx].get("title", "?"), 35, C_TEXT)
+    gtitle.position = Vector2(80, 0)
     gtitle.size     = Vector2(SCREEN_W - 112, ROW_H)
     gtitle.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
     gtitle.mouse_filter = Control.MOUSE_FILTER_IGNORE
     _drag_ghost.add_child(gtitle)
-    var ghandle := _lbl("↕", 22, C_GHOST_BOR)
-    ghandle.position = Vector2(SCREEN_W - 82, 0)
+    var ghandle := _lbl("↕", 45, C_GHOST_BOR)
+    ghandle.position = Vector2(1500, 0)
     ghandle.size     = Vector2(42, ROW_H)
     ghandle.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
     ghandle.vertical_alignment   = VERTICAL_ALIGNMENT_CENTER
@@ -379,7 +381,7 @@ func _check_result() -> void:
 func _refresh_timer() -> void:
     if not _timer_lbl:
         return
-    _timer_lbl.text = "⏱  " + _fmt(ceili(_time_left))
+    _timer_lbl.text = "ТАЙМЕР\n" + _fmt(ceili(_time_left))
     _timer_lbl.add_theme_color_override("font_color",
             C_TIMER_W if _time_left <= 10.0 else C_TIMER)
 

@@ -15,6 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://dqodphvbfpg4s" path="res://assets/alisa/Бариста(1).png" id="10_0j3na"]
 [ext_resource type="Texture2D" uid="uid://byupjqqxka5d1" path="res://assets/unicorn/Group 137(13).png" id="10_hf66p"]
 [ext_resource type="Texture2D" uid="uid://dh8gy5bcwvvl3" path="res://assets/alisa/Профиль арсения-Photoroom 1.png" id="13_86xye"]
+[ext_resource type="Texture2D" uid="uid://d06eaery04ggb" path="res://assets/alisa/Профиль алисы-Photoroom 1.png" id="14_ojxk2"]
 
 [node name="Mission2" type="Node2D" unique_id=2125656525]
 script = ExtResource("1_nob6w")
@@ -31,6 +32,7 @@ portrait_unicorn_neutral = ExtResource("8_0j3na")
 portrait_unicorn_curious = ExtResource("9_hf66p")
 portrait_unicorn_wise = ExtResource("10_hf66p")
 portrait_barista = ExtResource("10_0j3na")
+ui_profile_alisa = ExtResource("14_ojxk2")
 ui_profile_arseniy = ExtResource("13_86xye")
 
 [node name="Background" type="TextureRect" parent="." unique_id=1640878679]

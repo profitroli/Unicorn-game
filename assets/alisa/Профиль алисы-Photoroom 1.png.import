@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://0e5m4krjgo76"
-path="res://.godot/imported/Group 133(20).png-ce216d1323eb8cc7f3acf2e42cef520f.ctex"
+uid="uid://d06eaery04ggb"
+path="res://.godot/imported/Профиль алисы-Photoroom 1.png-5d54b23edd047bf94b7701229112a6e6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/kseniya/Group 133(20).png"
-dest_files=["res://.godot/imported/Group 133(20).png-ce216d1323eb8cc7f3acf2e42cef520f.ctex"]
+source_file="res://assets/alisa/Профиль алисы-Photoroom 1.png"
+dest_files=["res://.godot/imported/Профиль алисы-Photoroom 1.png-5d54b23edd047bf94b7701229112a6e6.ctex"]
 
 [params]
 
