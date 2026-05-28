@@ -20,6 +20,10 @@ enum Phase {
 
 var _phase: Phase = Phase.FADE_IN
 
+# ── Ссылки на активные инстансы мини-игр (добавлено) ────────────────────────
+var _mg1: MinigameSortCards  = null
+var _mg2: MinigameSortSlides = null
+
 @export_category("Backgrounds")
 ## Университетский коридор — стенды с объявлениями, студенты с ноутбуками
 @export var bg_university_corridor: Texture2D
@@ -95,12 +99,10 @@ var _phase: Phase = Phase.FADE_IN
 @onready var plashka_label: Label             = $PlashkaLayer/PlashkaLabel
 @onready var minigame_layer: CanvasLayer      = $MinigameLayer
 
-@export var finale_background_texture: Texture2D 
+@export var finale_background_texture: Texture2D
+
 # ==============================================================
 # ДАННЫЕ МИНИ-ИГРЫ 1 — «Собери реферат»
-# Источник: ЕДИНОРОГ.docx → МИНИ-ИГРА 1
-# 5 правильных тезисов + 3 ложных, перемешаны
-# correct_position: порядковый номер в правильной цепочке (-1 = не входит)
 # ==============================================================
 const MINIGAME_1_CARDS: Array[Dictionary] = [
     {
@@ -145,14 +147,12 @@ const MINIGAME_1_CARDS: Array[Dictionary] = [
     }
 ]
 
-const MINIGAME_1_SLOTS_COUNT: int       = 5   # Слотов для правильных карточек
-const MINIGAME_1_TIMER_FIRST: int       = 60  # Первая попытка (сек)
-const MINIGAME_1_TIMER_RETRY: int       = 45  # Пересдача при 3-4 верных (сек)
+const MINIGAME_1_SLOTS_COUNT: int       = 5
+const MINIGAME_1_TIMER_FIRST: int       = 60
+const MINIGAME_1_TIMER_RETRY: int       = 45
 
 # ==============================================================
 # ДАННЫЕ МИНИ-ИГРЫ 2 — «Собери презентацию»
-# Источник: ЕДИНОРОГ.docx → МИНИ-ИГРА 2
-# 6 слайдов, правильный порядок: проблема→данные→анализ→решения→план→выводы
 # ==============================================================
 const MINIGAME_2_SLIDES: Array[Dictionary] = [
     { "title": "Проблема: загрязнение кампуса",  "correct_position": 0 },
@@ -399,37 +399,35 @@ func _on_dialogue_line_changed(line_data: Dictionary) -> void:
 
 # ==============================================================
 # ФАЗА 3 — МИНИ-ИГРА 1: «Собери реферат»
-# Источник: ЕДИНОРОГ.docx → МИНИ-ИГРА 1
-# Данные: MINIGAME_1_CARDS (8 карточек, 5 правильных)
 # ==============================================================
 func _start_minigame_1(timer: int = MINIGAME_1_TIMER_FIRST) -> void:
     _phase = Phase.MINIGAME_1
     minigame_layer.visible = true
+    minigame_layer.layer = 150  # выше HomeOverlay
 
-    # TODO: инстанцируй сцену мини-игры и подключи сигнал.
-    # var mg = preload("res://scenes/minigame_sort_cards.tscn").instantiate()
-    # minigame_layer.add_child(mg)
-    # mg.setup(MINIGAME_1_CARDS, MINIGAME_1_SLOTS_COUNT, timer)
-    # mg.completed.connect(_on_minigame_1_completed)
+    if is_instance_valid(_mg1):
+        _mg1.queue_free()
 
-    push_warning("Mission1: MINIGAME_1 — заглушка. Подключи реальный UI.")
-    await get_tree().create_timer(0.1).timeout
-    _on_minigame_1_completed(5)  # ЗАГЛУШКА: 5/5 правильных
+    _mg1 = preload("res://scenes/minigame_sort_cards.tscn").instantiate() as MinigameSortCards
+    minigame_layer.add_child(_mg1)
+    
+    # Критично!
+    _mg1.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+    _mg1.setup(MINIGAME_1_CARDS, MINIGAME_1_SLOTS_COUNT, timer)
+    _mg1.completed.connect(_on_minigame_1_completed)
 
-## Вызывается мини-игрой по сигналу.
-## correct_count: сколько карточек в правильных позициях (0–5).
 func _on_minigame_1_completed(correct_count: int) -> void:
+    if is_instance_valid(_mg1):
+        _mg1.queue_free()
+        _mg1 = null
+
     if correct_count < 3:
         # Полный провал — Единорог помогает снова → полный перезапуск
-        push_warning("Mission1: МГ1 провал (меньше 3 верных). Перезапуск с 60 сек.")
-        minigame_layer.visible = false
         _start_minigame_1(MINIGAME_1_TIMER_FIRST)
         return
 
     if correct_count < 5:
         # 3–4 верных — «Почти! Попробуй ещё раз» → пересдача 45 сек
-        push_warning("Mission1: МГ1 пересдача (3-4 верных). Таймер 45 сек.")
-        minigame_layer.visible = false
         _start_minigame_1(MINIGAME_1_TIMER_RETRY)
         return
 
@@ -439,8 +437,6 @@ func _on_minigame_1_completed(correct_count: int) -> void:
 
 # ==============================================================
 # ФАЗА 4 — ДИАЛОГ ПОСЛЕ МГ1 (коридор)
-# Источник: ЕДИНОРОГ.docx → реплики после мини-игры 1
-# Макс рад → «что такое зачёт?» → «Хуже. Профессор Всезнайкин!»
 # ==============================================================
 func _start_dialogue_post_mg1() -> void:
     _phase = Phase.DIALOGUE_POST_MG1
@@ -482,8 +478,6 @@ func _start_dialogue_post_mg1() -> void:
 
 # ==============================================================
 # ФАЗА 5 — ДИАЛОГ В АУДИТОРИИ (до зачёта)
-# Источник: ЕДИНОРОГ.docx → «ПРОДОЛЖЕНИЕ МИССИИ 1» → аудитория
-# Профессор: «Три вопроса» → шёпот Единорога → «надеюсь, не ржёт»
 # ==============================================================
 func _start_dialogue_exam_before() -> void:
     _phase = Phase.DIALOGUE_EXAM_BEFORE
@@ -520,7 +514,7 @@ func _start_dialogue_exam_before() -> void:
             "speaker":    "ЕДИНОРОГ",
             "text":       "Я усилю твою память. Просто слушай свой внутренний голос.",
             "portrait_1": portrait_unicorn_curious,
-            "pos_1":      Vector2(0, 0),   # Прячется за Максом — ближе к центру
+            "pos_1":      Vector2(0, 0),
             "portrait_2": portrait_max_embarrassed,
             "pos_2":      Vector2(0, 0),
             "portrait_3": portrait_professor_strict,
@@ -536,25 +530,20 @@ func _start_dialogue_exam_before() -> void:
             "portrait_3": portrait_professor_strict,
             "pos_3":      Vector2(0, 0)
         }
-        # Завершение → _on_dialogue_finished → _show_plashka_15min
     ]
 
     dm.start(lines)
 
 # ==============================================================
 # ФАЗА 6 — ПЛАШКА «15 МИНУТ СПУСТЯ...»
-# Источник: ЕДИНОРОГ.docx → [Затемнение. Плашка: «15 МИНУТ СПУСТЯ...»]
-# Показывает плашку, затем скрывает и продолжает в аудитории
 # ==============================================================
 func _show_plashka_15min() -> void:
     _phase = Phase.PLASHKA_15MIN
     _reset_plashka()
     plashka_label.text = "15 МИНУТ СПУСТЯ..."
 
-    # Задержка перед появлением текста
     await get_tree().create_timer(plashka_delay).timeout
 
-    # Появление плашки
     var tw_in: Tween = create_tween()
     tw_in.tween_property(plashka_rect,  "color",         Color(0, 0, 0, 0.85), 0.5)
     tw_in.parallel().tween_property(plashka_label, "modulate:a", 1.0,         0.5)
@@ -562,7 +551,6 @@ func _show_plashka_15min() -> void:
 
     await get_tree().create_timer(1.5).timeout
 
-    # Скрытие плашки перед следующим диалогом
     var tw_out: Tween = create_tween()
     tw_out.tween_property(plashka_rect,  "color",         Color(0, 0, 0, 0.0), 0.4)
     tw_out.parallel().tween_property(plashka_label, "modulate:a", 0.0,         0.4)
@@ -572,12 +560,9 @@ func _show_plashka_15min() -> void:
 
 # ==============================================================
 # ФАЗА 7 — ДИАЛОГ В АУДИТОРИИ (после зачёта)
-# Источник: ЕДИНОРОГ.docx → «[после третьего вопроса...]»
-# Профессор доволен → замечает гриву → «фыркает» → уходят
 # ==============================================================
 func _start_dialogue_exam_after() -> void:
     _phase = Phase.DIALOGUE_EXAM_AFTER
-    # Фон не меняется — всё ещё аудитория
 
     if not dm or not dm.has_method("start"):
         push_warning("Mission1: DialogueManager не найден.")
@@ -636,15 +621,12 @@ func _start_dialogue_exam_after() -> void:
             "portrait_3": portrait_unicorn_confident,
             "pos_3":      Vector2(0, 0) 
         }
-        # Завершение → _on_dialogue_finished → _start_dialogue_group_project
     ]
 
     dm.start(lines)
 
 # ==============================================================
 # ФАЗА 8 — ДИАЛОГ: ГРУППОВОЙ ПРОЕКТ (переговорная)
-# Источник: ЕДИНОРОГ.docx → «Переговорная комната»
-# Конфликт группы → Единорог выходит вперёд → «Для этого я здесь»
 # ==============================================================
 func _start_dialogue_group_project() -> void:
     _phase = Phase.DIALOGUE_GROUP_PROJECT
@@ -727,7 +709,6 @@ func _start_dialogue_group_project() -> void:
             "pos_2":      Vector2(0, 0),
             "portrait_3": portrait_max_angry,
             "pos_3":      Vector2(0, 0)
-            
         },
         {
             "speaker":    "ЕДИНОРОГ",
@@ -810,51 +791,54 @@ func _start_dialogue_group_project() -> void:
             "portrait_3": portrait_dima_guilty,
             "pos_3":      Vector2(0, 0)
         }
-        # Завершение → _on_dialogue_finished → _start_minigame_2
     ]
 
     dm.start(lines)
 
 # ==============================================================
 # ФАЗА 9 — МИНИ-ИГРА 2: «Собери презентацию»
-# Источник: ЕДИНОРОГ.docx → МИНИ-ИГРА 2
-# Данные: MINIGAME_2_SLIDES (6 слайдов, перетаскивание)
 # ==============================================================
 func _start_minigame_2() -> void:
     _phase = Phase.MINIGAME_2
     minigame_layer.visible = true
+    minigame_layer.layer = 160   # Делаем выше HomeOverlay и диалогов
 
-    # TODO: инстанцируй сцену мини-игры и подключи сигнал.
-    # var mg = preload("res://scenes/minigame_sort_slides.tscn").instantiate()
-    # minigame_layer.add_child(mg)
-    # mg.setup(MINIGAME_2_SLIDES, MINIGAME_2_TIMER_FIRST)
-    # mg.completed.connect(_on_minigame_2_completed)
+    # Удаляем старый экземпляр, если есть
+    if is_instance_valid(_mg2):
+        _mg2.queue_free()
+        _mg2 = null
 
-    push_warning("Mission1: MINIGAME_2 — заглушка. Подключи реальный UI.")
-    await get_tree().create_timer(0.1).timeout
-    _on_minigame_2_completed(true)  # ЗАГЛУШКА: победа
+    _mg2 = preload("res://scenes/minigame_sort_slides.tscn").instantiate() as MinigameSortSlides
+    
+    # КРИТИЧНЫЕ СТРОКИ ДЛЯ РАБОТЫ ВВОДА:
+    _mg2.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+    _mg2.mouse_filter = Control.MOUSE_FILTER_IGNORE
+    
+    minigame_layer.add_child(_mg2)
+    
+    _mg2.setup(MINIGAME_2_SLIDES, MINIGAME_2_TIMER_FIRST)
+    _mg2.completed.connect(_on_minigame_2_completed)
 
-## Вызывается мини-игрой по сигналу.
-## is_success: true = правильный порядок до истечения таймера.
 func _on_minigame_2_completed(is_success: bool) -> void:
+    if is_instance_valid(_mg2):
+        _mg2.queue_free()
+        _mg2 = null
+
     if not is_success:
-        # Таймер истёк или порядок неверный → перезапуск
-        push_warning("Mission1: МГ2 провал. Перезапуск.")
-        minigame_layer.visible = false
+        # Неудача — перезапускаем мини-игру
+        await get_tree().create_timer(0.8).timeout
         _start_minigame_2()
         return
 
+    # Успех
     minigame_layer.visible = false
     _start_dialogue_post_mg2()
 
 # ==============================================================
 # ФАЗА 10 — ДИАЛОГ ПОСЛЕ МГ2 (переговорная)
-# Источник: ЕДИНОРОГ.docx → диалог после мини-игры 2
-# Примирение команды → профессор заглядывает → «Идите сдавать»
 # ==============================================================
 func _start_dialogue_post_mg2() -> void:
     _phase = Phase.DIALOGUE_POST_MG2
-    # Фон не меняется — всё ещё переговорная
 
     if not dm or not dm.has_method("start"):
         push_warning("Mission1: DialogueManager не найден.")
@@ -954,15 +938,12 @@ func _start_dialogue_post_mg2() -> void:
             "portrait_2": portrait_dima_guilty,
             "pos_2":      Vector2(0, 0)
         }
-        # Завершение → _on_dialogue_finished → _start_dialogue_finale
     ]
 
     dm.start(lines)
 
 # ==============================================================
 # ФАЗА 11 — ФИНАЛЬНЫЙ ДИАЛОГ (коридор)
-# Источник: ЕДИНОРОГ.docx → «Все выходят.» → конец Миссии 1
-# Макс: всё сдано → Единорог спрашивает о портале → Алиса
 # ==============================================================
 func _start_dialogue_finale() -> void:
     _phase = Phase.DIALOGUE_FINALE
@@ -1023,52 +1004,42 @@ func _start_dialogue_finale() -> void:
             "portrait_2": portrait_max_laughing,
             "pos_2":      Vector2(0, 0)
         }
-        # Завершение → _on_dialogue_finished → _show_plashka_finale
     ]
 
     dm.start(lines)
 
 # ==============================================================
 # ФАЗА 12 — ФИНАЛЬНАЯ ПЛАШКА
-# Источник: ЕДИНОРОГ.docx → «ТЕМ ВРЕМЕНЕМ, В КАФЕ ЛУНА...»
-# После плашки — fade out → mission_2.tscn
 # ==============================================================
 func _show_plashka_finale() -> void:
     _phase = Phase.PLASHKA_FINALE
     _reset_plashka()
-    plashka_label.text = "ТЕМ ВРЕМЕНЕМ,\nВ КАФЕ ЖБАН..." # Текст твоей плашки
+    plashka_label.text = "ТЕМ ВРЕМЕНЕМ,\nВ КАФЕ ЖБАН..."
 
-    # 1. Сначала подставляем финальную картинку на фон
     if background and finale_background_texture:
         background.texture = finale_background_texture
         
     await get_tree().create_timer(plashka_delay).timeout
 
-    # 2. Проявляем плашку на 85% затемнения, чтобы картинку было видно, и показываем текст
     var tw: Tween = create_tween()
     tw.tween_property(plashka_rect,  "color",         Color(0, 0, 0, 0.85), 0.5)
     tw.parallel().tween_property(plashka_label, "modulate:a", 1.0,         0.5)
     await tw.finished
 
-    # Ожидание 2 секунды, пока игрок читает текст
     await get_tree().create_timer(2.0).timeout
     
-    # Запускаем плавное перетекание в чёрный экран
     _begin_fade_out()
 
 # ==============================================================
-# ФАЗА 13 — FADE OUT → Абсолютное затухание в стиль пролога
+# ФАЗА 13 — FADE OUT
 # ==============================================================
 func _begin_fade_out() -> void:
     _phase = Phase.FADE_OUT
     
-    # Создаем Tween для эффекта «перетекания»:
-    # Текст плавно растворяется (0.0), а фон становится на 100% чёрным (1.0)
     var tw: Tween = create_tween()
     tw.tween_property(plashka_rect, "color", Color(0, 0, 0, 1.0), 1.0)
     tw.parallel().tween_property(plashka_label, "modulate:a", 0.0, 1.0)
     await tw.finished
 
-    # Когда экран полностью стал чёрным — переключаем сцену на Миссию 2
     mission_completed.emit()
     get_tree().change_scene_to_file("res://scenes/mission_2.tscn")
