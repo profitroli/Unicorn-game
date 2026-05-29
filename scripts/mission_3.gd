@@ -29,7 +29,12 @@ enum Phase {
 }
 
 var _phase: Phase = Phase.FADE_IN
+# ==============================================================
+# АКТИВНЫЕ МИНИ-ИГРЫ
+# ==============================================================
+var _mg_water: MinigameWaterDetector = null
 
+#
 # ==============================================================
 # ВИЗУАЛЬНЫЕ АССЕТЫ — ФОНЫ
 # ==============================================================
@@ -97,6 +102,7 @@ var _phase: Phase = Phase.FADE_IN
 @export var portrait_unicorn_glowing: Texture2D
 ## Кланяется — последнее прощание перед шагом в портал
 @export var portrait_unicorn_farewell: Texture2D
+@export var portrait_unicorn: Texture2D
 
 # ==============================================================
 # ВИЗУАЛЬНЫЕ АССЕТЫ — ЭПИЛОГ (ЛЕС)
@@ -113,29 +119,24 @@ var _phase: Phase = Phase.FADE_IN
 @export var portrait_asterion_smiling1: Texture2D
 
 # ==============================================================
-# КОНФИГУРАЦИЯ МИНИ-ИГРЫ 4 — «Детектор воды»
-# Источник: ЕДИНОРОГ.docx → МИНИ-ИГРА 4
-# Сетка 6×6. Рог = детектор. Расстояние = Манхэттен или Евклид.
+# КОНФИГУРАЦИЯ МИНИ-ИГР
 # ==============================================================
 const MINIGAME_WATER_CONFIG: Dictionary = {
-    "grid_cols":          6,     # Ширина сетки
-    "grid_rows":          6,     # Высота сетки
-    "water_cell_count":   2,     # Кол-во скрытых источников воды
-    "max_attempts":       8,     # Попыток до перезапуска
-    "rating_legendary":   4,     # 1–4 попытки  → «Невероятно!»
-    "rating_great":       6,     # 5–6 попыток  → «Отличная работа»
-    "rating_ok":          8,     # 7–8 попыток  → «Еле успели, но нашли»
+    "grid_cols":          6,
+    "grid_rows":          6,
+    "water_cell_count":   2,
+    "max_attempts":       8,
+    "rating_legendary":   4,
+    "rating_great":       6,
+    "rating_ok":          8
 }
 
-## Уровни сигнала рога по дистанции (Евклид, клеток)
-## max_distance: верхняя граница расстояния для этого уровня
-## Используется мини-игрой для окраски маркеров и индикатора
-const WATER_SIGNAL_LEVELS: Array = [
-    { "max_distance": 0,  "label": "ВОДА! 💧",   "color": "ffffff" },  # Попадание
-    { "max_distance": 1,  "label": "Горячо!",    "color": "ff8800" },  # Вплотную
-    { "max_distance": 2,  "label": "Тепло",      "color": "ffee00" },  # Рядом
-    { "max_distance": 3,  "label": "Прохладно",  "color": "00ccff" },  # Далеко
-    { "max_distance": 99, "label": "Ничего",     "color": "888888" },  # Нет сигнала
+const WATER_SIGNAL_LEVELS: Array[Dictionary] = [
+    { "max_distance": 0,  "label": "ВОДА! 💧",   "color": "ffffff" },
+    { "max_distance": 1,  "label": "Горячо!",    "color": "ff8800" },
+    { "max_distance": 2,  "label": "Тепло",      "color": "ffee00" },
+    { "max_distance": 3,  "label": "Прохладно",  "color": "00ccff" },
+    { "max_distance": 99, "label": "Ничего",     "color": "888888" },
 ]
 
 # ==============================================================
@@ -164,9 +165,8 @@ const MINIGAME_PORTAL_CONFIG: Dictionary = {
 @onready var plashka_rect: ColorRect           = $PlashkaLayer/PlashkaRect
 @onready var plashka_label: Label              = $PlashkaLayer/PlashkaLabel
 @onready var minigame_layer: CanvasLayer       = $MinigameLayer
-
 # ==============================================================
-# ГОТОВНОСТЬ
+# READY
 # ==============================================================
 func _ready() -> void:
     _set_background(bg_sahara_desert)
@@ -490,47 +490,45 @@ func _start_dialogue_desert_intro() -> void:
     dm.start(lines)
 
 # ==============================================================
-# ФАЗА 3 — МИНИ-ИГРА «ДЕТЕКТОР ВОДЫ»
-# Источник: ЕДИНОРОГ.docx → МИНИ-ИГРА 4
-# Конфигурация: MINIGAME_WATER_CONFIG + WATER_SIGNAL_LEVELS
+# МИНИ-ИГРА 4 — ДЕТЕКТОР ВОДЫ
 # ==============================================================
 func _start_minigame_water() -> void:
     _phase = Phase.MINIGAME_WATER
     minigame_layer.visible = true
+    minigame_layer.layer = 180
 
-    # TODO: инстанцируй сцену мини-игры и подключи сигналы.
-    # var mg = preload("res://scenes/minigame_water_detector.tscn").instantiate()
-    # minigame_layer.add_child(mg)
-    # mg.setup(MINIGAME_WATER_CONFIG, WATER_SIGNAL_LEVELS)
-    # mg.completed.connect(_on_minigame_water_completed)
+    if is_instance_valid(_mg_water):
+        _mg_water.queue_free()
 
-    push_warning("Mission3: MINIGAME_WATER — заглушка. Подключи UI.")
-    await get_tree().create_timer(0.1).timeout
-    _on_minigame_water_completed(true, 3)  # ЗАГЛУШКА: победа, 3 попытки
+    _mg_water = preload("res://scenes/minigame_water_detector.tscn").instantiate() as MinigameWaterDetector
+    minigame_layer.add_child(_mg_water)
 
-## Вызывается мини-игрой по сигналу.
-## is_success: нашли оба источника до исчерпания попыток.
-## attempts_used: сколько попыток ушло (для рейтинга).
+    _mg_water.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+    _mg_water.mouse_filter = Control.MOUSE_FILTER_IGNORE
+
+    _mg_water.setup(
+        MINIGAME_WATER_CONFIG,
+        WATER_SIGNAL_LEVELS,
+        portrait_unicorn   # или любую другую текстуру единорога
+    )
+
+    _mg_water.completed.connect(_on_minigame_water_completed)
+
+
 func _on_minigame_water_completed(is_success: bool, attempts_used: int) -> void:
-    if not is_success:
-        # Превышено max_attempts → перезапуск
-        push_warning("Mission3: MINIGAME_WATER — провал. Перезапуск.")
-        minigame_layer.visible = false
-        _start_minigame_water()
-        return
+    if is_instance_valid(_mg_water):
+        _mg_water.queue_free()
+        _mg_water = null
 
-    # Подбираем рейтинговую строку (для UI мини-игры)
-    var rating_text: String
-    if attempts_used <= MINIGAME_WATER_CONFIG["rating_legendary"]:
-        rating_text = "Невероятно!"
-    elif attempts_used <= MINIGAME_WATER_CONFIG["rating_great"]:
-        rating_text = "Отличная работа"
-    else:
-        rating_text = "Еле успели, но нашли"
-
-    print("[Mission3] Вода найдена. Попытки: %d. Рейтинг: %s" % [attempts_used, rating_text])
     minigame_layer.visible = false
-    _start_dialogue_post_water()
+
+    if is_success:
+        _start_dialogue_post_water()
+    else:
+        # Поражение — даём повторить
+        await get_tree().create_timer(1.4).timeout
+        _start_minigame_water()
+
 
 # ==============================================================
 # ФАЗА 4 — ДИАЛОГ ПОСЛЕ ВОДЫ
@@ -539,7 +537,7 @@ func _on_minigame_water_completed(is_success: bool, attempts_used: int) -> void:
 # ==============================================================
 func _start_dialogue_post_water() -> void:
     _phase = Phase.DIALOGUE_POST_WATER
-
+    _set_background(bg_sahara_anomaly)
     if not dm or not dm.has_method("start"):
         push_warning("Mission3: DialogueManager не найден.")
         _start_dialogue_pre_portal()
@@ -587,9 +585,7 @@ func _start_dialogue_post_water() -> void:
             "portrait_3": portrait_igor_believer,
             "pos_3":      Vector2(0, 0)
         },
-        # --- Единорог спрашивает о портале ---
-        # Примечание: в оригинале «Соня сказала» — очевидная опечатка,
-        # правильно «Алиса» (см. финал Миссии 2)
+        # --- Единорог спрашивает о портале --
         {
             "speaker":    "ЕДИНОРОГ",
             "text":       "Я ищу портал. Алиса сказала, здесь видели светящиеся врата.",
@@ -663,7 +659,7 @@ func _start_dialogue_post_water() -> void:
 # ==============================================================
 func _start_dialogue_pre_portal() -> void:
     _phase = Phase.DIALOGUE_PRE_PORTAL
-    _set_background(bg_sahara_anomaly)
+   
 
     if not dm or not dm.has_method("start"):
         push_warning("Mission3: DialogueManager не найден.")
