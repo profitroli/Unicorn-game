@@ -14,7 +14,7 @@ var _signal_levels: Array[Dictionary] = []
 
 # ─── Состояние ──────────────────────────────────────────────────────────────
 var _water_positions: Array[Vector2i] = []
-var _cell_states:     Dictionary = {}      # Vector2i → int
+var _cell_states:     Dictionary = {}      
 var _found_count:     int = 0
 var _attempts_used:   int = 0
 var _unicorn_cell:    Vector2i = Vector2i(2, 2)
@@ -37,18 +37,18 @@ var _attempts_lbl:   Label
 var _found_lbl:      Label
 
 # ─── Константы ──────────────────────────────────────────────────────────────
-const CELL_SIZE:    float = 94.0
-const CELL_GAP:     float = 5.0
-const UNICORN_SZ:   float = 92.0
-const MARKER_SZ:    float = 54.0
-const WATER_SZ:     float = 68.0
+const CELL_SIZE:    float = 118.0   # ← сильно увеличил
+const CELL_GAP:     float = 12.0
+const UNICORN_SZ:   float = 110.0
+const MARKER_SZ:    float = 68.0
+const WATER_SZ:     float = 88.0
 
 const BAR_W:        float = 44.0
 const BAR_H:        float = 44.0
 const BAR_GAP:      float = 5.0
 const BAR_SEGS:     int   = 8
 
-const GRID_OFFSET_Y: float = 160.0   # Центрирование
+const GRID_OFFSET_Y: float = 280.0
 
 # ─── Палитра ────────────────────────────────────────────────────────────────
 const C_DIM        := Color(0.00, 0.00, 0.00, 0.45)
@@ -147,10 +147,41 @@ func _place_water_randomly() -> void:
 # ─── Построение UI ───────────────────────────────────────────────────────────
 func _build_ui() -> void:
     _dim_node = ColorRect.new()
-    _dim_node.color = C_DIM
+    _dim_node.color = Color(0.0, 0.0, 0.0, 0.88)
     _dim_node.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
     _dim_node.mouse_filter = Control.MOUSE_FILTER_STOP
     add_child(_dim_node)
+
+    # === Большая рамка "устройства" как в первой игре ===
+    var device := Panel.new()
+    device.position = Vector2(140, 120)
+    device.size = Vector2(1640, 920)
+    var ds := StyleBoxFlat.new()
+    ds.bg_color = Color(0.12, 0.09, 0.06, 1.0)
+    ds.set_corner_radius_all(12)
+    # Исправлено:
+    ds.border_width_top = 8
+    ds.border_width_bottom = 8
+    ds.border_width_left = 8
+    ds.border_width_right = 8
+    ds.border_color = Color(0.65, 0.52, 0.32, 1.0)
+    device.add_theme_stylebox_override("panel", ds)
+    _dim_node.add_child(device)
+
+    # Заголовок
+    var title := _lbl("МИНИ-ИГРА 4: ДЕТЕКТОР ВОДЫ", 58, Color(0.98, 0.88, 0.48))
+    title.position = Vector2(0, 40)
+    title.size = Vector2(1920, 90)
+    title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+    if _font:
+        title.add_theme_font_override("font", _font)
+    _dim_node.add_child(title)
+
+    var subtitle := _lbl("НАЙДИ ДВА ПОДЗЕМНЫХ ИСТОЧНИКА", 32, Color(0.85, 0.72, 0.42))
+    subtitle.position = Vector2(0, 115)
+    subtitle.size = Vector2(1920, 50)
+    subtitle.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+    _dim_node.add_child(subtitle)
 
     _build_hud()
     _build_grid_cells()
@@ -158,7 +189,6 @@ func _build_ui() -> void:
 
     _update_hud_labels()
     _refresh_bar(-1)
-
 
 func _build_unicorn() -> void:
     _unicorn_ctrl = Control.new()
@@ -175,9 +205,7 @@ func _build_unicorn() -> void:
 
     if _unicorn_texture and _unicorn_texture.get_width() > 0:
         _unicorn_sprite.texture = _unicorn_texture
-        print("Minigame: Единорог загружен успешно")  # Для отладки
     else:
-        print("Minigame: WARNING - текстура единорога не передана или null")  # Для отладки
         # Заглушка
         var ph := Panel.new()
         ph.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -186,7 +214,7 @@ func _build_unicorn() -> void:
         ph.add_theme_stylebox_override("panel", ps)
         _unicorn_ctrl.add_child(ph)
 
-        var ul := _lbl("U", 45, Color(0.38, 0.34, 0.72))
+        var ul := _lbl("U", 48, Color(0.38, 0.34, 0.72))
         ul.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
         ul.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
         ul.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
@@ -197,27 +225,29 @@ func _build_unicorn() -> void:
 
 
 func _build_hud() -> void:
-    var lp := _mk_panel(Vector2(40, 30), Vector2(460, 70))
-    _found_lbl = _lbl("НАЙДИ %d ИСТОЧНИКА" % _water_count, 26, C_UI_TXT)
+    # Левая панель
+    var lp := _mk_panel(Vector2(180, 780), Vector2(520, 90))
+    _found_lbl = _lbl("НАЙДЕНО: 0 / 2", 32, C_UI_TXT)
     _found_lbl.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-    _found_lbl.offset_left = 20
+    _found_lbl.offset_left = 30
     _found_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
     _found_lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
     lp.add_child(_found_lbl)
 
-    var rp := _mk_panel(Vector2(1920 - 480, 30), Vector2(420, 70))
-    _attempts_lbl = _lbl("ПОПЫТКИ: 0 / %d" % _max_attempts, 26, C_UI_TXT)
+    # Правая панель
+    var rp := _mk_panel(Vector2(1220, 780), Vector2(520, 90))
+    _attempts_lbl = _lbl("ПОПЫТКИ: 0 / 8", 32, C_UI_TXT)
     _attempts_lbl.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-    _attempts_lbl.offset_left = 20
+    _attempts_lbl.offset_left = 30
     _attempts_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
     _attempts_lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
     rp.add_child(_attempts_lbl)
 
-    _signal_lbl = _lbl("", 34, C_UI_TXT)
-    _signal_lbl.position = Vector2(0, 110)
-    _signal_lbl.size = Vector2(1920, 50)
+    # Сигнал
+    _signal_lbl = _lbl("", 42, C_UI_TXT)
+    _signal_lbl.position = Vector2(0, 660)
+    _signal_lbl.size = Vector2(1920, 70)
     _signal_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-    _signal_lbl.mouse_filter = Control.MOUSE_FILTER_IGNORE
     _dim_node.add_child(_signal_lbl)
 
     _build_bar()
@@ -226,36 +256,35 @@ func _build_hud() -> void:
 func _build_bar() -> void:
     var total_w := float(BAR_SEGS) * BAR_W + float(BAR_SEGS - 1) * BAR_GAP
     var bx := (1920.0 - total_w) * 0.5 - 4.0
-    const BY: float = 76.0
+    const BY: float = 720.0
 
     var bg_p := Panel.new()
-    bg_p.position = Vector2(bx - 10, BY - 6)
-    bg_p.size = Vector2(total_w + 44, BAR_H + 12)
+    bg_p.position = Vector2(bx - 15, BY - 12)
+    bg_p.size = Vector2(total_w + 54, BAR_H + 30)
     bg_p.mouse_filter = Control.MOUSE_FILTER_IGNORE
     var bgs := StyleBoxFlat.new()
     bgs.bg_color = C_UI_BG
-    bgs.set_corner_radius_all(8)
-    bgs.border_width_top = 2
-    bgs.border_width_bottom = 2
-    bgs.border_width_left = 2
-    bgs.border_width_right = 2
+    bgs.set_corner_radius_all(12)
+    # Исправлено:
+    bgs.border_width_top = 4
+    bgs.border_width_bottom = 4
+    bgs.border_width_left = 4
+    bgs.border_width_right = 4
     bgs.border_color = C_UI_BOR
     bg_p.add_theme_stylebox_override("panel", bgs)
     _dim_node.add_child(bg_p)
 
     # Стрелки
-    var al := _lbl("◀", 28, C_UI_BOR2)
-    al.position = Vector2(bx - 10, BY - 3)
-    al.size = Vector2(24, BAR_H + 2)
+    var al := _lbl("◀", 36, C_UI_BOR2)
+    al.position = Vector2(bx - 38, BY - 8)
+    al.size = Vector2(32, BAR_H + 12)
     al.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-    al.mouse_filter = Control.MOUSE_FILTER_IGNORE
     _dim_node.add_child(al)
 
-    var ar := _lbl("▶", 28, C_UI_BOR2)
-    ar.position = Vector2(bx + total_w + 8, BY - 3)
-    ar.size = Vector2(24, BAR_H + 2)
+    var ar := _lbl("▶", 36, C_UI_BOR2)
+    ar.position = Vector2(bx + total_w + 18, BY - 8)
+    ar.size = Vector2(32, BAR_H + 12)
     ar.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-    ar.mouse_filter = Control.MOUSE_FILTER_IGNORE
     _dim_node.add_child(ar)
 
     for i in BAR_SEGS:
@@ -265,7 +294,7 @@ func _build_bar() -> void:
         seg.mouse_filter = Control.MOUSE_FILTER_IGNORE
         var ss := StyleBoxFlat.new()
         ss.bg_color = C_BAR_OFF
-        ss.set_corner_radius_all(5)
+        ss.set_corner_radius_all(6)
         seg.add_theme_stylebox_override("panel", ss)
         _dim_node.add_child(seg)
         _bar_segments.append(seg)
@@ -415,45 +444,55 @@ func _move_unicorn(target_cell: Vector2i) -> void:
 
 
 func _place_marker(cell: Vector2i, level: int) -> void:
+    # Удаляем старый маркер
     if _marker_nodes.has(cell):
         _marker_nodes[cell].queue_free()
+        _marker_nodes.erase(cell)
 
-    var off := (CELL_SIZE - MARKER_SZ) * 0.5
-    var pos := _cell_to_px(cell) + Vector2(off, off)
+    var pos := _cell_to_px(cell)
     var col: Color = MARKER_COLORS[min(level, MARKER_COLORS.size() - 1)]
 
-    var mk := Panel.new()
-    mk.position = pos
-    mk.size = Vector2(MARKER_SZ, MARKER_SZ)
-    mk.mouse_filter = Control.MOUSE_FILTER_IGNORE
+    # Маркер только если НЕ вода
+    if level != 0:
+        var off := (CELL_SIZE - MARKER_SZ) * 0.5
+        var marker_pos := pos + Vector2(off, off)
 
-    var ms := StyleBoxFlat.new()
-    ms.bg_color = col
-    ms.set_corner_radius_all(int(MARKER_SZ * 0.5))
-    ms.border_width_top = 2
-    ms.border_width_bottom = 2
-    ms.border_width_left = 2
-    ms.border_width_right = 2
-    ms.border_color = col.darkened(0.3)
-    mk.add_theme_stylebox_override("panel", ms)
+        var mk := Panel.new()
+        mk.position = marker_pos
+        mk.size = Vector2(MARKER_SZ, MARKER_SZ)
+        mk.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
-    var icon := _lbl(MARKER_ICONS[min(level, MARKER_ICONS.size() - 1)], 28, Color.WHITE)
-    icon.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-    icon.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-    icon.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-    mk.add_child(icon)
+        var ms := StyleBoxFlat.new()
+        ms.bg_color = col
+        ms.set_corner_radius_all(int(MARKER_SZ * 0.5))
+        # Исправлено:
+        ms.border_width_top = 3
+        ms.border_width_bottom = 3
+        ms.border_width_left = 3
+        ms.border_width_right = 3
+        ms.border_color = col.darkened(0.3)
+        mk.add_theme_stylebox_override("panel", ms)
 
-    _dim_node.add_child(mk)
-    _marker_nodes[cell] = mk
+        var icon := _lbl(MARKER_ICONS[min(level, MARKER_ICONS.size() - 1)], 28, Color.WHITE)
+        icon.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+        icon.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+        icon.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+        mk.add_child(icon)
+
+        _dim_node.add_child(mk)
+        _marker_nodes[cell] = mk
 
     # Вода
     if level == 0 and not _water_sprites.has(cell):
+        var off := (CELL_SIZE - WATER_SZ) * 0.5
+        var water_pos := pos + Vector2(off, off - 10)
+
         var water := TextureRect.new()
         water.texture = preload("res://assets/ui/Gemini_Generated_Image_oo0qv1oo0qv1oo0q-Photoroom 2.png")
         water.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
         water.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
         water.size = Vector2(WATER_SZ, WATER_SZ)
-        water.position = pos + Vector2((CELL_SIZE - WATER_SZ) * 0.5, (CELL_SIZE - WATER_SZ) * 0.5 - 10)
+        water.position = water_pos
         _dim_node.add_child(water)
         _water_sprites[cell] = water
 
@@ -463,8 +502,6 @@ func _place_marker(cell: Vector2i, level: int) -> void:
         var cs := cp.get_theme_stylebox("panel") as StyleBoxFlat
         if cs:
             cs.bg_color = Color(0.84, 0.74, 0.48, 1.0)
-
-
 # ─── Вспомогательные ────────────────────────────────────────────────────────
 func _cell_to_px(cell: Vector2i) -> Vector2:
     return _grid_origin + Vector2(
@@ -514,13 +551,13 @@ func _mk_panel(pos: Vector2, size: Vector2) -> Panel:
     var s := StyleBoxFlat.new()
     s.bg_color = C_UI_BG
     s.set_corner_radius_all(6)
-    s.border_width_top = 2
-    s.border_width_bottom = 2
-    s.border_width_left = 2
-    s.border_width_right = 2
+    s.border_width_top = 3
+    s.border_width_bottom = 3
+    s.border_width_left = 3
+    s.border_width_right = 3
     s.border_color = C_UI_BOR
     s.shadow_color = C_UI_BOR2
-    s.shadow_size = 2
+    s.shadow_size = 3
     p.add_theme_stylebox_override("panel", s)
     p.mouse_filter = Control.MOUSE_FILTER_IGNORE
     _dim_node.add_child(p)

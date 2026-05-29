@@ -88,14 +88,12 @@ func _ready() -> void:
     set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
     mouse_filter = Control.MOUSE_FILTER_IGNORE
     
-    # ←←← ЗАГРУЗКА ТВОЕГО ШРИФТА ←←←
     const FONT_PATH = "res://assets/text/ArcadeJeu-Regular.otf"
     if ResourceLoader.exists(FONT_PATH):
         _font = load(FONT_PATH)
     else:
         push_warning("Шрифт не найден: " + FONT_PATH)
     
-    # Если шрифт не загрузился — используем дефолтный
     if not _font:
         _font = ThemeDB.fallback_font
 
