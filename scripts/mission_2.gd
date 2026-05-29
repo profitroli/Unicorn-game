@@ -7,158 +7,131 @@ extends Node2D
 signal mission_completed
 
 # ==============================================================
-# ФАЗЫ — расширенный паттерн из prologue.gd
+# ФАЗЫ
 # ==============================================================
 enum Phase {
     FADE_IN,
-    DIALOGUE_INTRO,    # Кафе: Алиса одна → появление Единорога → «Покажи приложение»
-    MINIGAME_A,        # «Заполни анкету» (4 вопроса с вариантами)
-    DIALOGUE_BETWEEN,  # Лайк от Арсения → решение написать
-    MINIGAME_B,        # «Первое сообщение»
-    DIALOGUE_OUTRO,    # Разговор о портале → прощание
-    PLASHKA,           # «САХАРА. 38°C В ТЕНИ. ТРЕТИЙ ДЕНЬ БЕЗ ВОДЫ.»
+    DIALOGUE_INTRO,
+    MINIGAME_A,
+    DIALOGUE_BETWEEN,
+    MINIGAME_B,
+    DIALOGUE_OUTRO,
+    PLASHKA,
     FADE_OUT
 }
 
 var _phase: Phase = Phase.FADE_IN
 
-# ==============================================================
-# PLACEHOLDER-ПЕРЕМЕННЫЕ ДЛЯ ВИЗУАЛЬНЫХ АСЕТОВ
-# Заменяй пути к файлам через Инспектор или прямо здесь.
-# ==============================================================
+# ── Активные экземпляры мини-игр ────────────────────────────────────────────
+var _mg_questionnaire: MinigameProfileQuestionnaire = null
+var _mg_first_message: MinigameFirstMessage         = null
 
+# ==============================================================
+# ЭКСПОРТИРУЕМЫЕ АССЕТЫ
+# ==============================================================
 @export_category("Backgrounds")
-## Фон: кафе «Луна» — приглушённый свет, гирлянды
-@export var bg_cafe_luna: Texture2D
+@export var bg_cafe_luna:          Texture2D
 @export var ui_app_profile_arseniy: Texture2D
-@export var bg_sahara: Texture2D
-## Длительность показа фона перед плашкой (сек)
-@export var background_view_time: float = 1.5
+@export var bg_sahara:             Texture2D
+@export var background_view_time:  float = 1.5
 
 @export_category("Portraits — Алиса")
-## Алиса грустная (смотрит в телефон, одна)
-@export var portrait_alisa_sad: Texture2D
-## Алиса удивлённая (видит Единорога)
+@export var portrait_alisa_sad:       Texture2D
 @export var portrait_alisa_surprised: Texture2D
-## Алиса восторженная (дракон! звёзды! книги!)
-@export var portrait_alisa_excited: Texture2D
-## Алиса счастливая (после ответа Арсения)
-@export var portrait_alisa_happy: Texture2D
-## Алиса серьёзная (разговор о портале)
-@export var portrait_alisa_serious: Texture2D
-## Алиса смеётся
-@export var portrait_alisa_laughing: Texture2D
+@export var portrait_alisa_excited:   Texture2D
+@export var portrait_alisa_happy:     Texture2D
+@export var portrait_alisa_serious:   Texture2D
+@export var portrait_alisa_laughing:  Texture2D
 
 @export_category("Portraits — Единорог")
-## Нейтральный / спокойный
 @export var portrait_unicorn_neutral: Texture2D
-## Любопытный / озадаченный
 @export var portrait_unicorn_curious: Texture2D
-## Мудрый / торжественный
-@export var portrait_unicorn_wise: Texture2D
+@export var portrait_unicorn_wise:    Texture2D
 
 @export_category("Portraits — Прочие")
-## Бариста кафе (пытается запретить вход)
 @export var portrait_barista: Texture2D
 
 @export_category("UI Assets — Мини-игры")
-## Заполненный профиль Алисы в приложении знакомств
-@export var ui_profile_alisa: Texture2D
-## Профиль Арсения: фото с телескопом на крыше, 19 лет
+@export var ui_profile_alisa:   Texture2D
 @export var ui_profile_arseniy: Texture2D
-## Экран чата — сообщение принято, «пишет...»
-@export var ui_chat_typing: Texture2D
 
 # ==============================================================
-# КЭШИРОВАННЫЕ ССЫЛКИ НА УЗЛЫ
-# Все пути — точная копия структуры prologue.tscn
+# ССЫЛКИ НА УЗЛЫ
 # ==============================================================
-@onready var black_screen: ColorRect        = $FadeLayer/BlackScreen
-@onready var background: TextureRect        = $Background
-@onready var dm: Node                       = $DialogueManager
-@onready var dialogue_box: Control          = $DialogueBox
-@onready var character_portrait_1: TextureRect = $CharacterPortrait1
-@onready var character_portrait_2: TextureRect = $CharacterPortrait2
-@onready var plashka_rect: ColorRect        = $PlashkaLayer/PlashkaRect
-@onready var plashka_label: Label           = $PlashkaLayer/PlashkaLabel
-## Слой для UI мини-игр — поверх всего, кроме диалога
-@onready var minigame_layer: CanvasLayer    = $MinigameLayer
-## TextureRect внутри MinigameLayer для показа профилей / UI
-@onready var minigame_ui_rect: TextureRect  = $MinigameLayer/UIRect
+@onready var black_screen:          ColorRect    = $FadeLayer/BlackScreen
+@onready var background:            TextureRect  = $Background
+@onready var dm:                    Node         = $DialogueManager
+@onready var dialogue_box:          Control      = $DialogueBox
+@onready var character_portrait_1:  TextureRect  = $CharacterPortrait1
+@onready var character_portrait_2:  TextureRect  = $CharacterPortrait2
+@onready var plashka_rect:          ColorRect    = $PlashkaLayer/PlashkaRect
+@onready var plashka_label:         Label        = $PlashkaLayer/PlashkaLabel
+@onready var minigame_layer:        CanvasLayer  = $MinigameLayer
+@onready var minigame_ui_rect:      TextureRect  = $MinigameLayer/UIRect
 
 # ==============================================================
 # ДАННЫЕ МИНИ-ИГРЫ А — «Заполни анкету» (4 вопроса)
-# Источник: ЕДИНОРОГ.docx → ЧАСТЬ А
 # ==============================================================
 const MINIGAME_A_DATA: Array[Dictionary] = [
     {
         "question":       "Чем занимаешься в свободное время?",
-        "options": [
-            "Сижу дома",
-            "Читаю фэнтези, изучаю мифологию",
-            "Путешествую по другим мирам"
-        ],
+        "options":        ["Сижу дома",
+                           "Читаю фэнтези, изучаю мифологию",
+                           "Путешествую по другим мирам"],
         "correct_index":  1,
         "reactions": [
             "Ну и что? Все сидят дома...",
             "Честно и интересно. Мне нравится.",
-            "Это звучит как будто я схожу с ума."
+			"Это звучит как будто я схожу с ума."
         ]
     },
     {
         "question":       "Что ищешь?",
-        "options": [
-            "Серьёзные отношения с умным человеком",
-            "Принца на белом коне",
-            "Не знаю, посмотрим"
-        ],
+        "options":        ["Серьёзные отношения с умным человеком",
+                           "Принца на белом коне",
+                           "Не знаю, посмотрим"],
         "correct_index":  0,
         "reactions": [
             "Прямо и по делу. Хорошо.",
             "Нет. Просто нет.",
-            "Это значит «мне всё равно». Плохой сигнал."
+			"Это значит «мне всё равно». Плохой сигнал."
         ]
     },
     {
         "question":       "Опиши себя в трёх словах",
-        "options": [
-            "Тихая, умная, одинокая",
-            "Начитанная, вдумчивая, со странностями",
-            "Просто обычная девушка"
-        ],
+        "options":        ["Тихая, умная, одинокая",
+                           "Начитанная, вдумчивая, со странностями",
+                           "Просто обычная девушка"],
         "correct_index":  1,
         "reactions": [
             "Последнее слово убери. Пожалуйста.",
-            "Странности – это не минус. Это характер.",
-            "Я НЕ обычная. Ну то есть... в хорошем смысле."
+            "Странности — это не минус. Это характер.",
+			"Я НЕ обычная. Ну то есть... в хорошем смысле."
         ]
     },
     {
         "question":       "Твоя любимая книга?",
-        "options": [
-            "(оставить пустым)",
-            "Властелин колец. Толкин создал целый язык.",
-            "Люблю всё подряд"
-        ],
+        "options":        ["(оставить пустым)",
+                           "Властелин колец. Толкин создал целый язык.",
+                           "Люблю всё подряд"],
         "correct_index":  1,
         "reactions": [
             "Пустое поле — это как пустой взгляд. Нет.",
             "Это правда. И это прекрасно.",
-            "Это значит ничего конкретно. Скучно."
+			"Это значит ничего конкретно. Скучно."
         ]
     }
 ]
 
 # ==============================================================
-# ДАННЫЕ МИНИ-ИГРЫ Б — «Первое сообщение»
-# Источник: ЕДИНОРОГ.docx → ЧАСТЬ Б
+# ДАННЫЕ МИНИ-ИГРЫ Б — «Первое сообщение» (3 варианта)
 # ==============================================================
 const MINIGAME_B_DATA: Array[Dictionary] = [
     {
         "message":          "Хай",
         "response_speaker": "АРСЕНИЙ",
         "response_text":    "...",
-        "alisa_reaction":   "Это всё, что ты придумал?!",
+        "alisa_reaction":   "Это всё что ты придумал?!",
         "unicorn_comment":  "",
         "is_correct":       false
     },
@@ -175,39 +148,34 @@ const MINIGAME_B_DATA: Array[Dictionary] = [
         "response_speaker": "АРСЕНИЙ",
         "response_text":    "Хаха :)",
         "alisa_reaction":   "Он написал «хаха» со смайлом. Я в панике. Это хорошо или плохо?",
-        "unicorn_comment":  "Думаю, «хаха» – это хорошо.",
+        "unicorn_comment":  "Думаю «хаха» — это хорошо.",
         "is_correct":       false
     }
 ]
 
-# Счётчик правильных ответов в мини-игре А
 var _minigame_a_score: int = 0
 
 # ==============================================================
 # READY
 # ==============================================================
 func _ready() -> void:
-    # Применяем фон кафе, если текстура назначена через Инспектор
     if background and bg_cafe_luna:
         background.texture = bg_cafe_luna
 
-    # Скрываем портреты и UI до старта
     if character_portrait_1: character_portrait_1.visible = false
     if character_portrait_2: character_portrait_2.visible = false
-    minigame_layer.visible = false
+    minigame_layer.visible   = false
     minigame_ui_rect.visible = false
 
-    # Плашка — невидима
     plashka_label.modulate.a = 0.0
-    plashka_rect.color = Color(0, 0, 0, 0.0)
+    plashka_rect.color       = Color(0, 0, 0, 0.0)
 
-    # Подписываемся на сигналы DialogueManager
-    # Структура — идентично prologue.gd
     if dm:
         if dm.has_signal("dialogue_finished"):
             dm.dialogue_finished.connect(_on_dialogue_finished)
         if dm.has_signal("line_changed"):
             dm.line_changed.connect(_on_dialogue_line_changed)
+
     _begin_fade_in()
 
     var _home := HomeOverlay.new()
@@ -215,37 +183,39 @@ func _ready() -> void:
     add_child(_home)
 
 # ==============================================================
-# INPUT — пропуск реплик, только во время диалоговых фаз
-# Копия _input из prologue.gd
+# INPUT — пропуск реплик только в диалоговых фазах
 # ==============================================================
 func _input(event: InputEvent) -> void:
-  var is_dialogue_phase: bool = (
-    _phase == Phase.DIALOGUE_INTRO   or
-    _phase == Phase.DIALOGUE_BETWEEN or
-    _phase == Phase.DIALOGUE_OUTRO
-  )
-  if not is_dialogue_phase:
-    return
+    # === ЗАГЛУШКА ОТ HOME OVERLAY ===
+    if get_tree().root.has_meta("dialogue_input_blocked") and \
+       get_tree().root.get_meta("dialogue_input_blocked"):
+        return
+    var is_dialogue_active: bool = (
+        _phase == Phase.DIALOGUE_INTRO   or
+        _phase == Phase.DIALOGUE_BETWEEN or
+        _phase == Phase.DIALOGUE_OUTRO
+     )
+    
+    if not is_dialogue_active:
+        return
 
-  var is_tap: bool = event is InputEventScreenTouch and event.pressed
-  var is_click: bool = (
-    event is InputEventMouseButton
-    and event.pressed
-    and event.button_index == MOUSE_BUTTON_LEFT
-  )
+    var is_tap: bool = event is InputEventScreenTouch and event.pressed
+    var is_click: bool = (
+        event is InputEventMouseButton and 
+        event.pressed and 
+        event.button_index == MOUSE_BUTTON_LEFT
+    )
 
-  if (is_tap or is_click) and dm and dm.has_method("advance"):
-    dm.advance()
+    if (is_tap or is_click) and dm and dm.has_method("advance"):
+        dm.advance()
 
 # ==============================================================
 # ФАЗА 1 — FADE IN
-# Идентично mission_1.gd: чёрный экран → прозрачность → старт
 # ==============================================================
 func _begin_fade_in() -> void:
     _phase = Phase.FADE_IN
-
     black_screen.modulate.a = 1.0
-    black_screen.visible = true
+    black_screen.visible    = true
 
     var tween: Tween = create_tween()
     tween.tween_property(black_screen, "modulate:a", 0.0, 1.0)
@@ -255,9 +225,7 @@ func _begin_fade_in() -> void:
     _start_dialogue_intro()
 
 # ==============================================================
-# ФАЗА 2 — ДИАЛОГ-ВСТУПЛЕНИЕ
-# Источник: ЕДИНОРОГ.docx → начало Миссии 2 до «Покажи приложение»
-# Фон: кафе «Луна». Алиса грустная → Единорог входит → знакомятся
+# ФАЗА 2 — ДИАЛОГ-ВСТУПЛЕНИЕ (кафе)
 # ==============================================================
 func _start_dialogue_intro() -> void:
     _phase = Phase.DIALOGUE_INTRO
@@ -267,10 +235,7 @@ func _start_dialogue_intro() -> void:
         _start_minigame_a()
         return
 
-    # Структура словарей — 1-в-1 как в prologue.gd
-    # Поле "show_ui": имя UI-асета из @export для показа в _on_dialogue_line_changed
     var lines: Array[Dictionary] = [
-        # --- Алиса одна, смотрит в телефон ---
         {
             "speaker":    "АЛИСА",
             "text":       "Ну почему... Почему все находят кого-то, а я – нет?",
@@ -279,11 +244,10 @@ func _start_dialogue_intro() -> void:
             "portrait_2": null,
             "pos_2":      Vector2.ZERO
         },
-        # --- Единорог входит, бариста реагирует ---
         {
             "speaker":    "БАРИСТА",
             "text":       "Э-э-э... домашних животных нельзя...",
-            "portrait_1": portrait_barista,          # portrait_barista — placeholder
+            "portrait_1": portrait_barista,
             "pos_1":      Vector2(0, 0),
             "portrait_2": portrait_unicorn_neutral,
             "pos_2":      Vector2(0, 0),
@@ -296,7 +260,6 @@ func _start_dialogue_intro() -> void:
             "portrait_2": portrait_alisa_sad,
             "pos_2":      Vector2(0, 0),
         },
-        # --- Алиса замечает, удивляется ---
         {
             "speaker":    "АЛИСА",
             "text":       "Единорог?! Я думала, вы только в книжках существуете...",
@@ -329,10 +292,9 @@ func _start_dialogue_intro() -> void:
             "portrait_2": portrait_alisa_excited,
             "pos_2":      Vector2(0, 0)
         },
-        # --- Алиса открывается ---
         {
             "speaker":    "АЛИСА",
-            "text":       "Ох... Я просто устала быть одна. Все подруги с кем-то знакомятся, ходят на свидания... А я сижу тут, читаю фэнтези и разговариваю с воображаемыми персонажами.",
+            "text":       "Ох... Я просто устала быть одна. Все подруги с кем-то знакомятся, ходят на свидания... А я сижу тут, читаю фэнтези.",
             "portrait_1": portrait_alisa_sad,
             "pos_1":      Vector2(0, 0),
             "portrait_2": portrait_unicorn_neutral,
@@ -370,7 +332,6 @@ func _start_dialogue_intro() -> void:
             "portrait_2": portrait_unicorn_neutral,
             "pos_2":      Vector2(0, 0)
         },
-        # --- Триггер мини-игры А ---
         {
             "speaker":    "ЕДИНОРОГ",
             "text":       "Покажи мне это «приложение». Будем колдовать вместе.",
@@ -380,60 +341,57 @@ func _start_dialogue_intro() -> void:
             "pos_2":      Vector2(0, 0)
         }
     ]
-
     dm.start(lines)
 
 # ==============================================================
-# ОБРАБОТЧИК СИГНАЛА: смена строки диалога
-# Расширен по сравнению с prologue.gd: обрабатывает поле "show_ui"
+# ОБРАБОТЧИК СМЕНЫ СТРОКИ ДИАЛОГА
 # ==============================================================
 func _on_dialogue_line_changed(line_data: Dictionary) -> void:
-    # --- Портрет 1 (идентично prologue.gd) ---
     if character_portrait_1:
         var tex_1: Texture2D = line_data.get("portrait_1", null)
         if tex_1 == null:
             character_portrait_1.visible = false
         else:
-            character_portrait_1.texture = tex_1
-            character_portrait_1.visible = true
+            character_portrait_1.texture         = tex_1
+            character_portrait_1.visible         = true
             character_portrait_1.global_position = line_data.get("pos_1", Vector2.ZERO)
 
-    # --- Портрет 2 (идентично prologue.gd) ---
     if character_portrait_2:
         var tex_2: Texture2D = line_data.get("portrait_2", null)
         if tex_2 == null:
             character_portrait_2.visible = false
         else:
-            character_portrait_2.texture = tex_2
-            character_portrait_2.visible = true
+            character_portrait_2.texture         = tex_2
+            character_portrait_2.visible         = true
             character_portrait_2.global_position = line_data.get("pos_2", Vector2.ZERO)
 
-    # --- РАСШИРЕНИЕ: показ UI-картинки (профиль Арсения и т.д.) ---
-    # Поле "show_ui" содержит имя @export-переменной с текстурой.
-    # Добавляй случаи сюда по мере появления новых UI-асетов.
+    # Показ профиля Арсения поверх диалога (только во время диалогов, не мини-игр)
     var ui_key: String = line_data.get("show_ui", "")
     match ui_key:
         "profile_arseniy":
-            # Показываем профиль Арсения поверх диалога
-            if ui_app_profile_arseniy:             # placeholder: ui_app_profile_arseniy
+            if ui_app_profile_arseniy:
                 minigame_ui_rect.texture = ui_app_profile_arseniy
                 minigame_ui_rect.visible = true
                 minigame_layer.visible   = true
+               
+        "profile_alisa":
+            if ui_profile_alisa:
+                minigame_ui_rect.texture = ui_profile_alisa
+                minigame_ui_rect.visible = true
+                minigame_layer.visible   = true 
+                
         "":
-            # Нет UI — скрываем слой, если он был показан
             minigame_ui_rect.visible = false
             if _phase != Phase.MINIGAME_A and _phase != Phase.MINIGAME_B:
                 minigame_layer.visible = false
-
+       
 # ==============================================================
-# ОБРАБОТЧИК СИГНАЛА: диалог закончен → роутинг по фазам
+# РОУТЕР ЗАВЕРШЕНИЯ ДИАЛОГОВ
 # ==============================================================
 func _on_dialogue_finished() -> void:
-    # Скрываем портреты
     if character_portrait_1: character_portrait_1.visible = false
     if character_portrait_2: character_portrait_2.visible = false
 
-    # Переходим в следующую фазу в зависимости от текущей
     match _phase:
         Phase.DIALOGUE_INTRO:
             _start_minigame_a()
@@ -444,50 +402,51 @@ func _on_dialogue_finished() -> void:
 
 # ==============================================================
 # ФАЗА 3 — МИНИ-ИГРА А: «Заполни анкету»
-# Источник: ЕДИНОРОГ.docx → ЧАСТЬ А
-# Данные: MINIGAME_A_DATA (4 вопроса, правильный + реакция)
 # ==============================================================
 func _start_minigame_a() -> void:
     _phase = Phase.MINIGAME_A
     _minigame_a_score = 0
 
     minigame_layer.visible = true
+    minigame_layer.layer = 210          # ← ВЫШЕ HomeOverlay (200)
+    minigame_ui_rect.visible = false
 
-    # TODO: создай UI мини-игры A и подключи сигнал завершения.
-    # Когда все вопросы отвечены — вызывай:
-    #   _on_minigame_a_completed(score: int)
-    #
-    # Данные для UI: MINIGAME_A_DATA
-    # Пример подключения (если есть отдельная сцена мини-игры):
-    #   var mg_a = preload("res://scenes/minigame_questionnaire.tscn").instantiate()
-    #   add_child(mg_a)
-    #   mg_a.setup(MINIGAME_A_DATA)
-    #   mg_a.completed.connect(_on_minigame_a_completed)
+    if is_instance_valid(_mg_questionnaire):
+        _mg_questionnaire.queue_free()
 
-    push_warning("Mission2: MINIGAME_A — заглушка, замени на реальный UI.")
-    await get_tree().create_timer(0.1).timeout
-    _on_minigame_a_completed(4)  # ЗАГЛУШКА: 4/4 правильных
+    _mg_questionnaire = preload("res://scenes/minigame_profile_questionnaire.tscn").instantiate() as MinigameProfileQuestionnaire
+    minigame_layer.add_child(_mg_questionnaire)
+    
+    _mg_questionnaire.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+    _mg_questionnaire.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
-# Вызывается мини-игрой A по сигналу.
-# score: количество правильных ответов из 4.
+    _mg_questionnaire.setup(
+        MINIGAME_A_DATA,
+        portrait_alisa_excited,
+        portrait_alisa_happy,
+        portrait_alisa_sad
+    )
+    _mg_questionnaire.completed.connect(_on_minigame_a_completed)
+
+
 func _on_minigame_a_completed(score: int) -> void:
     _minigame_a_score = score
 
+    if is_instance_valid(_mg_questionnaire):
+        _mg_questionnaire.queue_free()
+        _mg_questionnaire = null
+
+    # Меньше 2 правильных → полный перезапуск анкеты
     if score < 2:
-        # Пересдача — перезапускаем мини-игру A
         _start_minigame_a()
         return
 
-    # Убираем мини-игровый слой
-    minigame_layer.visible   = false
-    minigame_ui_rect.visible = false
-
+    # Успех — прячем слой и запускаем диалог с лайком от Арсения
+    minigame_layer.visible = false
     _start_dialogue_between()
 
 # ==============================================================
-# ФАЗА 4 — ДИАЛОГ-СВЯЗКА
-# Источник: ЕДИНОРОГ.docx → «ДИАЛОГ МЕЖДУ ЧАСТЯМИ»
-# Лайк от Арсения, Алиса волнуется, показываем его профиль
+# ФАЗА 4 — ДИАЛОГ-СВЯЗКА (лайк от Арсения)
 # ==============================================================
 func _start_dialogue_between() -> void:
     _phase = Phase.DIALOGUE_BETWEEN
@@ -498,7 +457,9 @@ func _start_dialogue_between() -> void:
         return
 
     var lines: Array[Dictionary] = [
-        # show_ui = "profile_arseniy" → _on_dialogue_line_changed покажет ui_app_profile_arseniy
+        {
+            "show_ui":    "profile_alisa"
+        },
         {
             "speaker":    "АЛИСА",
             "text":       "Готово... Ой, тут сразу кто-то лайкнул!",
@@ -506,16 +467,17 @@ func _start_dialogue_between() -> void:
             "pos_1":      Vector2(0, 0),
             "portrait_2": portrait_unicorn_neutral,
             "pos_2":      Vector2(0, 0),
-            "show_ui":    "profile_arseniy"          # ui_app_profile_arseniy — placeholder
+        },
+        {
+            "show_ui":    "profile_arseniy"
         },
         {
             "speaker":    "АЛИСА",
             "text":       "Арсений... У него фото со звёздами. И в описании: «Ночую на крыше, наблюдаю за галактиками. Ищу того, кто тоже смотрит вверх». Ого...",
             "portrait_1": portrait_alisa_excited,
             "pos_1":      Vector2(0, 0),
-           "portrait_2": portrait_unicorn_neutral,
+            "portrait_2": portrait_unicorn_neutral,
             "pos_2":      Vector2(0, 0),
-            "show_ui":    "profile_arseniy"
         },
         {
             "speaker":    "ЕДИНОРОГ",
@@ -524,7 +486,7 @@ func _start_dialogue_between() -> void:
             "pos_1":      Vector2(0, 0),
             "portrait_2": portrait_alisa_excited,
             "pos_2":      Vector2(0, 0),
-            "show_ui":    ""                         # убираем профиль
+            "show_ui":    ""
         },
         {
             "speaker":    "АЛИСА",
@@ -536,56 +498,44 @@ func _start_dialogue_between() -> void:
             "show_ui":    ""
         }
     ]
-
     dm.start(lines)
 
 # ==============================================================
 # ФАЗА 5 — МИНИ-ИГРА Б: «Первое сообщение»
-# Источник: ЕДИНОРОГ.docx → ЧАСТЬ Б
-# Данные: MINIGAME_B_DATA (3 варианта, один правильный)
 # ==============================================================
 func _start_minigame_b() -> void:
     _phase = Phase.MINIGAME_B
 
     minigame_layer.visible = true
+    minigame_layer.layer = 210          # ← ВЫШЕ HomeOverlay
+    minigame_ui_rect.visible = false
 
-    # TODO: создай UI мини-игры Б и подключи сигнал завершения.
-    # Когда игрок выбрал вариант — вызывай:
-    #   _on_minigame_b_option_selected(option_index: int)
-    #
-    # Данные для UI: MINIGAME_B_DATA
-    # Пример:
-    #   var mg_b = preload("res://scenes/minigame_message.tscn").instantiate()
-    #   add_child(mg_b)
-    #   mg_b.setup(MINIGAME_B_DATA)
-    #   mg_b.option_chosen.connect(_on_minigame_b_option_selected)
+    if is_instance_valid(_mg_first_message):
+        _mg_first_message.queue_free()
 
-    push_warning("Mission2: MINIGAME_B — заглушка, замени на реальный UI.")
-    await get_tree().create_timer(0.1).timeout
-    _on_minigame_b_option_selected(1)  # ЗАГЛУШКА: правильный вариант (индекс 1)
+    _mg_first_message = preload("res://scenes/minigame_first_message.tscn").instantiate() as MinigameFirstMessage
+    minigame_layer.add_child(_mg_first_message)
+    
+    _mg_first_message.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+    _mg_first_message.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
-# Вызывается мини-игрой Б: игрок выбрал вариант с индексом option_index.
-func _on_minigame_b_option_selected(option_index: int) -> void:
-    if option_index < 0 or option_index >= MINIGAME_B_DATA.size():
-        push_error("Mission2: Неверный индекс варианта мини-игры Б: %d" % option_index)
-        return
+    _mg_first_message.setup(MINIGAME_B_DATA, ui_app_profile_arseniy)
+    _mg_first_message.completed.connect(_on_minigame_b_completed)
 
-    var chosen: Dictionary = MINIGAME_B_DATA[option_index]
 
-    if not chosen.get("is_correct", false):
-        # Неверный выбор — повтор
-        _start_minigame_b()
-        return
+## Вызывается когда MinigameFirstMessage эмитирует completed()
+## (только при правильном выборе — все повторы обрабатываются внутри мини-игры)
+func _on_minigame_b_completed() -> void:
+    if is_instance_valid(_mg_first_message):
+        _mg_first_message.queue_free()
+        _mg_first_message = null
 
     minigame_layer.visible   = false
     minigame_ui_rect.visible = false
-
     _start_dialogue_outro()
 
 # ==============================================================
-# ФАЗА 6 — ФИНАЛЬНЫЙ ДИАЛОГ
-# Источник: ЕДИНОРОГ.docx → «ПРОДОЛЖЕНИЕ ДИАЛОГА» и «прощание»
-# Арсений зовёт на встречу → разговор о портале → прощание
+# ФАЗА 6 — ФИНАЛЬНЫЙ ДИАЛОГ (разговор о портале → прощание)
 # ==============================================================
 func _start_dialogue_outro() -> void:
     _phase = Phase.DIALOGUE_OUTRO
@@ -596,15 +546,14 @@ func _start_dialogue_outro() -> void:
         return
 
     var lines: Array[Dictionary] = [
-        # --- Победа: Арсений зовёт на встречу ---
         {
             "speaker":    "АЛИСА",
             "text":       "Он предлагает встретиться. Завтра. В книжном.",
             "portrait_1": portrait_alisa_happy,
             "pos_1":      Vector2(0, 0),
             "portrait_2": portrait_unicorn_neutral,
-            "pos_2":       Vector2(0, 0),
-            "show_ui":    "profile_arseniy"          # ui_app_profile_arseniy — placeholder
+            "pos_2":      Vector2(0, 0),
+            "show_ui":    ""
         },
         {
             "speaker":    "ЕДИНОРОГ",
@@ -621,8 +570,7 @@ func _start_dialogue_outro() -> void:
             "portrait_1": portrait_alisa_laughing,
             "pos_1":      Vector2(0, 0),
             "portrait_2": portrait_unicorn_neutral,
-            "pos_2":      Vector2(0, 0),
-            "show_ui":    ""
+            "pos_2":      Vector2(0, 0)
         },
         {
             "speaker":    "ЕДИНОРОГ",
@@ -632,7 +580,6 @@ func _start_dialogue_outro() -> void:
             "portrait_2": portrait_alisa_laughing,
             "pos_2":      Vector2(0, 0)
         },
-        # --- Поворот: портал ---
         {
             "speaker":    "АЛИСА",
             "text":       "Слушай... ты говорил, что ищешь дорогу домой. Портал?",
@@ -651,87 +598,15 @@ func _start_dialogue_outro() -> void:
         },
         {
             "speaker":    "АЛИСА",
-            "text":       "Я читала на форуме «Аномалии Земли»... Это такое сообщество, мы собираем странные случаи по миру.",
-            "portrait_1": portrait_alisa_serious,
-            "pos_1":      Vector2(0, 0),
-            "portrait_2": portrait_unicorn_neutral,
-            "pos_2":      Vector2(0, 0)
-        },
-        {
-            "speaker":    "ЕДИНОРОГ",
-            "text":       "Люди собирают странности? Это... удивительно рационально для вашего вида.",
-            "portrait_1": portrait_unicorn_curious,
-            "pos_1":      Vector2(0, 0),
-            "portrait_2": portrait_alisa_serious,
-            "pos_2":      Vector2(0, 0)
-        },
-        {
-            "speaker":    "АЛИСА",
-            "text":       "Так, сейчас... вот! В пустыне Сахара, в районе Тенере, последние две недели наблюдают светящиеся врата в песке. Геологи думают, что это миражи. Но мираж не длится две недели, правда?",
+            "text":       "Я читала на форуме «Аномалии Земли»... В пустыне Сахара последние две недели наблюдают светящиеся врата в песке. Мираж не длится две недели, правда?",
             "portrait_1": portrait_alisa_excited,
             "pos_1":      Vector2(0, 0),
             "portrait_2": portrait_unicorn_neutral,
             "pos_2":      Vector2(0, 0)
         },
         {
-            "speaker":    "ЕДИНОРОГ",
-            "text":       "Сахара... Где это?",
-            "portrait_1": portrait_unicorn_curious,
-            "pos_1":      Vector2(0, 0),
-            "portrait_2": portrait_alisa_excited,
-            "pos_2":      Vector2(0, 0)
-        },
-        {
             "speaker":    "АЛИСА",
-            "text":       "Африка. Очень далеко и очень жарко. Но у меня есть контакт!",
-            "portrait_1": portrait_alisa_excited,
-            "pos_1":      Vector2(0, 0),
-            "portrait_2": portrait_unicorn_neutral,
-            "pos_2":      Vector2(0, 0)
-        },
-        {
-            "speaker":    "ЕДИНОРОГ",
-            "text":       "Контакт?",
-            "portrait_1": portrait_unicorn_curious,
-            "pos_1":      Vector2(0, 0),
-            "portrait_2": portrait_alisa_excited,
-            "pos_2":      Vector2(0, 0)
-        },
-        {
-            "speaker":    "АЛИСА",
-            "text":       "Мой дядя – Игорь. Он как раз в той экспедиции, геолог. Немного сумасшедший, но лучший в своём деле. Правда, от него три дня нет вестей...",
-            "portrait_1": portrait_alisa_serious,
-            "pos_1":      Vector2(0, 0),
-            "portrait_2": portrait_unicorn_neutral,
-            "pos_2":      Vector2(0, 0)
-        },
-        {
-            "speaker":    "ЕДИНОРОГ",
-            "text":       "Значит, ему может понадобиться помощь. Как мне попасть в эту Сахару?",
-            "portrait_1": portrait_unicorn_wise,
-            "pos_1":      Vector2(0, 0),
-            "portrait_2": portrait_alisa_serious,
-            "pos_2":      Vector2(0, 0)
-        },
-        {
-            "speaker":    "АЛИСА",
-            "text":       "Я отправлю тебя. У меня есть доступ к координатам экспедиции. Закрой глаза.",
-            "portrait_1": portrait_alisa_excited,
-            "pos_1":      Vector2(0, 0),
-            "portrait_2": portrait_unicorn_wise,
-            "pos_2":      Vector2(0, 0)
-        },
-        {
-            "speaker":    "ЕДИНОРОГ",
-            "text":       "Что?",
-            "portrait_1": portrait_unicorn_curious,
-            "pos_1":      Vector2(0, 0),
-            "portrait_2": portrait_alisa_excited,
-            "pos_2":      Vector2(0, 0)
-        },
-        {
-            "speaker":    "АЛИСА",
-            "text":       "Шучу! Короткая телепортация – это не ко мне. Но я знаю, где они. Иди на окраину города, там есть старая обсерватория. В подвале – портал. В детстве я нашла дневник деда.",
+            "text":       "Мой дядя – Игорь. Он в той экспедиции, геолог. Немного сумасшедший, но лучший в своём деле. Правда, от него три дня нет вестей...",
             "portrait_1": portrait_alisa_serious,
             "pos_1":      Vector2(0, 0),
             "portrait_2": portrait_unicorn_neutral,
@@ -739,13 +614,12 @@ func _start_dialogue_outro() -> void:
         },
         {
             "speaker":    "АЛИСА",
-            "text":       "Он был исследователем аномалий и писал, что под старой обсерваторией есть разрыв ткани реальности. Я никогда не была там, но уверена — это то, что тебе нужно.",
+            "text":       "Иди на окраину города, там есть старая обсерватория. В подвале – портал. Дед был исследователем аномалий — он писал о разрыве ткани реальности под ней.",
             "portrait_1": portrait_alisa_serious,
             "pos_1":      Vector2(0, 0),
-            "portrait_2": portrait_unicorn_neutral,
+            "portrait_2": portrait_unicorn_curious,
             "pos_2":      Vector2(0, 0)
         },
-        # --- Прощание ---
         {
             "speaker":    "ЕДИНОРОГ",
             "text":       "Ты удивительная, Алиса. Спасибо.",
@@ -771,42 +645,35 @@ func _start_dialogue_outro() -> void:
             "pos_2":      Vector2(0, 0)
         }
     ]
-
     dm.start(lines)
 
 # ==============================================================
-# ФАЗА 7 — ПЛАШКА
-# Источник: ЕДИНОРОГ.docx → [Затемнение. Плашка: «САХАРА...»]
-# Идентично _show_plashka() из prologue.gd
+# ФАЗА 7 — ПЛАШКА «САХАРА…»
 # ==============================================================
 func _show_plashka(text: String) -> void:
-    _phase = Phase.PLASHKA 
-    plashka_label.text = text 
+    _phase = Phase.PLASHKA
+    plashka_label.text = text
 
-    # Устанавливаем картинку Сахары, как делали в прологе и миссии 1
     if background and bg_sahara:
         background.texture = bg_sahara
 
-    # Ждём заданное время, давая игроку рассмотреть новый фон
-    await get_tree().create_timer(background_view_time).timeout 
+    await get_tree().create_timer(background_view_time).timeout
 
-    # Плавное появление плашки с текстом поверх новой картинки
-    var tw: Tween = create_tween() 
-    tw.tween_property(plashka_rect,  "color",         Color(0, 0, 0, 0.85), 0.5) 
-    tw.parallel().tween_property(plashka_label, "modulate:a", 1.0,          0.5) 
-    await tw.finished 
+    var tw: Tween = create_tween()
+    tw.tween_property(plashka_rect,  "color",         Color(0, 0, 0, 0.85), 0.5)
+    tw.parallel().tween_property(plashka_label, "modulate:a", 1.0,          0.5)
+    await tw.finished
 
-    await get_tree().create_timer(2.5).timeout 
+    await get_tree().create_timer(2.5).timeout
     _begin_fade_out()
 
 # ==============================================================
 # ФАЗА 8 — FADE OUT → Mission 3
-# Идентично mission_1.gd, но затемнение (чёрный)
 # ==============================================================
 func _begin_fade_out() -> void:
     _phase = Phase.FADE_OUT
 
-    black_screen.visible   = true
+    black_screen.visible    = true
     black_screen.modulate.a = 0.0
 
     var tween: Tween = create_tween()

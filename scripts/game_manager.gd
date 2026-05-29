@@ -6,7 +6,7 @@ var rog_color: Color = Color.WHITE
 var telo_color: Color = Color.WHITE
 
 func _ready() -> void:
-	pass 
+    pass 
 
 func _process(delta: float) -> void:
-	pass
+    pass

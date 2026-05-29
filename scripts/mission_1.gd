@@ -188,27 +188,33 @@ func _ready() -> void:
     add_child(_home)
 
 func _input(event: InputEvent) -> void:
-  var is_dialogue_active: bool = (
-    _phase == Phase.DIALOGUE_INTRO         or
-    _phase == Phase.DIALOGUE_POST_MG1      or
+    # === ЗАГЛУШКА ОТ HOME OVERLAY ===
+    if get_tree().root.has_meta("dialogue_input_blocked") and \
+       get_tree().root.get_meta("dialogue_input_blocked"):
+        return
+
+    var is_dialogue_active: bool = (
+        _phase == Phase.DIALOGUE_INTRO or
+        _phase == Phase.DIALOGUE_POST_MG1 or
     _phase == Phase.DIALOGUE_EXAM_BEFORE   or
     _phase == Phase.DIALOGUE_EXAM_AFTER    or
     _phase == Phase.DIALOGUE_GROUP_PROJECT or
     _phase == Phase.DIALOGUE_POST_MG2      or
     _phase == Phase.DIALOGUE_FINALE
   )
-  if not is_dialogue_active:
-    return
+    
+    if not is_dialogue_active:
+        return
 
-  var is_tap: bool = event is InputEventScreenTouch and event.pressed
-  var is_click: bool = (
-    event is InputEventMouseButton
-    and event.pressed
-    and event.button_index == MOUSE_BUTTON_LEFT
-  )
+    var is_tap: bool = event is InputEventScreenTouch and event.pressed
+    var is_click: bool = (
+        event is InputEventMouseButton and 
+        event.pressed and 
+        event.button_index == MOUSE_BUTTON_LEFT
+    )
 
-  if (is_tap or is_click) and dm and dm.has_method("advance"):
-    dm.advance()
+    if (is_tap or is_click) and dm and dm.has_method("advance"):
+        dm.advance()
 
 func _set_background(texture: Texture2D) -> void:
     if background and texture:

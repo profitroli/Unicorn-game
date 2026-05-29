@@ -41,15 +41,24 @@ func _ready() -> void:
 
 
 func _input(event: InputEvent) -> void:
-  if _phase != Phase.DIALOGUE:
-    return
-    
-  var is_tap: bool = event is InputEventScreenTouch and event.pressed
-  var is_click: bool = event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT
-  
-  if is_tap or is_click:
-    if dm and dm.has_method("advance"):
-      dm.advance()
+    # === ЗАГЛУШКА: не обрабатываем ввод, если открыт HomeOverlay ===
+    if get_tree().root.has_meta("dialogue_input_blocked") and \
+       get_tree().root.get_meta("dialogue_input_blocked"):
+        return
+
+    if _phase != Phase.DIALOGUE:
+        return
+
+    var is_tap: bool = event is InputEventScreenTouch and event.pressed
+    var is_click: bool = (
+        event is InputEventMouseButton and 
+        event.pressed and 
+        event.button_index == MOUSE_BUTTON_LEFT
+    )
+
+    if is_tap or is_click:
+        if dm and dm.has_method("advance"):
+            dm.advance()
 
 func _begin_fade_in() -> void:
     _phase = Phase.FADE_IN
