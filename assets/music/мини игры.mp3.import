@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dql57vs8hkork"
+path="res://.godot/imported/мини игры.mp3-b6c46208f4b88d3705469e5c49be73fe.mp3str"
+
+[deps]
+
+source_file="res://assets/music/мини игры.mp3"
+dest_files=["res://.godot/imported/мини игры.mp3-b6c46208f4b88d3705469e5c49be73fe.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
