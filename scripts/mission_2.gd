@@ -136,7 +136,7 @@ const MINIGAME_B_DATA: Array[Dictionary] = [
         "is_correct":       false
     },
     {
-        "message":          "О! Я как раз думала об этой книге. Что скажешь о концовке?",
+        "message":          "О! Я как раз думала об этой книге.Что скажешь о концовке?",
         "response_speaker": "АРСЕНИЙ",
         "response_text":    "Честно? Меня она разбила. Давай встретимся и поговорим?",
         "alisa_reaction":   "",
@@ -469,6 +469,12 @@ func _start_dialogue_between() -> void:
             "pos_2":      Vector2(0, 0),
         },
         {
+            "speaker":    "АЛИСА",
+            "text":       "Готово... Ой, тут сразу кто-то лайкнул!",
+            "portrait_1": portrait_alisa_excited,
+            "pos_1":      Vector2(0, 0),
+            "portrait_2": portrait_unicorn_neutral,
+            "pos_2":      Vector2(0, 0),
             "show_ui":    "profile_arseniy"
         },
         {

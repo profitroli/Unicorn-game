@@ -14,15 +14,15 @@ var _typing_lbl: Label
 var _reaction_lbl: Label
 var _option_btns: Array[Button] = []
 
-const PHONE_W: float = 520.0
-const PHONE_H: float = 820.0
+const PHONE_W: float = 463.0
+const PHONE_H: float = 1007.0
 const CHAT_H:  float = 300.0
 const OPT_H:   float = 86.0
-const OPT_GAP: float = 8.0
+const OPT_GAP: float = 40.0
 const BUBBLE_W: float = 300.0
 
 # ─── Пастельная палитра SoulMatch ────────────────────────────────────────────
-const C_DIM       := Color(0.00, 0.00, 0.00, 0.82)
+const C_DIM       := Color(0.0, 0.0, 0.0, 0.0)
 const C_PHONE     := Color(0.99, 0.97, 1.00, 1.00)
 const C_PBORD     := Color(0.58, 0.48, 0.74, 1.00)
 const C_HEADER    := Color(0.99, 0.99, 1.00, 1.00)
@@ -44,6 +44,7 @@ const C_LOGO      := Color(0.70, 0.62, 0.88, 0.55)
 const C_NOMSG     := Color(0.56, 0.50, 0.66, 0.75)
 const C_ROK       := Color(0.12, 0.54, 0.22, 1.00)
 const C_RERR      := Color(0.76, 0.16, 0.16, 1.00)
+
 
 # ─── Публичный API ───────────────────────────────────────────────────────────
 
@@ -72,6 +73,22 @@ func _ready() -> void:
 # ─── Построение интерфейса ────────────────────────────────────────────────────
 
 func _build_ui() -> void:
+    # Большой фон на всю мини-игру (1920x1080)
+    var full_bg := TextureRect.new()
+    full_bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+    full_bg.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+    full_bg.stretch_mode = TextureRect.STRETCH_SCALE
+    full_bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
+
+    const BG_PATH = "res://assets/alisa/Профиль алисы-Photoroom 1.png"
+    if ResourceLoader.exists(BG_PATH):
+        full_bg.texture = load(BG_PATH)
+    else:
+        push_warning("Не найдена фоновая картинка: " + BG_PATH)
+        full_bg.modulate = Color(0.3, 0.3, 0.3)  # тёмный фон на случай ошибки
+
+    add_child(full_bg)
+        
     # Затемнение
     var dim := ColorRect.new()
     dim.color = C_DIM
@@ -83,16 +100,20 @@ func _build_ui() -> void:
     phone.position = Vector2((1920 - PHONE_W) * 0.5, (1080 - PHONE_H) * 0.5)
     phone.size = Vector2(PHONE_W, PHONE_H)
     phone.mouse_filter = Control.MOUSE_FILTER_PASS
-    _mk_panel(phone, C_PHONE, C_PBORD, 4, 32)
+    _mk_panel(phone, C_PHONE, C_PBORD, 4, 70)
     dim.add_child(phone)
 
     # Шапка
     var hdr := Panel.new()
-    hdr.size = Vector2(PHONE_W, 60)
+    hdr.size = Vector2(PHONE_W, 56)
     _mk_panel(hdr, C_HEADER, C_PBORD, 0, 0)
+    var hs := hdr.get_theme_stylebox("panel") as StyleBoxFlat
+    if hs:
+        hs.corner_radius_top_left  = 70
+        hs.corner_radius_top_right = 70
     phone.add_child(hdr)
 
-    var hdr_lbl := _lbl("ЧАТ С АРСЕНИЕМ", 22, C_TXT)
+    var hdr_lbl := _lbl("ЧАТ С АРСЕНИЕМ", 26, C_TXT)
     hdr_lbl.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
     hdr_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
     hdr_lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
@@ -100,7 +121,7 @@ func _build_ui() -> void:
 
     # Зона чата
     var chat_bg := Panel.new()
-    chat_bg.position = Vector2(0, 60)
+    chat_bg.position = Vector2(0, 56)
     chat_bg.size = Vector2(PHONE_W, CHAT_H)
     _mk_panel(chat_bg, C_CHAT_BG, Color(0,0,0,0), 0, 0)
     phone.add_child(chat_bg)
@@ -112,26 +133,26 @@ func _build_ui() -> void:
     chat_bg.add_child(_chat_vbox)
 
     # Логотип SoulMatch (декоративный, показывается когда нет сообщений)
-    var logo_lbl := _lbl("SoulMatch", 30, C_LOGO)
+    var logo_lbl := _lbl("", 40, C_LOGO)
     logo_lbl.position = Vector2(0, CHAT_H * 0.22)
     logo_lbl.size     = Vector2(PHONE_W, 36)
     logo_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
     chat_bg.add_child(logo_lbl)
 
     # «Сообщений нет. Начните беседу!»
-    _no_msg_lbl = _lbl("Сообщений нет.\nНачните беседу!", 16, Color(0.56, 0.50, 0.66, 0.75))
+    _no_msg_lbl = _lbl("Сообщений нет.\nНачните беседу!", 25, Color(0.56, 0.50, 0.66, 0.75))
     _no_msg_lbl.position = Vector2(0, CHAT_H * 0.4)
     _no_msg_lbl.size = Vector2(PHONE_W, 50)
     _no_msg_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
     chat_bg.add_child(_no_msg_lbl)
 
-    _typing_lbl = _lbl("Арсений пишет...", 15, Color(0.60, 0.52, 0.74))
+    _typing_lbl = _lbl("Арсений пишет...", 20, Color(0.60, 0.52, 0.74))
     _typing_lbl.position = Vector2(12, CHAT_H - 28)
     _typing_lbl.size = Vector2(PHONE_W - 24, 22)
     _typing_lbl.visible = false
     chat_bg.add_child(_typing_lbl)
 
-    _reaction_lbl = _lbl("", 15, Color(0.76, 0.16, 0.16))
+    _reaction_lbl = _lbl("", 18, Color(0.76, 0.16, 0.16))
     _reaction_lbl.position = Vector2(8, 60 + CHAT_H + 4)
     _reaction_lbl.size = Vector2(PHONE_W - 16, 44)
     _reaction_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -139,7 +160,7 @@ func _build_ui() -> void:
     phone.add_child(_reaction_lbl)
 
     # ── Метка реакции Алисы (между чатом и вариантами) ──────────────
-    _reaction_lbl = _lbl("", 15, C_RERR)
+    _reaction_lbl = _lbl("", 18, C_RERR)
     _reaction_lbl.position = Vector2(8, 60 + CHAT_H + 4)
     _reaction_lbl.size     = Vector2(PHONE_W - 16, 44)
     _reaction_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -151,29 +172,55 @@ func _build_ui() -> void:
     # ── Разделительная линия ────────────────────────────────────────
     var sep := ColorRect.new()
     sep.color    = C_PBORD
-    sep.position = Vector2(0, 60 + CHAT_H + 54)
+    sep.position = Vector2(0, 60 + CHAT_H + 70)
     sep.size     = Vector2(PHONE_W, 1)
     phone.add_child(sep)
 
     # ── Кнопки-варианты сообщений ────────────────────────────────────
-    var opts_y: float = 60 + CHAT_H + 58
+    var opts_container := VBoxContainer.new()
+    opts_container.position = Vector2(12, 60 + CHAT_H + 90)
+    opts_container.size = Vector2(PHONE_W - 24, 300)
+    opts_container.add_theme_constant_override("separation", 20)
+    phone.add_child(opts_container)
+
     for i in _messages_data.size():
         var obtn := Button.new()
         obtn.text = _messages_data[i].get("message", "")
-        obtn.position = Vector2(12, opts_y + float(i) * (OPT_H + OPT_GAP))
-        obtn.size = Vector2(PHONE_W - 24, OPT_H)
+        obtn.custom_minimum_size = Vector2(0, 120)
+        obtn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
         obtn.focus_mode = Control.FOCUS_NONE
         obtn.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-        obtn.mouse_filter = Control.MOUSE_FILTER_STOP          # КРИТИЧНО
+        obtn.mouse_filter = Control.MOUSE_FILTER_STOP
         obtn.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+
+        # ─── КРАСИМ КНОПКИ (Добавленный блок) ──────────────────────────────────
+        # Создаем стили на основе констант: (цвет_фона, цвет_рамки, толщина_рамки, скругление)
+        var style_normal   := _mk_style(C_OPT_BTN, C_OPT_BORD, 2, 20)
+        var style_hover    := _mk_style(C_OPT_HOV, C_OPT_BORD, 2, 20)
+        var style_pressed  := _mk_style(C_OPT_HOV, C_OPT_BORD, 2, 20)
+        var style_disabled := _mk_style(C_OPT_DIS, C_OPT_BORD, 2, 20)
+
+        # Переопределяем стили состояний кнопки
+        obtn.add_theme_stylebox_override("normal", style_normal)
+        obtn.add_theme_stylebox_override("hover", style_hover)
+        obtn.add_theme_stylebox_override("pressed", style_pressed)
+        obtn.add_theme_stylebox_override("disabled", style_disabled)
+
+        # Настраиваем цвет текста для каждого состояния
+        obtn.add_theme_color_override("font_color", C_TXT)
+        obtn.add_theme_color_override("font_hover_color", C_TXT)
+        obtn.add_theme_color_override("font_pressed_color", C_TXT)
+        obtn.add_theme_color_override("font_disabled_color", C_TXTG)
+        # ──────────────────────────────────────────────────────────────────────
 
         if _font:
             obtn.add_theme_font_override("font", _font)
-        obtn.add_theme_font_size_override("font_size", 16)
+        obtn.add_theme_font_size_override("font_size", 24)
 
         obtn.pressed.connect(func(): _on_option_pressed(i))
-        phone.add_child(obtn)
+        opts_container.add_child(obtn)
         _option_btns.append(obtn)
+
 
     # ── Нижняя навигационная панель ───────────────────────────────────
     var nav := Panel.new()
@@ -186,7 +233,7 @@ func _build_ui() -> void:
         ns.corner_radius_bottom_right = 26
     phone.add_child(nav)
 
-    var nav_icons := ["○", "♥", "▣", "◎"]
+    var nav_icons := ["", "", "", ""]
     for i2 in 4:
         var ico := _lbl(nav_icons[i2], 18, C_TXTG)
         ico.position = Vector2(float(i2) * (PHONE_W / 4.0) + 8, 8)
@@ -194,8 +241,8 @@ func _build_ui() -> void:
         ico.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
         nav.add_child(ico)
 
-    var sm_l := _lbl("SoulMatch", 12, C_TXTG)
-    sm_l.position = Vector2(PHONE_W / 4.0 - 38, 38)
+    var sm_l := _lbl("SoulMatch", 40, C_TXTG)
+    sm_l.position = Vector2(PHONE_W / 4.0 - 38, 10)
     sm_l.size     = Vector2(76, 18)
     sm_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
     nav.add_child(sm_l)
@@ -228,12 +275,12 @@ func _handle_choice(idx: int) -> void:
     if response != "":
         _add_message(response, false)
 
-    await get_tree().create_timer(0.8).timeout
+    await get_tree().create_timer(3.0).timeout
 
     # ── 4. Развязка ──────────────────────────────────────────────────
     if data.get("is_correct", false):
         # Победа — сразу сообщаем миссии
-        await get_tree().create_timer(0.4).timeout
+        await get_tree().create_timer(1.0).timeout
         completed.emit()
         return
 
@@ -243,14 +290,14 @@ func _handle_choice(idx: int) -> void:
 
     if alisa_react != "":
         _show_reaction("АЛИСА: " + alisa_react, C_RERR)
-        await get_tree().create_timer(1.6).timeout
+        await get_tree().create_timer(3.5).timeout
 
     if unicorn_cmt != "":
         _show_reaction("ЕДИНОРОГ: " + unicorn_cmt, C_TYPING)
-        await get_tree().create_timer(1.3).timeout
+        await get_tree().create_timer(3.5).timeout
 
     _show_reaction("АЛИСА: Нет, давай переделаем.", C_RERR)
-    await get_tree().create_timer(1.3).timeout
+    await get_tree().create_timer(3.5).timeout
 
     _reset_chat()
 
@@ -258,46 +305,61 @@ func _handle_choice(idx: int) -> void:
 # ─── Вспомогательные методы ──────────────────────────────────────────────────
 
 func _add_message(text: String, is_sent: bool) -> void:
-    # Оцениваем высоту пузыря (грубо, но достаточно для 1-3 строк)
-    var bubble_h: float = _estimate_bubble_height(text)
-
     var row := HBoxContainer.new()
-    row.custom_minimum_size = Vector2(PHONE_W - 16.0, bubble_h)
+    # Высоту (Y) ставим 0 — контейнер сам растянется по вертикали
+    row.custom_minimum_size = Vector2(PHONE_W - 16.0, 0)
     row.add_theme_constant_override("separation", 0)
     _chat_vbox.add_child(row)
 
     if is_sent:
-        # Спейсер слева — «сдвигает» пузырь вправо
+        # Пружина слева, прижимает наш пузырь вправо
         var sp := Control.new()
         sp.size_flags_horizontal = Control.SIZE_EXPAND_FILL
         row.add_child(sp)
 
-    var bubble := Panel.new()
-    bubble.custom_minimum_size = Vector2(BUBBLE_W, bubble_h)
-    _mk_panel(bubble, C_MSG_SENT if is_sent else C_MSG_RECV, C_MSG_BORD, 1, 10)
+    # PanelContainer АВТОМАТИЧЕСКИ подстраивается под размер дочерних элементов (Label)
+    var bubble := PanelContainer.new()
+    # Фиксируем только ширину. Высота (0) подстроится под количество строк текста.
+    bubble.custom_minimum_size = Vector2(BUBBLE_W, 0)
+
+    # Настраиваем стиль фона пузырька и ВНУТРЕННИЕ ОТСТУПЫ
+    var style := StyleBoxFlat.new()
+    style.bg_color = C_MSG_SENT if is_sent else C_MSG_RECV
+    style.border_color = C_MSG_BORD
+    style.border_width_top = 1; style.border_width_bottom = 1
+    style.border_width_left = 1; style.border_width_right = 1
+    style.set_corner_radius_all(10)
+    
+    # Вот эта магия не даст тексту прилипать к краям пузыря
+    style.content_margin_left = 12.0
+    style.content_margin_right = 12.0
+    style.content_margin_top = 12.0
+    style.content_margin_bottom = 12.0
+
+    bubble.add_theme_stylebox_override("panel", style)
     row.add_child(bubble)
 
-    var lbl := _lbl(text, 15, C_TXT)
-    lbl.position      = Vector2(10, 8)
-    lbl.size          = Vector2(BUBBLE_W - 20, bubble_h - 16)
-    lbl.vertical_alignment = VERTICAL_ALIGNMENT_TOP
+    var lbl := _lbl(text, 20, C_TXT)
     lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+    lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+    
+    # Мы БОЛЬШЕ НЕ задаём position и size для Label! 
+    # PanelContainer сам поставит его ровно по центру с учетом отступов.
     bubble.add_child(lbl)
 
     if not is_sent:
-        # Спейсер справа — «удерживает» пузырь у левого края
+        # Пружина справа, прижимает пузырь Арсения влево
         var sp := Control.new()
         sp.size_flags_horizontal = Control.SIZE_EXPAND_FILL
         row.add_child(sp)
-
-
+        
 func _estimate_bubble_height(text: String) -> float:
-    # ~28 символов умещается в одну строку при ширине BUBBLE_W и font_size 15
-    const CHARS_PER_LINE: int = 28
-    const LINE_H: float = 24.0
-    const PADDING: float = 16.0
-    var lines: int = max(1, ceili(float(text.length()) / float(CHARS_PER_LINE)))
-    return float(lines) * LINE_H + PADDING
+    # Используем динамический расчет высоты на основе шрифта и ширины
+    var font: Font = _font if _font else ThemeDB.fallback_font
+    var text_size: Vector2 = font.get_multiline_string_size(
+        text, HORIZONTAL_ALIGNMENT_LEFT, BUBBLE_W - 20, 15
+    )
+    return text_size.y + 24 # 24 — это отступы сверху и снизу
 
 
 func _show_reaction(text: String, color: Color) -> void:

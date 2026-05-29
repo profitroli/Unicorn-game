@@ -28,7 +28,7 @@ var _next_btn:       Button
 var _font:           Font
 
 # ─── Пастельная палитра SoulMatch ────────────────────────────────────────────
-const C_DIM      := Color(0.00, 0.00, 0.00, 0.82)
+const C_DIM      := Color(0.0, 0.0, 0.0, 0.0)
 const C_PHONE    := Color(0.99, 0.97, 1.00, 1.00)
 const C_PBORD    := Color(0.58, 0.48, 0.74, 1.00)
 const C_HEADER   := Color(0.91, 0.86, 0.97, 1.00)
@@ -43,13 +43,13 @@ const C_NAV      := Color(0.84, 0.78, 0.96, 1.00)
 const C_TXT      := Color(0.16, 0.10, 0.24, 1.00)
 const C_TXTG     := Color(0.44, 0.38, 0.58, 1.00)
 const C_WHITE    := Color(1.00, 1.00, 1.00, 1.00)
-const C_SAVEBG   := Color(0.72, 0.62, 0.92, 1.00)
+const C_SAVEBG   := Color(0.722, 0.62, 0.922, 0.0)
 const C_ROK      := Color(0.12, 0.54, 0.22, 1.00)
 const C_RERR     := Color(0.76, 0.16, 0.16, 1.00)
 
-const PHONE_W: float = 500.0
-const PHONE_H: float = 820.0
-const OPT_H:   float = 72.0
+const PHONE_W: float = 463.0
+const PHONE_H: float = 1007.0
+const OPT_H:   float = 120.0
 const OPT_GAP: float = 8.0
 const LETTERS: Array  = ["A", "B", "C"]
 
@@ -89,6 +89,20 @@ func _ready() -> void:
 # ─── Построение интерфейса ────────────────────────────────────────────────────
 
 func _build_ui() -> void:
+    var full_bg := TextureRect.new()
+    full_bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+    full_bg.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+    full_bg.stretch_mode = TextureRect.STRETCH_SCALE
+    full_bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
+
+    const BG_PATH = "res://assets/alisa/Профиль алисы-Photoroom 1.png"
+    if ResourceLoader.exists(BG_PATH):
+        full_bg.texture = load(BG_PATH)
+    else:
+        push_warning("Не найдена фоновая картинка: " + BG_PATH)
+        full_bg.modulate = Color(0.3, 0.3, 0.3)  # тёмный фон на случай ошибки
+
+    add_child(full_bg)
     # Затемнение фона
     var dim := ColorRect.new()
     dim.color = C_DIM
@@ -99,13 +113,15 @@ func _build_ui() -> void:
     var px := (1920.0 - PHONE_W) * 0.5
     var py := (1080.0 - PHONE_H) * 0.5
 
+
     # ── Корпус телефона ──────────────────────────────────────────────
     var phone := Panel.new()
     phone.position     = Vector2(px, py)
     phone.size         = Vector2(PHONE_W, PHONE_H)
     phone.mouse_filter = Control.MOUSE_FILTER_PASS
-    _mk_panel(phone, C_PHONE, C_PBORD, 3, 28)
+    _mk_panel(phone, C_PHONE, C_PBORD, 3, 70)
     dim.add_child(phone)
+    
 
     # ── Шапка: «Редактирование профиля» ─────────────────────────────
     var hdr := Panel.new()
@@ -113,17 +129,18 @@ func _build_ui() -> void:
     _mk_panel(hdr, C_HEADER, C_PBORD, 0, 0)
     var hs := hdr.get_theme_stylebox("panel") as StyleBoxFlat
     if hs:
-        hs.corner_radius_top_left  = 26
-        hs.corner_radius_top_right = 26
+        hs.corner_radius_top_left  = 70
+        hs.corner_radius_top_right = 70
     phone.add_child(hdr)
 
-    var x_lbl := _lbl("  ✕", 22, C_TXTG)
+    var x_lbl := _lbl("+", 50, C_TXTG)
     x_lbl.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+    x_lbl.position = Vector2(285, 80)
     x_lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
     hdr.add_child(x_lbl)
 
-    var title_lbl := _lbl("Редактирование профиля", 18, C_TXT)
-    title_lbl.position = Vector2(40, 6)
+    var title_lbl := _lbl("Редактирование профиля", 20, C_TXT)
+    title_lbl.position = Vector2(35, 10)
     title_lbl.size     = Vector2(PHONE_W - 118, 44)
     title_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
     title_lbl.vertical_alignment   = VERTICAL_ALIGNMENT_CENTER
@@ -133,7 +150,7 @@ func _build_ui() -> void:
     save_p.position = Vector2(PHONE_W - 70, 12)
     save_p.size     = Vector2(56, 30)
     _mk_panel(save_p, C_SAVEBG, Color(0,0,0,0), 0, 8)
-    var save_l := _lbl("Save", 16, C_WHITE)
+    var save_l := _lbl("", 16, C_WHITE)
     save_l.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
     save_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
     save_l.vertical_alignment   = VERTICAL_ALIGNMENT_CENTER
@@ -148,13 +165,7 @@ func _build_ui() -> void:
     _mk_panel(av_bg, C_AVATAR, C_PBORD, 2, AV * 0.5)
     phone.add_child(av_bg)
 
-    _avatar_tex = TextureRect.new()
-    _avatar_tex.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-    _avatar_tex.expand_mode  = TextureRect.EXPAND_IGNORE_SIZE
-    _avatar_tex.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-    av_bg.add_child(_avatar_tex)
-
-    var name_lbl := _lbl("Alice", 24, C_TXT)
+    var name_lbl := _lbl("Алиса", 24, C_TXT)
     name_lbl.position = Vector2(0, 168.0)
     name_lbl.size     = Vector2(PHONE_W, 28)
     name_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -163,11 +174,11 @@ func _build_ui() -> void:
     # ── Панель вопроса ────────────────────────────────────────────────
     var q_bg := Panel.new()
     q_bg.position = Vector2(16, 204.0)
-    q_bg.size     = Vector2(PHONE_W - 32, 70.0)
+    q_bg.size     = Vector2(PHONE_W - 32, 120.0)
     _mk_panel(q_bg, C_QBKG, Color(0,0,0,0), 0, 12)
     phone.add_child(q_bg)
 
-    _question_lbl = _lbl("", 17, C_WHITE)
+    _question_lbl = _lbl("", 28, C_WHITE)
     _question_lbl.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
     _question_lbl.offset_left   = 12;  _question_lbl.offset_right  = -12
     _question_lbl.offset_top    =  4;  _question_lbl.offset_bottom = -4
@@ -177,7 +188,7 @@ func _build_ui() -> void:
     q_bg.add_child(_question_lbl)
 
     # ── Три варианта ответа ───────────────────────────────────────────
-    const OPTS_Y: float = 284.0
+    const OPTS_Y: float = 340.0
     for i in 3:
         var op := Panel.new()
         op.position = Vector2(16, OPTS_Y + float(i) * (OPT_H + OPT_GAP))
@@ -187,7 +198,7 @@ func _build_ui() -> void:
         _option_panels.append(op)
 
         # Буква варианта
-        var let_l := _lbl(LETTERS[i], 22, C_TXTG)
+        var let_l := _lbl(LETTERS[i], 30, C_TXTG)
         let_l.position = Vector2(14, 0)
         let_l.size     = Vector2(28, OPT_H)
         let_l.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
@@ -201,7 +212,7 @@ func _build_ui() -> void:
         op.add_child(sep)
 
         # Текст варианта
-        var opt_l := _lbl("", 16, C_TXT)
+        var opt_l := _lbl("", 25, C_TXT)
         opt_l.position = Vector2(56, 4)
         opt_l.size     = Vector2(PHONE_W - 32 - 70, OPT_H - 8)
         opt_l.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
@@ -228,7 +239,7 @@ func _build_ui() -> void:
 
     # ── Реакция Алисы ─────────────────────────────────────────────────
     var rx_y: float = OPTS_Y + 3.0 * (OPT_H + OPT_GAP) + 10.0
-    _reaction_lbl = _lbl("", 16, C_RERR)
+    _reaction_lbl = _lbl("", 20, C_RERR)
     _reaction_lbl.position = Vector2(16, rx_y)
     _reaction_lbl.size     = Vector2(PHONE_W - 32, 52)
     _reaction_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -238,25 +249,25 @@ func _build_ui() -> void:
     phone.add_child(_reaction_lbl)
 
     # ── Прогресс «Вопрос X / 4» ──────────────────────────────────────
-    _progress_lbl = _lbl("Вопрос 1 / 4", 14, C_TXTG)
-    _progress_lbl.position = Vector2(0, rx_y + 58.0)
+    _progress_lbl = _lbl("Вопрос 1 / 4", 24, C_TXTG)
+    _progress_lbl.position = Vector2(0, rx_y + 70.0)
     _progress_lbl.size     = Vector2(PHONE_W, 22)
     _progress_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
     phone.add_child(_progress_lbl)
 
     # ── Кнопка «Далее» ────────────────────────────────────────────────
     _next_btn = Button.new()
-    _next_btn.text     = "Далее  ▶"
-    _next_btn.position = Vector2((PHONE_W - 160.0) * 0.5, rx_y + 86.0)
-    _next_btn.size     = Vector2(160, 44)
+    _next_btn.text     = "Далее ▶"
+    _next_btn.position = Vector2((PHONE_W - 200.0) * 0.5, rx_y + 100.0)
+    _next_btn.size     = Vector2(200, 60)
     _next_btn.visible  = false
     _next_btn.focus_mode = Control.FOCUS_NONE
     _next_btn.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
     if _font:
         _next_btn.add_theme_font_override("font", _font)
-    _next_btn.add_theme_font_size_override("font_size", 20)
+    _next_btn.add_theme_font_size_override("font_size", 30)
     _next_btn.add_theme_color_override("font_color", C_WHITE)
-    _next_btn.add_theme_stylebox_override("normal",  _mk_style(C_SAVEBG, Color(0,0,0,0), 0, 10))
+    _next_btn.add_theme_stylebox_override("normal",  _mk_style(C_TXTG , Color(0,0,0,0), 0, 10))
     _next_btn.add_theme_stylebox_override("hover",   _mk_style(Color(0.60, 0.50, 0.82, 1.0), Color(0,0,0,0), 0, 10))
     _next_btn.add_theme_stylebox_override("pressed", _mk_style(Color(0.52, 0.42, 0.74, 1.0), Color(0,0,0,0), 0, 10))
     _next_btn.add_theme_stylebox_override("focus",   StyleBoxEmpty.new())
@@ -270,11 +281,11 @@ func _build_ui() -> void:
     _mk_panel(nav, C_NAV, C_PBORD, 0, 0)
     var ns := nav.get_theme_stylebox("panel") as StyleBoxFlat
     if ns:
-        ns.corner_radius_bottom_left  = 26
-        ns.corner_radius_bottom_right = 26
+        ns.corner_radius_bottom_left  = 56
+        ns.corner_radius_bottom_right = 56
     phone.add_child(nav)
 
-    var nav_icons := ["○", "♥", "▣", "◎"]
+    var nav_icons := ["", "", "", ""]
     for i2 in 4:
         var ico := _lbl(nav_icons[i2], 18, C_TXTG)
         ico.position = Vector2(float(i2) * (PHONE_W / 4.0) + 8, 8)
@@ -282,8 +293,8 @@ func _build_ui() -> void:
         ico.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
         nav.add_child(ico)
 
-    var sm_l := _lbl("SoulMatch", 12, C_TXTG)
-    sm_l.position = Vector2(PHONE_W / 4.0 - 38, 38)
+    var sm_l := _lbl("SoulMatch", 40, C_TXTG)
+    sm_l.position = Vector2(PHONE_W / 4.0 - 38, 10)
     sm_l.size     = Vector2(76, 18)
     sm_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
     nav.add_child(sm_l)
