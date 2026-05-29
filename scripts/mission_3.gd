@@ -125,7 +125,7 @@ const MINIGAME_WATER_CONFIG: Dictionary = {
     "grid_cols":          6,
     "grid_rows":          6,
     "water_cell_count":   2,
-    "max_attempts":       8,
+    "max_attempts":       10,
     "rating_legendary":   4,
     "rating_great":       6,
     "rating_ok":          8

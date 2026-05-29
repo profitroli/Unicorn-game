@@ -9,7 +9,7 @@ signal completed(is_success: bool, attempts_used: int)
 var _grid_cols:    int   = 6
 var _grid_rows:    int   = 6
 var _water_count:  int   = 2
-var _max_attempts: int   = 8
+var _max_attempts: int   = 10
 var _signal_levels: Array[Dictionary] = []
 
 # ─── Состояние ──────────────────────────────────────────────────────────────
@@ -46,9 +46,9 @@ const WATER_SZ:     float = 88.0
 const BAR_W:        float = 44.0
 const BAR_H:        float = 44.0
 const BAR_GAP:      float = 5.0
-const BAR_SEGS:     int   = 8
+const BAR_SEGS:     int   = 10
 
-const GRID_OFFSET_Y: float = 280.0
+const GRID_OFFSET_Y: float = 260.0
 
 # ─── Палитра ────────────────────────────────────────────────────────────────
 const C_DIM        := Color(0.00, 0.00, 0.00, 0.45)
@@ -100,7 +100,7 @@ func setup(
     _grid_cols     = config.get("grid_cols", 6)
     _grid_rows     = config.get("grid_rows", 6)
     _water_count   = config.get("water_cell_count", 2)
-    _max_attempts  = config.get("max_attempts", 8)
+    _max_attempts  = config.get("max_attempts", 10)
     _signal_levels = signal_levels
     _unicorn_texture = unicorn_texture
 
@@ -147,41 +147,34 @@ func _place_water_randomly() -> void:
 # ─── Построение UI ───────────────────────────────────────────────────────────
 func _build_ui() -> void:
     _dim_node = ColorRect.new()
-    _dim_node.color = Color(0.0, 0.0, 0.0, 0.88)
+    _dim_node.color = Color(0.0, 0.0, 0.0, 0.537)
     _dim_node.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
     _dim_node.mouse_filter = Control.MOUSE_FILTER_STOP
     add_child(_dim_node)
 
-    # === Большая рамка "устройства" как в первой игре ===
+    # Большая рамка как в первой игре
     var device := Panel.new()
-    device.position = Vector2(140, 120)
-    device.size = Vector2(1640, 920)
+    device.position = Vector2(120, 110)
+    device.size = Vector2(1680, 940)
     var ds := StyleBoxFlat.new()
-    ds.bg_color = Color(0.12, 0.09, 0.06, 1.0)
-    ds.set_corner_radius_all(12)
-    # Исправлено:
-    ds.border_width_top = 8
-    ds.border_width_bottom = 8
-    ds.border_width_left = 8
-    ds.border_width_right = 8
-    ds.border_color = Color(0.65, 0.52, 0.32, 1.0)
+    ds.bg_color = Color(0.139, 0.066, 0.0, 0.753)
+    ds.set_corner_radius_all(16)
+    ds.border_width_top = 12
+    ds.border_width_bottom = 12
+    ds.border_width_left = 12
+    ds.border_width_right = 12
+    ds.border_color = Color(0.72, 0.58, 0.38, 1.0)
     device.add_theme_stylebox_override("panel", ds)
     _dim_node.add_child(device)
 
     # Заголовок
-    var title := _lbl("МИНИ-ИГРА 4: ДЕТЕКТОР ВОДЫ", 58, Color(0.98, 0.88, 0.48))
-    title.position = Vector2(0, 40)
-    title.size = Vector2(1920, 90)
+    var title := _lbl("МИНИ-ИГРА 4: ДЕТЕКТОР ВОДЫ", 56, Color(0.98, 0.88, 0.48))
+    title.position = Vector2(0, 35)
+    title.size = Vector2(1920, 80)
     title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
     if _font:
         title.add_theme_font_override("font", _font)
     _dim_node.add_child(title)
-
-    var subtitle := _lbl("НАЙДИ ДВА ПОДЗЕМНЫХ ИСТОЧНИКА", 32, Color(0.85, 0.72, 0.42))
-    subtitle.position = Vector2(0, 115)
-    subtitle.size = Vector2(1920, 50)
-    subtitle.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-    _dim_node.add_child(subtitle)
 
     _build_hud()
     _build_grid_cells()
@@ -226,26 +219,26 @@ func _build_unicorn() -> void:
 
 func _build_hud() -> void:
     # Левая панель
-    var lp := _mk_panel(Vector2(180, 780), Vector2(520, 90))
-    _found_lbl = _lbl("НАЙДЕНО: 0 / 2", 32, C_UI_TXT)
+    var lp := _mk_panel(Vector2(150, 150), Vector2(400, 95))
+    _found_lbl = _lbl("НАЙДЕНО: 0 / 2", 25, C_UI_TXT)
     _found_lbl.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-    _found_lbl.offset_left = 30
+    
     _found_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
     _found_lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
     lp.add_child(_found_lbl)
 
     # Правая панель
-    var rp := _mk_panel(Vector2(1220, 780), Vector2(520, 90))
-    _attempts_lbl = _lbl("ПОПЫТКИ: 0 / 8", 32, C_UI_TXT)
+    var rp := _mk_panel(Vector2(1367, 150), Vector2(400, 95))
+    _attempts_lbl = _lbl("ПОПЫТКИ: 0 / 10", 25, C_UI_TXT)
     _attempts_lbl.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-    _attempts_lbl.offset_left = 30
+    
     _attempts_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
     _attempts_lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
     rp.add_child(_attempts_lbl)
 
-    # Сигнал
+    # Сигнал (горячо/холодно)
     _signal_lbl = _lbl("", 42, C_UI_TXT)
-    _signal_lbl.position = Vector2(0, 660)
+    _signal_lbl.position = Vector2(0, 135)
     _signal_lbl.size = Vector2(1920, 70)
     _signal_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
     _dim_node.add_child(_signal_lbl)
@@ -259,7 +252,7 @@ func _build_bar() -> void:
     const BY: float = 720.0
 
     var bg_p := Panel.new()
-    bg_p.position = Vector2(bx - 15, BY - 12)
+    bg_p.position = Vector2(bx - 15, BY - 540)
     bg_p.size = Vector2(total_w + 54, BAR_H + 30)
     bg_p.mouse_filter = Control.MOUSE_FILTER_IGNORE
     var bgs := StyleBoxFlat.new()
@@ -276,20 +269,20 @@ func _build_bar() -> void:
 
     # Стрелки
     var al := _lbl("◀", 36, C_UI_BOR2)
-    al.position = Vector2(bx - 38, BY - 8)
+    al.position = Vector2(bx - 55, BY - 540)
     al.size = Vector2(32, BAR_H + 12)
     al.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
     _dim_node.add_child(al)
 
     var ar := _lbl("▶", 36, C_UI_BOR2)
-    ar.position = Vector2(bx + total_w + 18, BY - 8)
+    ar.position = Vector2(bx + total_w + 50, BY - 538)
     ar.size = Vector2(32, BAR_H + 12)
     ar.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
     _dim_node.add_child(ar)
 
     for i in BAR_SEGS:
         var seg := Panel.new()
-        seg.position = Vector2(bx + float(i) * (BAR_W + BAR_GAP), BY)
+        seg.position = Vector2(bx + float(i) * (BAR_W + BAR_GAP)+13, BY-525)
         seg.size = Vector2(BAR_W, BAR_H)
         seg.mouse_filter = Control.MOUSE_FILTER_IGNORE
         var ss := StyleBoxFlat.new()
@@ -541,7 +534,7 @@ func _update_hud_labels() -> void:
         _attempts_lbl.text = "ПОПЫТКИ: %d / %d" % [_attempts_used, _max_attempts]
     if _found_lbl:
         _found_lbl.text = "НАЙДЕНО: %d / %d" % [_found_count, _water_count] if _found_count > 0 else \
-                          "НАЙДИ %d ИСТОЧНИКА ИЗ %d" % [_water_count, _water_count]
+                          "НАЙДИ ИСТОЧНИКИ"
 
 # ─── Фабрики ────────────────────────────────────────────────────────────────
 func _mk_panel(pos: Vector2, size: Vector2) -> Panel:
