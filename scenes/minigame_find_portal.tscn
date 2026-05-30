@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://d0g32oaybl8tl"]
+
+[ext_resource type="Script" uid="uid://77irw52jopmg" path="res://scripts/minigame_find_portal.gd" id="1_bgkae"]
+
+[node name="MinigameFindPortal" type="Control" unique_id=589325818]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_bgkae")

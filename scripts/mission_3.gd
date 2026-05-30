@@ -33,6 +33,7 @@ var _phase: Phase = Phase.FADE_IN
 # АКТИВНЫЕ МИНИ-ИГРЫ
 # ==============================================================
 var _mg_water: MinigameWaterDetector = null
+var _mg_portal: MinigameFindPortal    = null
 
 #
 # ==============================================================
@@ -145,12 +146,13 @@ const WATER_SIGNAL_LEVELS: Array[Dictionary] = [
 # Tap-to-move, без таймера. Ловушки-миражи снимают магию.
 # ==============================================================
 const MINIGAME_PORTAL_CONFIG: Dictionary = {
-    "particle_count":     6,     # Частиц аномалии на карте
-    "trap_stone_count":   4,     # Миражных камней-ловушек
-    "magic_points_max":   5,     # Единиц магии (жизней)
-    "has_timer":          false, # Без таймера — медитативная финальная игра
-    "unicorn_speed_px":   200,   # Скорость движения единорога (пикс/сек)
+    "particle_count":   6,
+    "trap_stone_count": 5,
+    "magic_points_max": 5,
+    "has_timer":        false,
+    "unicorn_speed_px": 250,
 }
+
 
 # ==============================================================
 # ССЫЛКИ НА УЗЛЫ
@@ -732,43 +734,43 @@ func _start_dialogue_pre_portal() -> void:
 func _start_minigame_portal(particles_override: int = -1) -> void:
     _phase = Phase.MINIGAME_PORTAL
     minigame_layer.visible = true
+    minigame_layer.layer   = 180
 
-    # particles_override: если >= 0, мини-игра стартует
-    # с меньшим числом частиц (потеря при перезапуске, как в ТЗ)
+    # Удаляем предыдущий экземпляр
+    if is_instance_valid(_mg_portal):
+        _mg_portal.queue_free()
+
+    _mg_portal = preload("res://scenes/minigame_find_portal.tscn") \
+        .instantiate() as MinigameFindPortal
+    minigame_layer.add_child(_mg_portal)
+    _mg_portal.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+    _mg_portal.mouse_filter = Control.MOUSE_FILTER_IGNORE
+
+    # Собираем конфиг (учитываем override при повторной попытке)
     var config: Dictionary = MINIGAME_PORTAL_CONFIG.duplicate()
-    if particles_override >= 0:
+    if particles_override >= 1:
         config["particle_count"] = particles_override
 
-    # TODO: инстанцируй сцену мини-игры и подключи сигналы.
-    # var mg = preload("res://scenes/minigame_find_portal.tscn").instantiate()
-    # minigame_layer.add_child(mg)
-    # mg.setup(config)
-    # mg.completed.connect(_on_minigame_portal_completed)
+    _mg_portal.setup(config, portrait_unicorn)
+    _mg_portal.completed.connect(_on_minigame_portal_completed)
 
-    push_warning("Mission3: MINIGAME_PORTAL — заглушка. Подключи UI.")
-    await get_tree().create_timer(0.1).timeout
-    _on_minigame_portal_completed(true, 5)  # ЗАГЛУШКА: победа, магия не потрачена
 
-## Вызывается мини-игрой по сигналу.
-## is_success: все частицы собраны до исчерпания магии.
-## magic_remaining: оставшихся единиц магии (0 = провал).
 func _on_minigame_portal_completed(is_success: bool, magic_remaining: int) -> void:
-    if not is_success or magic_remaining <= 0:
-        # Магия на нуле → перезапуск с одной лишней частицей (согласно ТЗ)
-        var particles_on_retry: int = max(
-            1,
-            MINIGAME_PORTAL_CONFIG["particle_count"] - 1
-        )
-        push_warning(
-            "Mission3: MINIGAME_PORTAL — провал. Перезапуск с %d частицами."
-            % particles_on_retry
-        )
-        minigame_layer.visible = false
-        _start_minigame_portal(particles_on_retry)
-        return
+    if is_instance_valid(_mg_portal):
+        _mg_portal.queue_free()
+        _mg_portal = null
 
     minigame_layer.visible = false
+
+    if not is_success or magic_remaining <= 0:
+        # Магия на нуле → перезапуск с одной частицей меньше
+        var retry_count: int = max(1, MINIGAME_PORTAL_CONFIG["particle_count"] - 1)
+        await get_tree().create_timer(0.8).timeout
+        _start_minigame_portal(retry_count)
+        return
+
     _start_dialogue_portal_open()
+
 
 # ==============================================================
 # ФАЗА 7 — ДИАЛОГ «ПОРТАЛ ОТКРЫЛСЯ»
