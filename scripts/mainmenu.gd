@@ -18,46 +18,57 @@ var _custom_font1: Font
 var _slot_buttons: Array[Button] = []
 
 func _ready() -> void:
-  _custom_font = load("res://assets/text/PixelifySans-VariableFont_wght.ttf")
-  _custom_font1 = load("res://assets/text/ArcadeJeu-Regular.otf")
+    _custom_font = load("res://assets/text/PixelifySans-VariableFont_wght.ttf")
+    _custom_font1 = load("res://assets/text/ArcadeJeu-Regular.otf")
 
-  # ── Кнопки главного меню ────────────────────────────────────
-  $TextureRect/PlayButton.pressed.connect(_on_play_pressed)
-  $TextureRect/SaveButton.pressed.connect(_on_save_pressed)
-  $TextureRect/CustomizationButton.pressed.connect(_on_customization_pressed)
-  $TextureRect/SettingsButton.pressed.connect(_on_settings_pressed)
-  $TextureRect/ExitButton.pressed.connect(_on_exit_pressed)
+    # === AUDIO MANAGER ===
+    var audio = get_node_or_null("/root/AudioManager")
+    if audio:
+        audio.stop_music()
+        audio.play_music("mm", -6.0)
 
-  # ── Диалог выхода ───────────────────────────────────────────
-  $TextureRect/Controlvixod/yes.pressed.connect(_on_confirm_exit)
-  $TextureRect/Controlvixod/no.pressed.connect(_on_cancel_exit)
-  $TextureRect/Controlvixod/krest.pressed.connect(_on_cancel_exit)
+    # ── Кнопки главного меню ────────────────────────────────────
+    $TextureRect/PlayButton.pressed.connect(_on_play_pressed)
+    $TextureRect/SaveButton.pressed.connect(_on_save_pressed)
+    $TextureRect/CustomizationButton.pressed.connect(_on_customization_pressed)
+    $TextureRect/SettingsButton.pressed.connect(_on_settings_pressed)
+    $TextureRect/ExitButton.pressed.connect(_on_exit_pressed)
 
-  # ── Настройки ───────────────────────────────────────────────
-  $TextureRect/Controlset/vixod.pressed.connect(_on_close_settings_pressed)
+    # ── Диалог выхода ───────────────────────────────────────────
+    $TextureRect/Controlvixod/yes.pressed.connect(_on_confirm_exit)
+    $TextureRect/Controlvixod/no.pressed.connect(_on_cancel_exit)
+    $TextureRect/Controlvixod/krest.pressed.connect(_on_cancel_exit)
 
-  # ── Панель сохранений ───────────────────────────────────────
-  $TextureRect/Controlsave/vixod.pressed.connect(_on_close_save_pressed)
-  $TextureRect/Controlsave/add.pressed.connect(_on_add_save_pressed)
-  $TextureRect/Controlsave/delete.pressed.connect(_on_delete_save_pressed)
+    # ── Настройки ───────────────────────────────────────────────
+    $TextureRect/Controlset/vixod.pressed.connect(_on_close_settings_pressed)
 
-  $TextureRect/Controlvixod.visible = false
-  $TextureRect/Controlset.visible   = false
-  $TextureRect/Controlsave.visible  = false
+    # ── Панель сохранений ───────────────────────────────────────
+    $TextureRect/Controlsave/vixod.pressed.connect(_on_close_save_pressed)
+    $TextureRect/Controlsave/add.pressed.connect(_on_add_save_pressed)
+    $TextureRect/Controlsave/delete.pressed.connect(_on_delete_save_pressed)
 
-  _setup_fps_popup()
+    $TextureRect/Controlvixod.visible = false
+    $TextureRect/Controlset.visible   = false
+    $TextureRect/Controlsave.visible  = false
+    
+    _setup_fps_popup()
 
-  var sys: SaveSystemManager = _get_save_system()
-  if sys:
-    sys.saves_updated.connect(_refresh_saves_list)
+    var sys: SaveSystemManager = _get_save_system()
+    if sys:
+        sys.saves_updated.connect(_refresh_saves_list)
 
-  _refresh_saves_list()
+    _refresh_saves_list()
 
 # ────────────────────────────────────────────────────────────────
 # ГЛАВНОЕ МЕНЮ
 # ────────────────────────────────────────────────────────────────
 
 func _on_play_pressed() -> void:
+  # Останавливаем музыку перед интро
+  var audio = get_node_or_null("/root/AudioManager")
+  if audio:
+      audio.stop_music()
+      
   get_tree().change_scene_to_file("res://scenes/intro.tscn")
 
 func _on_exit_pressed() -> void:

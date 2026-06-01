@@ -39,7 +39,6 @@ bg_sahara_desert = ExtResource("2_7uc7w")
 bg_sahara_anomaly = ExtResource("3_175cs")
 bg_portal_sunset = ExtResource("4_ikfj0")
 bg_magic_forest = ExtResource("4_mxh81")
-plashka_delay = null
 portrait_ksenia_weak = ExtResource("4_tk4rw")
 portrait_ksenia_squinting = ExtResource("5_eot8g")
 portrait_ksenia_hopeful = ExtResource("6_8h1x1")

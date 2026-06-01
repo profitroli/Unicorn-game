@@ -31,6 +31,11 @@ var _save_tween: Tween
 func _ready() -> void:
     _load_from_global()
 
+    var audio = get_node_or_null("/root/AudioManager")
+    if audio:
+        audio.stop_music()
+        audio.play_music("cas", -7.0)
+
     $TextureRect/MenuButton.pressed.connect(_on_back_pressed)
 
     if has_node("TextureRect/SaveButton"):

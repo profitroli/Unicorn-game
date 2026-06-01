@@ -48,7 +48,15 @@ func _type_text(full: String) -> void:
         if not _typing:
             text_label.text = full
             break
+            
         text_label.text += full[i]
+        
+        # Звук печати
+        if i % 8 == 0:  # каждый второй символ
+            var audio = get_node_or_null("/root/AudioManager")
+            if audio:
+                audio.play_typing()
+        
         await get_tree().create_timer(TYPING_SPEED).timeout
     
     _typing = false

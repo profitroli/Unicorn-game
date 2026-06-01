@@ -20,7 +20,8 @@ enum Phase {
     DIALOGUE_POST_WATER,     # После воды: радость → разговор о портале
     DIALOGUE_PRE_PORTAL,     # Зона аномалии: «Грань тонкая...» перед мини-игрой
     MINIGAME_PORTAL,         # «Найди портал» (6 частиц + ловушки-миражи)
-    DIALOGUE_PORTAL_OPEN,    # Портал открылся → «Дом»
+    DIALOGUE_PORTAL_OPEN,
+    PLASHKA_FOREST,    # Портал открылся → «Дом»
     DIALOGUE_FAREWELL,       # Монолог о людях → прощание → «Веру.»
     FADE_TO_FOREST,          # Вспышка белого → лес → затемнение выходит
     DIALOGUE_EPILOGUE,       # Лес на рассвете: Луна, Гром, Астерион
@@ -171,6 +172,12 @@ const MINIGAME_PORTAL_CONFIG: Dictionary = {
 # READY
 # ==============================================================
 func _ready() -> void:
+    
+    var audio = get_node_or_null("/root/AudioManager")
+    if audio:
+        audio.stop_music()
+        audio.play_music("desert", -7.0)
+    
     _set_background(bg_sahara_desert)
 
     if character_portrait_1: character_portrait_1.visible = false
@@ -250,7 +257,10 @@ func _on_dialogue_finished() -> void:
         Phase.DIALOGUE_DESERT_INTRO:  _start_minigame_water()
         Phase.DIALOGUE_POST_WATER:    _start_dialogue_pre_portal()
         Phase.DIALOGUE_PRE_PORTAL:    _start_minigame_portal()
-        Phase.DIALOGUE_PORTAL_OPEN:   _start_dialogue_farewell()
+        Phase.DIALOGUE_PORTAL_OPEN:
+            _start_dialogue_farewell()
+        Phase.DIALOGUE_FAREWELL:
+            _show_plashka_forest()
         Phase.DIALOGUE_FAREWELL:      _begin_fade_to_forest()
         Phase.DIALOGUE_EPILOGUE:      _show_plashka_final()
 
@@ -495,6 +505,8 @@ func _start_dialogue_desert_intro() -> void:
 # МИНИ-ИГРА 4 — ДЕТЕКТОР ВОДЫ
 # ==============================================================
 func _start_minigame_water() -> void:
+    var audio = get_node_or_null("/root/AudioManager")
+    if audio: audio.play_music("minigame")
     _phase = Phase.MINIGAME_WATER
     minigame_layer.visible = true
     minigame_layer.layer = 180
@@ -538,6 +550,8 @@ func _on_minigame_water_completed(is_success: bool, attempts_used: int) -> void:
 # Радость → благодарность → разговор о портале в Сахаре
 # ==============================================================
 func _start_dialogue_post_water() -> void:
+    var audio = get_node_or_null("/root/AudioManager")
+    if audio: audio.play_music("desert")
     _phase = Phase.DIALOGUE_POST_WATER
     _set_background(bg_sahara_anomaly)
     if not dm or not dm.has_method("start"):
@@ -732,6 +746,8 @@ func _start_dialogue_pre_portal() -> void:
 # Tap-to-move, без таймера. Ловушки = потеря магии.
 # ==============================================================
 func _start_minigame_portal(particles_override: int = -1) -> void:
+    var audio = get_node_or_null("/root/AudioManager")
+    if audio: audio.play_music("minigame")
     _phase = Phase.MINIGAME_PORTAL
     minigame_layer.visible = true
     minigame_layer.layer   = 180
@@ -780,6 +796,12 @@ func _on_minigame_portal_completed(is_success: bool, magic_remaining: int) -> vo
 func _start_dialogue_portal_open() -> void:
     _phase = Phase.DIALOGUE_PORTAL_OPEN
     _set_background(bg_portal_sunset)
+
+    # === ДОБАВЛЕНО: возвращаем фоновую музыку и включаем звук портала ===
+    var audio = get_node_or_null("/root/AudioManager")
+    if audio: 
+        audio.play_music("desert")
+        audio.play_portal()
 
     if not dm or not dm.has_method("start"):
         push_warning("Mission3: DialogueManager не найден.")
@@ -1094,6 +1116,37 @@ func _begin_fade_to_forest() -> void:
     black_screen.visible = false
     _start_dialogue_epilogue()
 
+func _show_plashka_forest() -> void:
+    _phase = Phase.PLASHKA_FOREST
+    _hide_portraits()
+    _reset_plashka()
+    
+    plashka_label.text = "ТЕМ ВРЕМЕНЕМ \nВ ВОЛШЕБНОМ ЛЕСУ..."
+
+    # Меняем фон на волшебный лес
+    # (убедись, что переменная фона леса называется bg_magic_forest или замени на свою)
+    if background and bg_magic_forest:
+        background.texture = bg_magic_forest
+
+    await get_tree().create_timer(plashka_delay).timeout
+
+    # Плавное появление темного фона и текста
+    var tw_in: Tween = create_tween()
+    tw_in.tween_property(plashka_rect,  "color",         Color(0, 0, 0, 0.85), 0.5)
+    tw_in.parallel().tween_property(plashka_label, "modulate:a", 1.0,         0.5)
+    await tw_in.finished
+
+    # Пауза для чтения
+    await get_tree().create_timer(1.5).timeout
+
+    # Плавное исчезновение плашки
+    var tw_out: Tween = create_tween()
+    tw_out.tween_property(plashka_rect,  "color",         Color(0, 0, 0, 0.0), 0.4)
+    tw_out.parallel().tween_property(plashka_label, "modulate:a", 0.0,         0.4)
+    await tw_out.finished
+
+    # Запускаем финальный диалог
+    _start_dialogue_epilogue()
 # ==============================================================
 # ФАЗА 10 — ЭПИЛОГ (Волшебный лес)
 # Источник: ЕДИНОРОГ.docx → «ЭПИЛОГ – Возвращение домой»

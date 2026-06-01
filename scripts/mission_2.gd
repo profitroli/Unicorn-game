@@ -159,6 +159,12 @@ var _minigame_a_score: int = 0
 # READY
 # ==============================================================
 func _ready() -> void:
+    
+    var audio = get_node_or_null("/root/AudioManager")
+    if audio:
+        audio.stop_music()
+        audio.play_music("cafe", -7.0)
+    
     if background and bg_cafe_luna:
         background.texture = bg_cafe_luna
 
@@ -404,6 +410,8 @@ func _on_dialogue_finished() -> void:
 # ФАЗА 3 — МИНИ-ИГРА А: «Заполни анкету»
 # ==============================================================
 func _start_minigame_a() -> void:
+    var audio = get_node_or_null("/root/AudioManager")
+    if audio: audio.play_music("minigame")
     _phase = Phase.MINIGAME_A
     _minigame_a_score = 0
 
@@ -449,6 +457,8 @@ func _on_minigame_a_completed(score: int) -> void:
 # ФАЗА 4 — ДИАЛОГ-СВЯЗКА (лайк от Арсения)
 # ==============================================================
 func _start_dialogue_between() -> void:
+    var audio = get_node_or_null("/root/AudioManager")
+    if audio: audio.play_music("cafe")
     _phase = Phase.DIALOGUE_BETWEEN
 
     if not dm or not dm.has_method("start"):
@@ -510,6 +520,8 @@ func _start_dialogue_between() -> void:
 # ФАЗА 5 — МИНИ-ИГРА Б: «Первое сообщение»
 # ==============================================================
 func _start_minigame_b() -> void:
+    var audio = get_node_or_null("/root/AudioManager")
+    if audio: audio.play_music("minigame")
     _phase = Phase.MINIGAME_B
 
     minigame_layer.visible = true
@@ -544,6 +556,8 @@ func _on_minigame_b_completed() -> void:
 # ФАЗА 6 — ФИНАЛЬНЫЙ ДИАЛОГ (разговор о портале → прощание)
 # ==============================================================
 func _start_dialogue_outro() -> void:
+    var audio = get_node_or_null("/root/AudioManager")
+    if audio: audio.play_music("cafe")
     _phase = Phase.DIALOGUE_OUTRO
 
     if not dm or not dm.has_method("start"):

@@ -9,7 +9,8 @@ enum Phase {
     DIALOGUE_POST_MG1,       # Коридор: после реферата → «профессор Всезнайкин»
     DIALOGUE_EXAM_BEFORE,    # Аудитория: «Три вопроса» → шёпот → конец сцены
     PLASHKA_15MIN,           # «15 МИНУТ СПУСТЯ...»
-    DIALOGUE_EXAM_AFTER,     # Аудитория: профессор доволен → «Идите»
+    DIALOGUE_EXAM_AFTER,
+    PLASHKA_MEETING_ROOM,     # Аудитория: профессор доволен → «Идите»
     DIALOGUE_GROUP_PROJECT,  # Переговорная: конфликт → Единорог → «Для этого я здесь»
     MINIGAME_2,              # «Собери презентацию» (6 слайдов)
     DIALOGUE_POST_MG2,       # Переговорная: примирение → профессор → «Идите сдавать»
@@ -166,6 +167,12 @@ const MINIGAME_2_SLIDES: Array[Dictionary] = [
 const MINIGAME_2_TIMER_FIRST: int = 60
 
 func _ready() -> void:
+    
+    var audio = get_node_or_null("/root/AudioManager")
+    if audio:
+        audio.stop_music()
+        audio.play_music("school", -7.0)
+    
     _set_background(bg_university_corridor)
 
     if character_portrait_1: character_portrait_1.visible = false
@@ -367,7 +374,7 @@ func _on_dialogue_finished() -> void:
         Phase.DIALOGUE_EXAM_BEFORE:
             _show_plashka_15min()
         Phase.DIALOGUE_EXAM_AFTER:
-            _start_dialogue_group_project()
+            _show_plashka_meeting_room() # <--- Изменено
         Phase.DIALOGUE_GROUP_PROJECT:
             _start_minigame_2()
         Phase.DIALOGUE_POST_MG2:
@@ -407,6 +414,8 @@ func _on_dialogue_line_changed(line_data: Dictionary) -> void:
 # ФАЗА 3 — МИНИ-ИГРА 1: «Собери реферат»
 # ==============================================================
 func _start_minigame_1(timer: int = MINIGAME_1_TIMER_FIRST) -> void:
+    var audio = get_node_or_null("/root/AudioManager")
+    if audio: audio.play_music("minigame")
     _phase = Phase.MINIGAME_1
     minigame_layer.visible = true
     minigame_layer.layer = 150  # выше HomeOverlay
@@ -445,6 +454,8 @@ func _on_minigame_1_completed(correct_count: int) -> void:
 # ФАЗА 4 — ДИАЛОГ ПОСЛЕ МГ1 (коридор)
 # ==============================================================
 func _start_dialogue_post_mg1() -> void:
+    var audio = get_node_or_null("/root/AudioManager")
+    if audio: audio.play_music("school")
     _phase = Phase.DIALOGUE_POST_MG1
     _set_background(bg_university_corridor)
 
@@ -631,6 +642,35 @@ func _start_dialogue_exam_after() -> void:
 
     dm.start(lines)
 
+func _show_plashka_meeting_room() -> void:
+    _phase = Phase.PLASHKA_MEETING_ROOM
+    _reset_plashka()
+    
+    plashka_label.text = "ТЕМ ВРЕМЕНЕМ \nВ УЧЕБНОЙ КОМНАТЕ..."
+
+    # Меняем фон на переговорную (учебную комнату)
+    if background and bg_meeting_room:
+        background.texture = bg_meeting_room
+
+    await get_tree().create_timer(plashka_delay).timeout
+
+    # Плавное появление темного фона и текста
+    var tw_in: Tween = create_tween()
+    tw_in.tween_property(plashka_rect,  "color",         Color(0, 0, 0, 0.85), 0.5)
+    tw_in.parallel().tween_property(plashka_label, "modulate:a", 1.0,         0.5)
+    await tw_in.finished
+
+    # Пауза для чтения
+    await get_tree().create_timer(1.5).timeout
+
+    # Плавное исчезновение плашки
+    var tw_out: Tween = create_tween()
+    tw_out.tween_property(plashka_rect,  "color",         Color(0, 0, 0, 0.0), 0.4)
+    tw_out.parallel().tween_property(plashka_label, "modulate:a", 0.0,         0.4)
+    await tw_out.finished
+
+    # Запускаем диалог с группой
+    _start_dialogue_group_project()
 # ==============================================================
 # ФАЗА 8 — ДИАЛОГ: ГРУППОВОЙ ПРОЕКТ (переговорная)
 # ==============================================================
@@ -805,6 +845,8 @@ func _start_dialogue_group_project() -> void:
 # ФАЗА 9 — МИНИ-ИГРА 2: «Собери презентацию»
 # ==============================================================
 func _start_minigame_2() -> void:
+    var audio = get_node_or_null("/root/AudioManager")
+    if audio: audio.play_music("minigame")
     _phase = Phase.MINIGAME_2
     minigame_layer.visible = true
     minigame_layer.layer = 160   # Делаем выше HomeOverlay и диалогов
@@ -844,6 +886,8 @@ func _on_minigame_2_completed(is_success: bool) -> void:
 # ФАЗА 10 — ДИАЛОГ ПОСЛЕ МГ2 (переговорная)
 # ==============================================================
 func _start_dialogue_post_mg2() -> void:
+    var audio = get_node_or_null("/root/AudioManager")
+    if audio: audio.play_music("school")
     _phase = Phase.DIALOGUE_POST_MG2
 
     if not dm or not dm.has_method("start"):

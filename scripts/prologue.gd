@@ -24,6 +24,12 @@ var _phase := Phase.FADE_IN
 @onready var character_portrait_2 : TextureRect = $CharacterPortrait2
 
 func _ready() -> void:
+    
+    var audio = get_node_or_null("/root/AudioManager")
+    if audio:
+        audio.stop_music()
+        audio.play_music("birds", -8.0)
+    
     dialogue_box.visible = false
     plashka_label.modulate.a = 0.0
     plashka_rect.color = Color(0, 0, 0, 0.0)
