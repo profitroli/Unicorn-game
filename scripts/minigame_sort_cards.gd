@@ -419,7 +419,7 @@ func _animate_results() -> void:
                 st.bg_color = target_color
         ).set_delay(delay)
 
-    var wait := float(_slots_count) * 0.18 + 0.9
+    var wait := float(_slots_count) * 0.18 + 3
     await get_tree().create_timer(wait).timeout
     completed.emit(correct)
 

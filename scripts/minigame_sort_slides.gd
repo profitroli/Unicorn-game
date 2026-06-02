@@ -362,7 +362,7 @@ func _check_result() -> void:
                 if st:
                     st.bg_color = C_GREEN
             ).set_delay(float(i) * 0.12)
-        await get_tree().create_timer(float(_row_panels.size()) * 0.12 + 0.7).timeout
+        await get_tree().create_timer(float(_row_panels.size()) * 0.12 + 2).timeout
     else:
         # Неверные позиции → красный
         for i in _row_panels.size():
@@ -372,7 +372,7 @@ func _check_result() -> void:
                 var st := _row_panels[i].get_theme_stylebox("panel") as StyleBoxFlat
                 if st:
                     st.bg_color = C_RED
-        await get_tree().create_timer(0.9).timeout
+        await get_tree().create_timer(4).timeout
 
     completed.emit(correct)
 
